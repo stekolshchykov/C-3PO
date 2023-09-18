@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react"
-import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
-import {Counter} from "./features/counter/Counter";
-import { useGetPokemonByNameQuery } from './services/pokemon'
+import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
+import {useGetPokemonByNameQuery} from './services/pokemon'
+import Translator from "./Translator";
+
 function Hello() {
 
     const [from, setFrom] = useState('');
@@ -31,7 +32,10 @@ function Hello() {
           value={from}
           placeholder="from"
       />
-            <textarea placeholder="to" value={to} />
+            <textarea placeholder="to" value={to}/>
+            <h1 className="text-3xl font-bold underline text-clifford">
+                Hello world!
+            </h1>
         </div>
     );
 }
@@ -39,7 +43,7 @@ function Hello() {
 
 export const App = () => {
 
-    const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur')
+    const {data, error, isLoading} = useGetPokemonByNameQuery('bulbasaur')
 
     useEffect(() => {
         const handleBlur = () => {
@@ -66,7 +70,7 @@ export const App = () => {
         <div className="app">
             <Router>
                 <Routes>
-                    <Route path="/" element={<Hello />} />
+                    <Route path="/" element={<Translator/>}/>
                 </Routes>
             </Router>
         </div>

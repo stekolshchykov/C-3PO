@@ -8,67 +8,67 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
-  app.quit();
+    app.quit();
 }
 
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 
 const createWindow = (): void => {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    height: config.height,
-    width: config.width,
-    icon: "assets/trayIcon.png",
-    skipTaskbar: true,
-    frame: false,
-    transparent: true,
-    show: false,
-    hasShadow: false,
-    webPreferences: {
-      webSecurity: false,
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-    },
-  });
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        height: config.height,
+        width: config.width,
+        icon: "assets/trayIcon.png",
+        skipTaskbar: true,
+        frame: false,
+        transparent: true,
+        show: false,
+        hasShadow: false,
+        webPreferences: {
+            webSecurity: false,
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        },
+    });
 
-  tray = new Tray(path.join(__dirname, 'assets/trayIcon.png'));
+    tray = new Tray(path.join(__dirname, 'assets/trayIcon.png'));
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    // and load the index.html of the app.
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+    // Open the DevTools.
+    // mainWindow.webContents.openDevTools();
 
-  setIcon(app, mainWindow, tray);
-  hideWindowWhenFocusOut(ipcMain, mainWindow);
-  shortcutHideShow(app, mainWindow, tray);
+    setIcon(app, mainWindow, tray);
+    hideWindowWhenFocusOut(ipcMain, mainWindow);
+    shortcutHideShow(app, mainWindow, tray);
 
-  ipcMain.on('my-channel', (event, args) => {
-    console.log(args.message);
-  });
+    ipcMain.on('my-channel', (_, args) => {
+        console.log(args.message);
+    });
 };
 
 hideInTray(app);
-ipcMain.on('windowBlur', (event, args) => {
-  console.log("windowBlur");
+ipcMain.on('windowBlur', () => {
+    console.log("windowBlur");
 });
-ipcMain.on('windowFocus', (event, args) => {
-  console.log("windowFocus");
+ipcMain.on('windowFocus', () => {
+    console.log("windowFocus");
 });
 
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
 });
 
 // In this file you can include the rest of your app's specific main process
