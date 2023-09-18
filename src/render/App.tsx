@@ -1,22 +1,85 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import {Counter} from "./features/counter/Counter";
 import { useGetPokemonByNameQuery } from './services/pokemon'
+function Hello() {
+
+    const [from, setFrom] = useState('');
+    const [to, setTo] = useState('');
+
+    useEffect(() => {
+        (async () => {
+            const response = await fetch(
+                `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ru&dt=t&q=${from}`
+            )
+                .then((r) => r.json())
+                .then((r) => {
+                    try {
+                        return r[0][0][0];
+                    } catch (e) {
+                        return '';
+                    }
+                });
+            setTo(response);
+        })();
+    }, [from]);
+
+    return (
+        <div>
+      <textarea
+          onChange={(e) => setFrom(e.target.value)}
+          value={from}
+          placeholder="from"
+      />
+            <textarea placeholder="to" value={to} />
+        </div>
+    );
+}
+
 
 export const App = () => {
 
     const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur')
 
+    useEffect(() => {
+        const handleBlur = () => {
+            window?.electronAPI?.windowBlur();
+        };
+        window.addEventListener('blur', handleBlur);
+        return () => {
+            window.removeEventListener('blur', handleBlur);
+        };
+    }, []);
+    // windowHide
+    useEffect(() => {
+        const handleBlur = () => {
+            window?.electronAPI?.windowFocus();
+        };
+        window.addEventListener('focus', handleBlur);
+        return () => {
+            window.removeEventListener('focus', handleBlur);
+        };
+    }, []);
+
     return <>
-        <Counter/>
-        {error ? (
-            <>Oh no, there was an error</>
-        ) : isLoading ? (
-            <>Loading...</>
-        ) : data ? (
-            <>
-                <h3>{data.species.name}</h3>
-                <img src={data.sprites.front_shiny} alt={data.species.name} />
-            </>
-        ) : null}
+        <div className="triangleUp"></div>
+        <div className="app">
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Hello />} />
+                </Routes>
+            </Router>
+        </div>
+        {/*<Counter/>*/}
+        {/*{error ? (*/}
+        {/*    <>Oh no, there was an error</>*/}
+        {/*) : isLoading ? (*/}
+        {/*    <>Loading...</>*/}
+        {/*) : data ? (*/}
+        {/*    <>*/}
+        {/*        <h3>{data.species.name}</h3>*/}
+        {/*        <img src={data.sprites.front_shiny} alt={data.species.name} />*/}
+        {/*    </>*/}
+        {/*) : null}*/}
     </>
 }
