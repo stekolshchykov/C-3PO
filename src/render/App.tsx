@@ -73,6 +73,7 @@ export const App = () => {
                     <Route path="/" element={<Translator/>}/>
                 </Routes>
             </Router>
+            <div className="menu">123</div>
         </div>
         {/*<Counter/>*/}
         {/*{error ? (*/}

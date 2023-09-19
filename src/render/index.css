@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 body {
     /*background: red;*/
+
+    color: #DCD8D8;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .triangleUp {
@@ -12,11 +21,34 @@ body {
 }
 
 .app {
-    overflow: hidden;
     background: #494949;
     height: calc(100vh - 60px);
     width: calc(100vw - 100px);
     margin: auto;
     border-radius: 10px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+    grid-auto-flow: row;
+}
+
+.volumetricButton {
+    padding: 10px 40px;
+    border-radius: 20px;
+    border: 1px solid #262626;
+    background: #494949;
+    transition: 0.5s;
+
+    &:hover {
+        border: 1px solid #262626;
+        background: #262626;
+    }
+
+    &:active {
+        border-radius: 20px;
+        border: 1px solid #F8CB5C;
+        background-color: #F8CB5C;
+        color: #262626;
+    }
 }
