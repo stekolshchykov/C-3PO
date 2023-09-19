@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react"
 import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
-import {useGetPokemonByNameQuery} from './services/pokemon'
-import Translator from "./Translator";
+import Translator from "./features/translator/Translator";
+import {EWindowEvent} from "./features/root/rootSlice";
+import {useAppDispatch} from "./hooks";
+import {callWindowEvent} from "./features/root/actions";
 
 function Hello() {
 
@@ -43,11 +45,11 @@ function Hello() {
 
 export const App = () => {
 
-    const {data, error, isLoading} = useGetPokemonByNameQuery('bulbasaur')
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         const handleBlur = () => {
-            window?.electronAPI?.windowBlur();
+            dispatch(callWindowEvent(EWindowEvent.focus));
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -56,12 +58,12 @@ export const App = () => {
     }, []);
     // windowHide
     useEffect(() => {
-        const handleBlur = () => {
-            window?.electronAPI?.windowFocus();
+        const handleFocus = () => {
+            dispatch(callWindowEvent(EWindowEvent.focus))
         };
-        window.addEventListener('focus', handleBlur);
+        window.addEventListener('focus', handleFocus);
         return () => {
-            window.removeEventListener('focus', handleBlur);
+            window.removeEventListener('focus', handleFocus);
         };
     }, []);
 
@@ -75,16 +77,5 @@ export const App = () => {
             </Router>
             <div className="menu">123</div>
         </div>
-        {/*<Counter/>*/}
-        {/*{error ? (*/}
-        {/*    <>Oh no, there was an error</>*/}
-        {/*) : isLoading ? (*/}
-        {/*    <>Loading...</>*/}
-        {/*) : data ? (*/}
-        {/*    <>*/}
-        {/*        <h3>{data.species.name}</h3>*/}
-        {/*        <img src={data.sprites.front_shiny} alt={data.species.name} />*/}
-        {/*    </>*/}
-        {/*) : null}*/}
     </>
 }

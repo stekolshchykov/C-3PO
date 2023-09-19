@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './features/counter/counterSlice'
-import { pokemonApi } from './services/pokemon'
+import {configureStore} from '@reduxjs/toolkit'
+import {pokemonApi} from './services/pokemon'
+import rootSlice from "./features/root/rootSlice";
+import translatorSlice from "./features/translator/translatorSlice";
 
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
+        root: rootSlice,
+        translator: translatorSlice,
         [pokemonApi.reducerPath]: pokemonApi.reducer,
 
     },
@@ -12,7 +14,5 @@ export const store = configureStore({
         getDefaultMiddleware().concat(pokemonApi.middleware),
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
