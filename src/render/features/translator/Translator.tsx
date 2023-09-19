@@ -32,7 +32,7 @@ const Translator = () => {
             <textarea className={" bg-grayDark mr-[1px] w-full outline-none px-3 py-2 resize-none"} placeholder="from"
                       value={fromText} onChange={e => setFromText(e.target.value)}/>
             <textarea className={" bg-grayDark ml-[1px] w-full outline-none px-3 py-2 resize-none"} placeholder="to"
-                      value={toText}/>
+                      value={toText} disabled={true}/>
         </div>
     </div>
 };

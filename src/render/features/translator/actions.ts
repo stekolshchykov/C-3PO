@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {RootState} from "./../../store";
 import {translateText} from "../functions";
-import {setLanguage, setText} from "../translator/translatorSlice";
+import {setText} from "../translator/translatorSlice";
 
 export const translatorSwapDirection = createAsyncThunk(
     'translator/swapDirection',
@@ -10,6 +10,7 @@ export const translatorSwapDirection = createAsyncThunk(
         const {translator} = getState() as RootState
         const result = await translateText(text, translator.toLanguage.code, translator.fromLanguage.code)
         dispatch(setText({fromText: result, toText: translator.fromText}))
-        dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
+
+        // dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
     }
 )
