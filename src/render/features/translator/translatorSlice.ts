@@ -24,13 +24,19 @@ export const translatorSlice = createSlice({
             state.toLanguage = action.payload.toLanguage
         },
         setText: (state, action: PayloadAction<{ fromText: string, toText: string }>) => {
-            console.log("+++++", action.payload)
             state.fromText = action.payload.fromText
             state.toText = action.payload.toText
+        },
+        setTextFrom: (state, action: PayloadAction<string>) => {
+            state.fromText = action.payload
+
+        },
+        setTextTo: (state, action: PayloadAction<string>) => {
+            state.toText = action.payload
         },
     }
 })
 
-export const {setLanguage, setText} = translatorSlice.actions
+export const {setLanguage, setText, setTextFrom, setTextTo} = translatorSlice.actions
 
 export default translatorSlice.reducer

@@ -2,7 +2,6 @@ import {configureStore} from '@reduxjs/toolkit'
 import {pokemonApi} from './services/pokemon'
 import rootSlice from "./features/root/rootSlice";
 import translatorSlice from "./features/translator/translatorSlice";
-// eslint-disable-next-line import/no-unresolved
 import devToolsEnhancer from 'remote-redux-devtools';
 
 export const store = configureStore({

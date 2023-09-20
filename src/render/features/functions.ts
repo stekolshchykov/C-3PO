@@ -1,12 +1,30 @@
+import axios from "axios";
+
 export const translateText = async (text: string, fromCode: string, toCode: string) => {
     let translateText = ""
-    for (const t of text.split(".")) {
-        const response = await fetch(
-            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromCode}&tl=${toCode}&dt=t&q=${t}`
-        )
-            .then(e => e.json())
-            .then(e => e[0][0][0])
-        translateText += response
+    const textArray = text
+        .replace(/\?/gi, "?*******")
+        .replace(/\!/gi, "!*******")
+        .replace(/\./gi, ".*******")
+        .replace(/\?/gi, "??")
+        .split("*******")
+        .map(e => e.trim()).filter(e => e.length > 0)
+    for (const suggestion of textArray) {
+        const response = await axios.get('https://translate.googleapis.com/translate_a/single', {
+            params: {
+                client: "gtx",
+                sl: fromCode,
+                tl: toCode,
+                dt: "t",
+                q: suggestion
+            }
+        })
+            .then(e => e.data[0][0][0].replace("??", "?"))
+            .catch(e => {
+                console.log(e)
+                return ""
+            })
+        translateText += response + " "
     }
-    return translateText
+    return translateText.trim()
 }
