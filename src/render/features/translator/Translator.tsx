@@ -1,9 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SVG from "../../components/SVG";
 import {useAppDispatch, useAppSelector} from "./../../hooks";
-import {translatorSetFromTextAndTranslate, translatorSwapDirection} from "./actions";
+import {
+    translatorSetFromTextAndTranslate,
+    translatorSetLanguageFrom,
+    translatorSetLanguageTo,
+    translatorSwapDirection
+} from "./actions";
 import {ILanguage, languages} from "./languageList";
-import {setLanguageFrom, setLanguageTo} from "./translatorSlice";
 
 
 const Translator = () => {
@@ -36,7 +40,7 @@ const Translator = () => {
     }
 
     const selectNewLanguage = (newLanguage: ILanguage) => {
-        dispatch(languagesListStatus === "from" ? setLanguageFrom(newLanguage) : setLanguageTo(newLanguage))
+        dispatch(languagesListStatus === "from" ? translatorSetLanguageFrom(newLanguage) : translatorSetLanguageTo(newLanguage))
         setLanguageListStatus(null)
     }
 
