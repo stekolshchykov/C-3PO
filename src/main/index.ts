@@ -37,23 +37,22 @@ const createWindow = (): void => {
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
     shortcutHideShow(app, mainWindow, tray);
 
-    ipcMain.on('my-channel', (_, args) => {
-        console.log(args.message);
-    });
 };
 
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
     console.log("windowBlur");
+    mainWindow?.hide()
 });
 ipcMain.on('windowFocus', () => {
     console.log("windowFocus");
+    mainWindow?.show()
 });
 
 app.on('ready', createWindow);
