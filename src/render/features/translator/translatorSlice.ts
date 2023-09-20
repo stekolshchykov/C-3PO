@@ -16,12 +16,19 @@ const initialState: ITranslatorState = {
 }
 
 export const translatorSlice = createSlice({
-    name: 'root',
+    name: 'translator',
     initialState,
     reducers: {
         setLanguage: (state, action: PayloadAction<{ fromLanguage: ILanguage, toLanguage: ILanguage }>) => {
             state.fromLanguage = action.payload.fromLanguage
             state.toLanguage = action.payload.toLanguage
+            console.log("translator", "fromLanguage:", state.fromLanguage, "toLanguage:", state.toLanguage)
+        },
+        setLanguageFrom: (state, action: PayloadAction<ILanguage>) => {
+            state.fromLanguage = action.payload
+        },
+        setLanguageTo: (state, action: PayloadAction<ILanguage>) => {
+            state.toLanguage = action.payload
         },
         setText: (state, action: PayloadAction<{ fromText: string, toText: string }>) => {
             state.fromText = action.payload.fromText
@@ -37,6 +44,6 @@ export const translatorSlice = createSlice({
     }
 })
 
-export const {setLanguage, setText, setTextFrom, setTextTo} = translatorSlice.actions
+export const {setLanguageFrom, setLanguageTo, setLanguage, setText, setTextFrom, setTextTo} = translatorSlice.actions
 
 export default translatorSlice.reducer

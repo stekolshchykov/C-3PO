@@ -6,10 +6,13 @@ import {setLanguage, setText, setTextFrom, setTextTo} from "../translator/transl
 export const translatorSwapDirection = createAsyncThunk(
     'translator/swapDirection',
     async (_, {rejectWithValue, dispatch, getState}) => {
-        console.log("+++swapDirection")
         const {translator} = getState() as RootState
-        dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
+        await dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
+
         dispatch(translatorTranslate())
+        setTimeout(() => {
+            dispatch(translatorTranslate())
+        }, 500)
     }
 )
 
@@ -18,6 +21,7 @@ export const translatorTranslate = createAsyncThunk(
     'translator/translate',
     async (_, {rejectWithValue, dispatch, getState}) => {
         const {translator} = getState() as RootState
+        console.log("++++translator", translator)
         const result = await translateText(translator.fromText, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setText({fromText: result, toText: translator.fromText}))
     }
