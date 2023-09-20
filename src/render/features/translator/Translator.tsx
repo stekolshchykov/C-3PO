@@ -15,6 +15,7 @@ const Translator = () => {
     const [languagesListStatus, setLanguageListStatus] = useState<null | "from" | "to">(null)
     const [inputSearchLanguage, setInputSearchLanguage] = useState("")
 
+    const translator = useAppSelector((state) => state.translator)
     const toText = useAppSelector((state) => state.translator.toText)
     const fromText = useAppSelector((state) => state.translator.fromText)
     const fromLanguage = useAppSelector((state) => state.translator.fromLanguage)
@@ -44,16 +45,18 @@ const Translator = () => {
     const selectFromHandler = () =>
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
 
+    console.log(translator)
+
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"flex justify-between mx-auto my-3"}>
-            <button className={"volumetricButton"} onClick={selectToHandler}>
-                {toLanguage.name}
+            <button className={"volumetricButton"} onClick={selectFromHandler}>
+                {fromLanguage.name}
             </button>
             <div className={"mx-10 flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <SVG type={"switchArrow"}/>
             </div>
-            <button className={"volumetricButton"} onClick={selectFromHandler}>
-                {fromLanguage.name}
+            <button className={"volumetricButton"} onClick={selectToHandler}>
+                {toLanguage.name}
             </button>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
@@ -75,9 +78,9 @@ const Translator = () => {
                     className={"p-4 m-0 w-[100%] mb-4 bg-gray outline-none"}
                     placeholder={"Language name..."}/>
                 <ul className={" m-0 p-0 grid grid-cols-[1fr_1fr_1fr] gap-4"}>
-                    {languages.map(l =>
+                    {languages.map((l, k) =>
                         l.name.toLowerCase().includes(inputSearchLanguage.toLowerCase().trim())
-                            ? <li className={"m-auto"}>
+                            ? <li className={"m-auto"} key={k}>
                                 <button
                                     onClick={() => selectNewLanguage(l)}
                                     className={`volumetricButton ${isActiveLanguage(l.code) && "active"}`}>

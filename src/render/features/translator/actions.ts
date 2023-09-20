@@ -7,12 +7,8 @@ export const translatorSwapDirection = createAsyncThunk(
     'translator/swapDirection',
     async (_, {rejectWithValue, dispatch, getState}) => {
         const {translator} = getState() as RootState
-        await dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
-
-        dispatch(translatorTranslate())
-        setTimeout(() => {
-            dispatch(translatorTranslate())
-        }, 500)
+        dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
+        dispatch(setText({fromText: translator.toText, toText: translator.fromText}))
     }
 )
 
@@ -21,9 +17,9 @@ export const translatorTranslate = createAsyncThunk(
     'translator/translate',
     async (_, {rejectWithValue, dispatch, getState}) => {
         const {translator} = getState() as RootState
-        console.log("++++translator", translator)
         const result = await translateText(translator.fromText, translator.fromLanguage.code, translator.toLanguage.code)
-        dispatch(setText({fromText: result, toText: translator.fromText}))
+        dispatch(setTextFrom(result))
+        dispatch(setTextTo(translator.fromText))
     }
 )
 
@@ -33,7 +29,7 @@ export const translatorSetFromTextAndTranslate = createAsyncThunk(
     async (fromText: string, {rejectWithValue, dispatch, getState}) => {
         const {translator} = getState() as RootState
         dispatch(setTextFrom(fromText))
-        const result = await translateText(fromText, translator.toLanguage.code, translator.fromLanguage.code)
+        const result = await translateText(fromText, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setTextTo(result))
     }
 )

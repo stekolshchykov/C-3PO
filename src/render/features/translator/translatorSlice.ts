@@ -22,7 +22,6 @@ export const translatorSlice = createSlice({
         setLanguage: (state, action: PayloadAction<{ fromLanguage: ILanguage, toLanguage: ILanguage }>) => {
             state.fromLanguage = action.payload.fromLanguage
             state.toLanguage = action.payload.toLanguage
-            console.log("translator", "fromLanguage:", state.fromLanguage, "toLanguage:", state.toLanguage)
         },
         setLanguageFrom: (state, action: PayloadAction<ILanguage>) => {
             state.fromLanguage = action.payload
