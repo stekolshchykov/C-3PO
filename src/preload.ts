@@ -9,3 +9,4 @@ const electronAPI: IElectronAPI = {
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
+

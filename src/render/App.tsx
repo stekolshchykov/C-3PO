@@ -10,6 +10,21 @@ import Menu from "./features/menu/Menu";
 export const App = () => {
 
     const dispatch = useAppDispatch()
+    
+    useEffect(() => {
+        function clickHandler(this: any, e: any) {
+            if (e.target.id === "root") {
+                window.electronAPI.windowBlur()
+            }
+        }
+
+        const body = document.querySelector("body")
+
+        body && body.addEventListener('click', clickHandler, false);
+        return () => {
+            body && body.removeEventListener('click', clickHandler, false);
+        };
+    }, []);
 
     useEffect(() => {
         const handleBlur = () => {

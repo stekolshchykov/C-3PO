@@ -26,6 +26,7 @@ const createWindow = (): void => {
         transparent: true,
         show: false,
         hasShadow: false,
+        resizable: false,
         webPreferences: {
             webSecurity: false,
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
