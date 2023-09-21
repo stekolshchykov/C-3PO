@@ -28,6 +28,7 @@ export const translatorTranslate = createAsyncThunk(
         const result = await translateText(translator.fromText, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setTextFrom(result))
         dispatch(setTextTo(translator.fromText))
+        await navigator.clipboard.writeText(translator.fromText)
     }
 )
 
@@ -39,6 +40,7 @@ export const translatorSetFromTextAndTranslate = createAsyncThunk(
         dispatch(setTextFrom(fromText))
         const result = await translateText(fromText, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setTextTo(result))
+        await navigator.clipboard.writeText(result)
     }
 )
 
@@ -60,5 +62,6 @@ export const translatorSetLanguageTo = createAsyncThunk(
         const {translator} = getState() as RootState
         const result = await translateText(translator.toText, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setTextTo(result))
+        await navigator.clipboard.writeText(result)
     }
 )

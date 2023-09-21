@@ -11,6 +11,8 @@ export const callWindowEvent = createAsyncThunk(
         const {translator} = getState() as RootState
         const result = await translateText(text, translator.fromLanguage.code, translator.toLanguage.code)
         dispatch(setText({fromText: text, toText: result}))
+        // TODO: for settings
+        await navigator.clipboard.writeText(result)
         return text
     }
 )

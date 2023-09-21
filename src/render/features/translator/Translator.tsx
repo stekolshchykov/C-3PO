@@ -72,7 +72,7 @@ const Translator = () => {
                     placeholder="from"
                     onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>
                 <FontAwesomeIcon
-                    className={"icon absolute right-6 top-6 cursor-pointer"}
+                    className={"icon absolute right-6 top-5 cursor-pointer"}
                     size={"lg"}
                     onClick={() => navigator.clipboard.writeText(fromText)}
                     icon={faCopy}/>
@@ -84,7 +84,7 @@ const Translator = () => {
                    value={toText}
                    disabled={true}/>
                 <FontAwesomeIcon
-                    className={"icon absolute right-6 top-6 cursor-pointer"}
+                    className={"icon absolute right-6 top-5 cursor-pointer"}
                     color={"#DCD8D8"}
                     size={"lg"}
                     onClick={() => navigator.clipboard.writeText(toText)}
