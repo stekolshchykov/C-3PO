@@ -4,6 +4,8 @@ import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
 import {EWindowEvent} from "./features/root/rootSlice";
 import {callWindowEvent} from "./features/root/actions";
+import {faCoffee} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 export const App = () => {
@@ -38,7 +40,9 @@ export const App = () => {
                     <Route path="/" element={<Translator/>}/>
                 </Routes>
             </Router>
-            <div className="menu">123</div>
+            <div className="menu">
+                <FontAwesomeIcon icon={faCoffee}/>
+            </div>
         </div>
     </>
 }

@@ -54,3 +54,17 @@ body {
         color: #262626;
     }
 }
+
+
+.icon {
+    color: #494949;
+    transition: 0.3s;
+
+    &:hover {
+        color: #313131;
+    }
+
+    &:active {
+        color: #F8CB5C;
+    }
+}

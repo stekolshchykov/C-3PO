@@ -7,8 +7,9 @@ import {
     translatorSetLanguageTo,
     translatorSwapDirection
 } from "./actions";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCopy} from "@fortawesome/free-solid-svg-icons";
 import {ILanguage, languages} from "./languageList";
-
 
 const Translator = () => {
 
@@ -64,16 +65,31 @@ const Translator = () => {
             </button>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
-            <textarea
-                ref={inputFromRef}
-                className={" bg-grayDark mr-[1px] w-full outline-none px-3 py-2 resize-none"}
-                placeholder="from"
-                onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>
-            <textarea
-                className={" bg-grayDark ml-[1px] w-full outline-none px-3 py-2 resize-none"}
-                placeholder="to"
-                value={toText}
-                disabled={true}/>
+            <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
+                <textarea
+                    ref={inputFromRef}
+                    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
+                    placeholder="from"
+                    onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>
+                <FontAwesomeIcon
+                    className={"icon absolute right-6 top-6 cursor-pointer"}
+                    size={"lg"}
+                    onClick={() => navigator.clipboard.writeText(fromText)}
+                    icon={faCopy}/>
+            </div>
+            <div className={"w-full grid grid-cols-[1fr] relative"}>
+               <textarea
+                   className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
+                   placeholder="to"
+                   value={toText}
+                   disabled={true}/>
+                <FontAwesomeIcon
+                    className={"icon absolute right-6 top-6 cursor-pointer"}
+                    color={"#DCD8D8"}
+                    size={"lg"}
+                    onClick={() => navigator.clipboard.writeText(toText)}
+                    icon={faCopy}/>
+            </div>
             {languagesListStatus && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-[100%] bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>
                 <input
