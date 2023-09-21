@@ -53,11 +53,11 @@ const Translator = () => {
     console.log(translator)
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
-        <div className={"flex justify-between mx-auto my-3"}>
+        <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
             <button className={"volumetricButton"} onClick={selectFromHandler}>
                 {fromLanguage.name}
             </button>
-            <div className={"mx-10 flex items-center justify-center"} onClick={swapDirectionHandler}>
+            <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <SVG type={"switchArrow"}/>
             </div>
             <button className={"volumetricButton"} onClick={selectToHandler}>
