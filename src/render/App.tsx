@@ -4,8 +4,9 @@ import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
 import {EWindowEvent} from "./features/root/rootSlice";
 import {callWindowEvent} from "./features/root/actions";
-import {faCoffee} from "@fortawesome/free-solid-svg-icons";
+import {faGear, faThumbtack} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import SVG from "./components/SVG";
 
 
 export const App = () => {
@@ -40,8 +41,10 @@ export const App = () => {
                     <Route path="/" element={<Translator/>}/>
                 </Routes>
             </Router>
-            <div className="menu">
-                <FontAwesomeIcon icon={faCoffee}/>
+            <div className="flex justify-between items-center px-4 py-3">
+                <FontAwesomeIcon className={"iconMenuControl"} icon={faThumbtack} size={"2x"}/>
+                <SVG type={"logo"}/>
+                <FontAwesomeIcon className={"iconMenuControl"} icon={faGear} size={"2x"}/>
             </div>
         </div>
     </>

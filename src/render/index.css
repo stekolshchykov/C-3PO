@@ -68,3 +68,17 @@ body {
         color: #F8CB5C;
     }
 }
+
+.iconMenuControl {
+    color: #DCD8D8;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        color: #919090;
+    }
+
+    &:active {
+        color: #F8CB5C;
+    }
+}
