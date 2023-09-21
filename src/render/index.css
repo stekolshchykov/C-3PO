@@ -82,3 +82,11 @@ body {
         color: #F8CB5C;
     }
 }
+
+.iconMenuControlActive {
+    color: #F8CB5C;
+
+    &:hover, &:active {
+        color: #F8CB5C;
+    }
+}
