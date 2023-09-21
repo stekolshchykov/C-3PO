@@ -13,6 +13,7 @@ if (require('electron-squirrel-startup')) {
 
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
+let dockedWindowMode = false
 
 const createWindow = (): void => {
     // Create the browser window.
@@ -48,12 +49,29 @@ const createWindow = (): void => {
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
     console.log("windowBlur");
-    mainWindow?.hide()
+    if (!dockedWindowMode)
+        mainWindow?.hide()
 });
 ipcMain.on('windowFocus', () => {
     console.log("windowFocus");
     mainWindow?.show()
 });
+
+ipcMain.on('dockedWindowModeOn', () => {
+    console.log("dockedWindowModeOn");
+    // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    mainWindow && mainWindow.setAlwaysOnTop(true, 'floating', Number.MAX_VALUE);
+    dockedWindowMode = true;
+});
+
+
+ipcMain.on('dockedWindowModeOff', () => {
+    console.log("dockedWindowModeOff");
+    // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false });
+    mainWindow && mainWindow.setAlwaysOnTop(false, 'floating', Number.MAX_VALUE);
+    dockedWindowMode = false;
+});
+
 
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {

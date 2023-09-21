@@ -3,6 +3,8 @@ declare global {
         electronAPI: {
             windowBlur: () => void;
             windowFocus: () => void;
+            dockedWindowModeOn: () => void;
+            dockedWindowModeOff: () => void;
         };
     }
 }

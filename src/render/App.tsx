@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
@@ -15,7 +15,8 @@ export const App = () => {
 
     useEffect(() => {
         const handleBlur = () => {
-            dispatch(callWindowEvent(EWindowEvent.focus));
+            dispatch(callWindowEvent(EWindowEvent.blur));
+            window.electronAPI.windowBlur()
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -26,12 +27,15 @@ export const App = () => {
     useEffect(() => {
         const handleFocus = () => {
             dispatch(callWindowEvent(EWindowEvent.focus))
+            window.electronAPI.windowFocus()
         };
         window.addEventListener('focus', handleFocus);
         return () => {
             window.removeEventListener('focus', handleFocus);
         };
     }, []);
+
+    const [dockedWindowMode, setDockedWindowMode] = useState<"off" | "on">("off")
 
     return <>
         <div className="triangleUp"></div>
@@ -42,7 +46,16 @@ export const App = () => {
                 </Routes>
             </Router>
             <div className="flex justify-between items-center px-4 py-3">
-                <FontAwesomeIcon className={"iconMenuControl"} icon={faThumbtack} size={"2x"}/>
+                <FontAwesomeIcon className={"iconMenuControl"} icon={faThumbtack} size={"2x"} onClick={() => {
+                    console.log("!!!")
+                    if (dockedWindowMode === "on") {
+                        window.electronAPI.dockedWindowModeOff()
+                        setDockedWindowMode("off")
+                    } else {
+                        window.electronAPI.dockedWindowModeOn()
+                        setDockedWindowMode("on")
+                    }
+                }}/>
                 <SVG type={"logo"}/>
                 <FontAwesomeIcon className={"iconMenuControl"} icon={faGear} size={"2x"}/>
             </div>
