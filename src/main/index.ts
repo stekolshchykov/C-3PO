@@ -1,7 +1,8 @@
-import {app, BrowserWindow, ipcMain, Tray} from 'electron';
+import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
 import config from "./config";
-import * as path from "path";
 import {hideInTray, hideWindowWhenFocusOut, setIcon, shortcutHideShow} from "./startConfig";
+import * as path from "path";
+// import nativeImage = Electron.nativeImage;
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -20,7 +21,7 @@ const createWindow = (): void => {
     mainWindow = new BrowserWindow({
         height: config.height,
         width: config.width,
-        icon: "assets/trayIcon.png",
+        // icon: "assets/trayIcon.png",
         skipTaskbar: true,
         frame: false,
         transparent: true,
@@ -33,7 +34,9 @@ const createWindow = (): void => {
         },
     });
 
-    tray = new Tray(path.join(__dirname, 'assets/trayIcon.png'));
+    // tray = new Tray(path.join(__dirname, 'assets/trayIcon.png'));
+    const image = nativeImage.createFromPath(path.join(__dirname, 'assets/trayIcon.png'))
+    tray = new Tray(image.resize({width: 32, height: 32}));
 
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
