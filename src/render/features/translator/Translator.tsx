@@ -50,8 +50,6 @@ const Translator = () => {
     const selectFromHandler = () =>
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
 
-    console.log(translator)
-
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
             <button className={"volumetricButton"} onClick={selectFromHandler}>

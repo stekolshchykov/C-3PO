@@ -53,8 +53,8 @@ const createWindow = (): void => {
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
     console.log("windowBlur");
-    if (!dockedWindowMode)
-        mainWindow?.hide()
+    // if (!dockedWindowMode)
+    //     mainWindow?.hide()
 });
 ipcMain.on('windowFocus', () => {
     console.log("windowFocus");

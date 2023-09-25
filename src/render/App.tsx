@@ -1,16 +1,16 @@
 import React, {useEffect} from "react"
-import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
+import {MemoryRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
 import {EWindowEvent} from "./features/root/rootSlice";
 import {callWindowEvent} from "./features/root/actions";
 import Menu from "./features/menu/Menu";
-
+import Settings from "./features/settings/Settings";
 
 export const App = () => {
 
     const dispatch = useAppDispatch()
-    
+
     useEffect(() => {
         function clickHandler(this: any, e: any) {
             if (e.target.id === "root") {
@@ -53,11 +53,14 @@ export const App = () => {
         <div className="triangleUp"></div>
         <div className="app">
             <Router>
+                {/*TODO: temp*/}
+                <Navigate replace to="/settings"/>
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
                 </Routes>
+                <Menu/>
             </Router>
-            <Menu/>
         </div>
     </>
 }
