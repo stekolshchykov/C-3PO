@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {IHotKey} from "../../../type";
+import {EIPCKeys, IHotKey} from "../../../type";
 
 export interface ISettingsState {
     translatorHotKey: IHotKey[]
@@ -18,7 +18,7 @@ export const settingsSlice = createSlice({
             window.electronAPI?.store(JSON.stringify({
                 type: "set",
                 value: JSON.stringify({
-                    key: "settings.translatorHotKey",
+                    key: EIPCKeys.translatorHotKey,
                     value: JSON.stringify(state.translatorHotKey)
                 })
             }))

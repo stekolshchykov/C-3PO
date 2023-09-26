@@ -1,19 +1,6 @@
-import {BrowserWindow, globalShortcut, Menu, Tray} from 'electron';
-import config from './config';
+import {BrowserWindow, Menu, Tray} from 'electron';
+import {showWindow} from "./function";
 
-import Store from "electron-store";
-import {IStoreData, IStoreDataObjSet} from "../type";
-
-const showWindow = (tray: Tray, mainWindow: BrowserWindow) => {
-    const {x, y} = tray.getBounds();
-    const trayWidth = tray.getBounds().width;
-    const trayHeight = tray.getBounds().height;
-    const windowWidth = config.width; // Замените на ширину вашего окна
-    const xPos = x + trayWidth / 2 - windowWidth / 2;
-    const yPos = y - trayHeight;
-    mainWindow.setPosition(xPos, yPos);
-    mainWindow.show();
-};
 export const hideInTray = (app: Electron.App) => {
     app.whenReady().then(() => {
         app.dock.hide();
@@ -65,72 +52,30 @@ export const hideWindowWhenFocusOut = (
     });
 };
 
-export const shortcutHideShow = (
-    app: Electron.App,
-    mainWindow: BrowserWindow | null,
-    tray: Tray
-) => {
-    globalShortcut.register('CommandOrControl+P', () => {
-        if (mainWindow)
-            if (mainWindow.isVisible()) {
-                mainWindow.hide();
-            } else {
-                showWindow(tray, mainWindow);
-            }
-    });
-    app.on('will-quit', () => {
-        globalShortcut.unregister('CommandOrControl+P');
-        globalShortcut.unregisterAll();
-    });
-};
+
+// export const shortcutHideShow = async (
+//     app: Electron.App,
+//     mainWindow: BrowserWindow | null,
+//     tray: Tray,
+//     systemStore: SystemStore
+// ) => {
+//     const hotKey = await systemStore.get(EIPCKeys.translatorHotKey)
+//
+//
+//     // globalShortcut.register('CommandOrControl+P', () => {
+//     globalShortcut.register('Meta+P', () => {
+//         if (mainWindow)
+//             if (mainWindow.isVisible()) {
+//                 mainWindow.hide();
+//             } else {
+//                 showWindow(tray, mainWindow);
+//             }
+//     });
+//     app.on('will-quit', () => {
+//         globalShortcut.unregister('CommandOrControl+P');
+//         globalShortcut.unregisterAll();
+//     });
+// };
 
 
-class SystemStore {
 
-    store: Store
-    ipcMain!: Electron.IpcMain
-    mainWindow!: BrowserWindow
-
-    constructor() {
-        this.store = new Store();
-    }
-
-    set = (key: string, value: any) => {
-        this.store.set(key, value)
-    }
-
-    get = async (key: string): Promise<any> => {
-        return await this.store.get(key)
-    }
-
-    delete = (key: string) => {
-        this.store.delete(key)
-    }
-
-    init = async (data: string, ipcMain: Electron.IpcMain, mainWindow: BrowserWindow) => {
-
-        this.ipcMain = ipcMain
-        this.mainWindow = mainWindow
-
-        let result: any = ""
-        const dataObj: IStoreData = JSON.parse(data)
-
-        if (dataObj.type === "get") {
-            result = await this.store.get(dataObj.value)
-        } else if (dataObj.type === "set") {
-            const setData: IStoreDataObjSet = JSON.parse(dataObj.value)
-            this.store.set(setData.key, setData.value)
-            result = true
-        } else if (dataObj.type === "delete") {
-            this.store.delete(dataObj.value)
-            result = true
-        }
-
-        return result
-
-    }
-
-
-}
-
-export const systemStore = new SystemStore()

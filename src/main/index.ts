@@ -1,7 +1,10 @@
 import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
 import config from "./config";
-import {hideInTray, hideWindowWhenFocusOut, setIcon, shortcutHideShow, systemStore} from "./startConfig";
+import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import * as path from "path";
+import {HotKeys} from "./HotKeys";
+import {SystemStore} from "./SystemStore";
+import {EIPCKeys, IStoreData, IStoreDataObjSet} from "../type";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -14,6 +17,8 @@ if (require('electron-squirrel-startup')) {
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let dockedWindowMode = false
+let hotKeys: HotKeys
+let systemStore: SystemStore
 
 const createWindow = (): void => {
     // Create the browser window.
@@ -46,20 +51,9 @@ const createWindow = (): void => {
 
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
-    shortcutHideShow(app, mainWindow, tray);
-    // systemStore.init(ipcMain, mainWindow)
 
-
-    // handle.systemStore()
-
-    // mainWindow.webContents.on('dom-ready', () => {
-    //     mainWindow && invoke.getPong(mainWindow, 'pong')
-    // })
-
-    // ipcMain.on("store", (event, data) => {
-    //     console.log("+++data", data)
-    // })
-
+    hotKeys = new HotKeys(app, mainWindow, tray)
+    systemStore = new SystemStore()
 
 };
 
@@ -74,12 +68,27 @@ ipcMain.on('windowFocus', () => {
     mainWindow?.show()
 });
 ipcMain.handle('store', (_, data) => {
-    return systemStore.init(data, ipcMain, mainWindow!)
-})
 
-// ipcMain.on('store', (event, data) => {
-//     console.log("+++data", data)
-// });
+    try {
+        const dataObj: IStoreData = JSON.parse(data)
+
+        // set hotkeys
+        if (dataObj.type === "set") {
+            const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
+            if (valueObj.key === EIPCKeys.translatorHotKey) {
+                const translatorHotKeyObj = JSON.parse(valueObj.value)
+                const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+                key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+            }
+        }
+    } catch (e) {
+        console.log(e)
+    }
+
+
+    return systemStore.init(data, ipcMain, mainWindow!)
+
+})
 
 ipcMain.on('dockedWindowModeOn', () => {
     // console.log("dockedWindowModeOn");
@@ -99,6 +108,17 @@ ipcMain.on('dockedWindowModeOff', () => {
 
 app.on('ready', createWindow);
 
+// set hotkeys when app ready
+app.on('ready', async () => {
+    const translatorHotKey = await systemStore.get(EIPCKeys.translatorHotKey)
+    if (translatorHotKey) {
+        const translatorHotKeyObj = JSON.parse(translatorHotKey)
+        const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+        key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+    }
+});
+
+
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
@@ -106,12 +126,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+})

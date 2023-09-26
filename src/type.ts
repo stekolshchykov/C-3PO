@@ -25,3 +25,7 @@ export interface IHotKey {
     name: string
     code: string
 }
+
+export enum EIPCKeys {
+    "translatorHotKey" = "settings.translatorHotKey"
+}

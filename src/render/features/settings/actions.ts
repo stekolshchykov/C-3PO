@@ -1,5 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setTranslatorHotKey} from "./settingsSlice";
+import {EIPCKeys} from "../../../type";
 
 
 export const settingsInit = createAsyncThunk(
@@ -7,7 +8,7 @@ export const settingsInit = createAsyncThunk(
     async (_, {rejectWithValue, dispatch, getState}) => {
         const translatorHotKey = await window.electronAPI.store(JSON.stringify({
             type: "get",
-            value: "settings.translatorHotKey"
+            value: EIPCKeys.translatorHotKey
         }))
         translatorHotKey && dispatch(setTranslatorHotKey(JSON.parse(translatorHotKey)))
     }
