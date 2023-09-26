@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {MemoryRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
 import {EWindowEvent} from "./features/root/rootSlice";
@@ -19,7 +19,6 @@ export const App = () => {
         }
 
         const body = document.querySelector("body")
-
         body && body.addEventListener('click', clickHandler, false);
         return () => {
             body && body.removeEventListener('click', clickHandler, false);
@@ -35,7 +34,8 @@ export const App = () => {
         return () => {
             window.removeEventListener('blur', handleBlur);
         };
-    }, []);
+    }, [])
+
     // windowHide
     useEffect(() => {
         const handleFocus = () => {
@@ -48,13 +48,12 @@ export const App = () => {
         };
     }, []);
 
-
     return <>
         <div className="triangleUp"></div>
         <div className="app">
             <Router>
                 {/*TODO: temp*/}
-                <Navigate replace to="/settings"/>
+                {/*<Navigate replace to="/settings"/>*/}
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>

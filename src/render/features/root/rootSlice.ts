@@ -39,21 +39,12 @@ export const counterSlice = createSlice({
         },
     },
     extraReducers: {
-
-
         [callWindowEvent.fulfilled.type]: (state, {payload}) => {
             state.clipboard = payload
         },
-    },
-
-    // extraReducers: builder => {
-    //     builder.addCase(callWindowEvent.fulfilled, (state, {payload}) => {
-    //         console.log("!!")
-    //     })
-    // },
+    }
 })
 
-// Action creators are generated for each case reducer function
 export const {setWindowEvent} = counterSlice.actions
 
 export default counterSlice.reducer
