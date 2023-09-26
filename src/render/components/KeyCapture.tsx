@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {setTranslatorHotKey} from "../features/settings/settingsSlice";
+import {IHotKey} from "../../type";
 
-interface IKey {
-    name: string
-    code: string
-}
 
-const KeyCapture = (props: { initKey: IKey[] }) => {
+const KeyCapture = () => {
 
-    const [keys, setKeys] = useState<IKey[]>(props.initKey)
+    const dispatch = useAppDispatch()
+
+    const translatorHotKey = useAppSelector((state) => state.settings.translatorHotKey)
+
+    const [keys, setKeys] = useState<IHotKey[]>([])
     const [active, setActive] = useState<boolean>(false)
 
     useEffect(() => {
@@ -30,6 +33,14 @@ const KeyCapture = (props: { initKey: IKey[] }) => {
             window.document.removeEventListener('keyup', handleKeyUp);
         }
     }, [keys, active]);
+
+    useEffect(() => {
+        dispatch(setTranslatorHotKey(keys))
+    }, [keys]);
+
+    useEffect(() => {
+        setKeys(translatorHotKey)
+    }, []);
 
     const baseClasses = "transition h-[65.5px] border rounded grid grid-cols-[max-content_min-content] w-[100%] p-2 justify-between align-middle"
     const activeClasses = baseClasses + " border-yellow"

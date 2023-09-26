@@ -4,6 +4,7 @@ import {RootState} from "../../store";
 import {translateText} from "../functions";
 import {setText} from "../translator/translatorSlice";
 import {translatorInit} from "../translator/actions";
+import {settingsInit} from "../settings/actions";
 
 export const callWindowEvent = createAsyncThunk(
     'root/windowEvent',
@@ -23,5 +24,6 @@ export const init = createAsyncThunk(
     'init',
     async (_, {rejectWithValue, dispatch, getState}) => {
         dispatch(translatorInit())
+        dispatch(settingsInit())
     }
 )

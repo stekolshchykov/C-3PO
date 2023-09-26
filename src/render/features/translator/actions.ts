@@ -77,7 +77,6 @@ export const translatorInit = createAsyncThunk(
             type: "get",
             value: "translator.toLanguage"
         }))
-        console.log("!!!translator/init!!!", fromLanguage, toLanguage)
         fromLanguage && dispatch(setLanguageFrom(fromLanguage))
         toLanguage && dispatch(setLanguageTo(toLanguage))
     }

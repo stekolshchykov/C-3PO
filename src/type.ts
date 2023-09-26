@@ -19,3 +19,9 @@ export type IStoreDataObjSet = {
     key: string
     value: string
 }
+
+
+export interface IHotKey {
+    name: string
+    code: string
+}

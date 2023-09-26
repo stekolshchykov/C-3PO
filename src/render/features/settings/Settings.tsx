@@ -31,7 +31,7 @@ const Settings = () => {
                     <div className={"text-sm"}>Open translator with a shortcut at any time.</div>
                 </div>
                 <div className={"flex align-middle"}>
-                    <KeyCapture initKey={[]}/>
+                    <KeyCapture/>
                 </div>
             </div>
         </div>
