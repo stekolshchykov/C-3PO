@@ -65,3 +65,20 @@ export const translatorSetLanguageTo = createAsyncThunk(
         await navigator.clipboard.writeText(result)
     }
 )
+
+export const translatorInit = createAsyncThunk(
+    'translator/init',
+    async (_, {rejectWithValue, dispatch, getState}) => {
+        const fromLanguage = await window.electronAPI.store(JSON.stringify({
+            type: "get",
+            value: "translator.fromLanguage"
+        }))
+        const toLanguage = await window.electronAPI.store(JSON.stringify({
+            type: "get",
+            value: "translator.toLanguage"
+        }))
+        console.log("!!!translator/init!!!", fromLanguage, toLanguage)
+        fromLanguage && dispatch(setLanguageFrom(fromLanguage))
+        toLanguage && dispatch(setLanguageTo(toLanguage))
+    }
+)

@@ -25,9 +25,23 @@ export const translatorSlice = createSlice({
         },
         setLanguageFrom: (state, action: PayloadAction<ILanguage>) => {
             state.fromLanguage = action.payload
+            window.electronAPI?.store(JSON.stringify({
+                type: "set",
+                value: JSON.stringify({
+                    key: "translator.fromLanguage",
+                    value: action.payload
+                })
+            }))
         },
         setLanguageTo: (state, action: PayloadAction<ILanguage>) => {
             state.toLanguage = action.payload
+            window.electronAPI?.store(JSON.stringify({
+                type: "set",
+                value: JSON.stringify({
+                    key: "translator.toLanguage",
+                    value: action.payload
+                })
+            }))
         },
         setText: (state, action: PayloadAction<{ fromText: string, toText: string }>) => {
             state.fromText = action.payload.fromText

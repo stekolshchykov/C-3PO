@@ -1,11 +1,8 @@
+import {IElectronAPI} from "./IElectronAPI";
+
 declare global {
     interface Window {
-        electronAPI: {
-            windowBlur: () => void;
-            windowFocus: () => void;
-            dockedWindowModeOn: () => void;
-            dockedWindowModeOff: () => void;
-        };
+        electronAPI: IElectronAPI
     }
 }
 export {};

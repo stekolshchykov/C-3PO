@@ -20,7 +20,6 @@ const Translator = () => {
     const [languagesListStatus, setLanguageListStatus] = useState<null | "from" | "to">(null)
     const [inputSearchLanguage, setInputSearchLanguage] = useState("")
 
-    const translator = useAppSelector((state) => state.translator)
     const toText = useAppSelector((state) => state.translator.toText)
     const fromText = useAppSelector((state) => state.translator.fromText)
     const fromLanguage = useAppSelector((state) => state.translator.fromLanguage)

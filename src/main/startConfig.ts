@@ -1,6 +1,9 @@
 import {BrowserWindow, globalShortcut, Menu, Tray} from 'electron';
 import config from './config';
 
+import Store from "electron-store";
+import {IStoreData, IStoreDataObjSet} from "../type";
+
 const showWindow = (tray: Tray, mainWindow: BrowserWindow) => {
     const {x, y} = tray.getBounds();
     const trayWidth = tray.getBounds().width;
@@ -67,7 +70,7 @@ export const shortcutHideShow = (
     mainWindow: BrowserWindow | null,
     tray: Tray
 ) => {
-    const ret = globalShortcut.register('CommandOrControl+P', () => {
+    globalShortcut.register('CommandOrControl+P', () => {
         if (mainWindow)
             if (mainWindow.isVisible()) {
                 mainWindow.hide();
@@ -80,3 +83,54 @@ export const shortcutHideShow = (
         globalShortcut.unregisterAll();
     });
 };
+
+
+class SystemStore {
+
+    store: Store
+    ipcMain!: Electron.IpcMain
+    mainWindow!: BrowserWindow
+
+    constructor() {
+        this.store = new Store();
+    }
+
+    set = (key: string, value: any) => {
+        this.store.set(key, value)
+    }
+
+    get = async (key: string): Promise<any> => {
+        return await this.store.get(key)
+    }
+
+    delete = (key: string) => {
+        this.store.delete(key)
+    }
+
+    init = async (data: string, ipcMain: Electron.IpcMain, mainWindow: BrowserWindow) => {
+
+        this.ipcMain = ipcMain
+        this.mainWindow = mainWindow
+
+        let result: any = ""
+        const dataObj: IStoreData = JSON.parse(data)
+
+        if (dataObj.type === "get") {
+            result = await this.store.get(dataObj.value)
+        } else if (dataObj.type === "set") {
+            const setData: IStoreDataObjSet = JSON.parse(dataObj.value)
+            this.store.set(setData.key, setData.value)
+            result = true
+        } else if (dataObj.type === "delete") {
+            this.store.delete(dataObj.value)
+            result = true
+        }
+
+        return result
+
+    }
+
+
+}
+
+export const systemStore = new SystemStore()

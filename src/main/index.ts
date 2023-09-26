@@ -1,8 +1,7 @@
 import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
 import config from "./config";
-import {hideInTray, hideWindowWhenFocusOut, setIcon, shortcutHideShow} from "./startConfig";
+import {hideInTray, hideWindowWhenFocusOut, setIcon, shortcutHideShow, systemStore} from "./startConfig";
 import * as path from "path";
-// import nativeImage = Electron.nativeImage;
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -30,6 +29,7 @@ const createWindow = (): void => {
         resizable: false,
         webPreferences: {
             webSecurity: false,
+            sandbox: false,
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
         },
     });
@@ -47,22 +47,42 @@ const createWindow = (): void => {
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
     shortcutHideShow(app, mainWindow, tray);
+    // systemStore.init(ipcMain, mainWindow)
+
+
+    // handle.systemStore()
+
+    // mainWindow.webContents.on('dom-ready', () => {
+    //     mainWindow && invoke.getPong(mainWindow, 'pong')
+    // })
+
+    // ipcMain.on("store", (event, data) => {
+    //     console.log("+++data", data)
+    // })
+
 
 };
 
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
-    console.log("windowBlur");
+    // console.log("windowBlur");
     // if (!dockedWindowMode)
     //     mainWindow?.hide()
 });
 ipcMain.on('windowFocus', () => {
-    console.log("windowFocus");
+    // console.log("windowFocus");
     mainWindow?.show()
 });
+ipcMain.handle('store', (_, data) => {
+    return systemStore.init(data, ipcMain, mainWindow!)
+})
+
+// ipcMain.on('store', (event, data) => {
+//     console.log("+++data", data)
+// });
 
 ipcMain.on('dockedWindowModeOn', () => {
-    console.log("dockedWindowModeOn");
+    // console.log("dockedWindowModeOn");
     // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
     mainWindow && mainWindow.setAlwaysOnTop(true, 'floating', Number.MAX_VALUE);
     dockedWindowMode = true;
@@ -70,7 +90,7 @@ ipcMain.on('dockedWindowModeOn', () => {
 
 
 ipcMain.on('dockedWindowModeOff', () => {
-    console.log("dockedWindowModeOff");
+    // console.log("dockedWindowModeOff");
     // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false });
     mainWindow && mainWindow.setAlwaysOnTop(false, 'floating', Number.MAX_VALUE);
     dockedWindowMode = false;
@@ -78,6 +98,7 @@ ipcMain.on('dockedWindowModeOff', () => {
 
 
 app.on('ready', createWindow);
+
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
