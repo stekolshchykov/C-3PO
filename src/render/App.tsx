@@ -50,43 +50,17 @@ export const App = () => {
 
 
     useEffect(() => {
-        setInterval(async () => {
-            const response = await window.electronAPI.store(JSON.stringify({
-                type: "get",
-                value: "val1"
-            }))
-            const response2 = await window.electronAPI.store(JSON.stringify({
-                type: "set",
-                value: JSON.stringify({
-                    key: "val1",
-                    value: "123",
-                })
-            }))
+        function clickHandler(this: any, e: any) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                console.log("+++e", e.key)
+                window.electronAPI.windowBlur()
+            }
+        }
 
-
-            console.log("+++response", response)
-
-            // const x = await window.electronAPI.store("xxx")
-            // console.log("+++x", x)
-            // const {invoke, handle} = window.api
-            // const ss = await invoke.systemStore({ss: "12"})
-            // // const ddd = await handle.getPong()
-            // // console.log("+++rrr", rrr)
-            // console.log("+++ddd", ss)
-            // const obj = {
-            //     key: "windowHide",
-            //     value: "11"
-            // }
-            // const x = await window.electronAPI.message("xxx")
-            // const response = await window.electronAPI.ping("ping")
-            // const response = await ipcRenderer.invoke('ping', pingData);
-
-            // console.log(response)
-            // await window.electronAPI.systemStore({
-            //     key: "windowHide",
-            //     value: JSON.stringify(obj)
-            // }).then(res => console.log("+++", res))
-        }, 4000)
+        window.addEventListener('keydown', clickHandler);
+        return () => {
+            window.removeEventListener('keydown', clickHandler);
+        };
     }, []);
 
     useEffect(() => {

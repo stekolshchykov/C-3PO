@@ -51,31 +51,3 @@ export const hideWindowWhenFocusOut = (
         }
     });
 };
-
-
-// export const shortcutHideShow = async (
-//     app: Electron.App,
-//     mainWindow: BrowserWindow | null,
-//     tray: Tray,
-//     systemStore: SystemStore
-// ) => {
-//     const hotKey = await systemStore.get(EIPCKeys.translatorHotKey)
-//
-//
-//     // globalShortcut.register('CommandOrControl+P', () => {
-//     globalShortcut.register('Meta+P', () => {
-//         if (mainWindow)
-//             if (mainWindow.isVisible()) {
-//                 mainWindow.hide();
-//             } else {
-//                 showWindow(tray, mainWindow);
-//             }
-//     });
-//     app.on('will-quit', () => {
-//         globalShortcut.unregister('CommandOrControl+P');
-//         globalShortcut.unregisterAll();
-//     });
-// };
-
-
-

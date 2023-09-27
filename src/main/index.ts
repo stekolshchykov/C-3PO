@@ -1,10 +1,20 @@
 import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
+import AutoLaunch from "auto-launch";
+import * as path from "path";
+
 import config from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
-import * as path from "path";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
 import {EIPCKeys, IStoreData, IStoreDataObjSet} from "../type";
+
+const appAutoLauncher = new AutoLaunch({
+    name: 'C-3PO.app',
+    path: path.join(__dirname, "c-3po.app"),
+});
+
+appAutoLauncher.enable();
+
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -21,7 +31,6 @@ let hotKeys: HotKeys
 let systemStore: SystemStore
 
 const createWindow = (): void => {
-    // Create the browser window.
     mainWindow = new BrowserWindow({
         height: config.height,
         width: config.width,
@@ -59,9 +68,9 @@ const createWindow = (): void => {
 
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
-    // console.log("windowBlur");
-    // if (!dockedWindowMode)
-    //     mainWindow?.hide()
+    console.log("windowBlur");
+    if (!dockedWindowMode)
+        mainWindow?.hide()
 });
 ipcMain.on('windowFocus', () => {
     // console.log("windowFocus");
