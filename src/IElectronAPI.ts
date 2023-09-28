@@ -4,7 +4,7 @@ export interface IElectronAPI {
     dockedWindowModeOn: () => void
     dockedWindowModeOff: () => void
     store: (data: string) => Promise<any>
-    // ping: any
+    autoLaunch: (data: string) => Promise<any>
 }
 
 

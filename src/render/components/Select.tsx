@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Select = (props: { initValue: boolean }) => {
+const Select = (props: { initValue: boolean, onClick: (status: boolean) => void }) => {
 
     const [selected, setSelected] = useState(props.initValue)
 
@@ -9,7 +9,12 @@ const Select = (props: { initValue: boolean }) => {
     const notSelectedClasses = baseClasses + "  border-grayLight"
 
     return <div
-        className={selected ? selectedClasses : notSelectedClasses} onClick={() => setSelected(!selected)}>
+        className={selected ? selectedClasses : notSelectedClasses}
+        onClick={() => {
+            setSelected(!selected)
+            props.onClick(!selected)
+        }
+        }>
         <div
             className={`transition-all w-[28px] h-[28px] rounded-full ${selected ? "bg-yellow" : "bg-grayLight"}`}></div>
     </div>

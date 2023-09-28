@@ -1,9 +1,14 @@
 {
-  "name": "c-3po",
-  "productName": "c-3po",
+  "name": "C-3PO",
+  "productName": "C-3PO",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
+  "repository": "https://github.com/StekolschikovV/C-3PO-releases",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

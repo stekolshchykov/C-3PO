@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,26 @@ import Select from "../../components/Select";
 import KeyCapture from "../../components/KeyCapture";
 
 const Settings = () => {
+
+    const [autoStartInitStatus, setAutoStartInitStatus] = useState<boolean | null>(null)
+
+    const onClickAutoStartHandler = async (e: boolean) => {
+        await window.electronAPI.autoLaunch(JSON.stringify({
+            type: "setStatus",
+            value: e.toString()
+        }))
+    }
+
+    useEffect(() => {
+        async function initAutoStart() {
+            const status = await window.electronAPI.autoLaunch(JSON.stringify({
+                type: "getStatus"
+            }))
+            setAutoStartInitStatus(status)
+        }
+
+        initAutoStart()
+    }, []);
 
     return <div
         className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)] grid-cols-[1fr] overflow-none"}>
@@ -22,7 +42,8 @@ const Settings = () => {
                     <div className={"text-sm"}>Launch the application while the operating system boots.</div>
                 </div>
                 <div className={"flex align-middle m-auto"}>
-                    <Select initValue={false}/>
+                    {autoStartInitStatus !== null &&
+                        <Select initValue={autoStartInitStatus} onClick={onClickAutoStartHandler}/>}
                 </div>
             </div>
             <div className={"grid grid-cols-[1fr] gap-2"}>

@@ -6,15 +6,11 @@ import config from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {EIPCKeys, IStoreData, IStoreDataObjSet} from "../type";
+import {EIPCKeys, IAutoLaunchData, IStoreData, IStoreDataObjSet} from "../type";
 
 const appAutoLauncher = new AutoLaunch({
-    name: 'C-3PO.app',
-    path: path.join(__dirname, "c-3po.app"),
-});
-
-appAutoLauncher.enable();
-
+    name: 'C-3PO',
+})
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -36,6 +32,7 @@ const createWindow = (): void => {
         width: config.width,
         // icon: "assets/trayIcon.png",
         skipTaskbar: true,
+        title: "C-3PO",
         frame: false,
         transparent: true,
         show: false,
@@ -68,16 +65,41 @@ const createWindow = (): void => {
 
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
-    console.log("windowBlur");
+    // console.log("windowBlur");
     if (!dockedWindowMode)
         mainWindow?.hide()
 });
+
 ipcMain.on('windowFocus', () => {
     // console.log("windowFocus");
     mainWindow?.show()
 });
-ipcMain.handle('store', (_, data) => {
 
+ipcMain.handle('autoLaunch', async (_, data) => {
+
+    const dataObj: IAutoLaunchData = JSON.parse(data)
+
+    if (dataObj.type === "getStatus") {
+        let result = false
+        await appAutoLauncher.isEnabled()
+            .then(function (isEnabled) {
+                result = isEnabled
+            })
+            .catch(function () {
+                result = false
+            })
+        return result
+    } else if (dataObj.type === "setStatus") {
+        if (dataObj.value === "true") {
+            appAutoLauncher.enable()
+        } else {
+            appAutoLauncher.disable()
+        }
+    }
+
+})
+
+ipcMain.handle('store', (_, data) => {
     try {
         const dataObj: IStoreData = JSON.parse(data)
 

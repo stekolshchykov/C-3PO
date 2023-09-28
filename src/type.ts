@@ -15,6 +15,19 @@ interface IStoreDataDelete {
 
 export type IStoreData = IStoreDataGet | IStoreDataSet | IStoreDataDelete
 
+
+interface IAutoLaunchDataGetStatus {
+    type: "getStatus"
+}
+
+interface IAutoLaunchDataSetStatus {
+    type: "setStatus"
+    value: string
+}
+
+
+export type IAutoLaunchData = IAutoLaunchDataGetStatus | IAutoLaunchDataSetStatus
+
 export type IStoreDataObjSet = {
     key: string
     value: string

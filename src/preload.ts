@@ -7,7 +7,8 @@ const electronAPI: IElectronAPI = {
     windowBlur: () => ipcRenderer.send("windowBlur"),
     dockedWindowModeOn: () => ipcRenderer.send("dockedWindowModeOn"),
     dockedWindowModeOff: () => ipcRenderer.send("dockedWindowModeOff"),
-    store: (data) => ipcRenderer.invoke('store', data)
+    store: (data) => ipcRenderer.invoke('store', data),
+    autoLaunch: (data) => ipcRenderer.invoke('autoLaunch', data)
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
