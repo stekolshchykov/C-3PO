@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SVG from "../../components/SVG";
-import {useAppDispatch, useAppSelector} from "./../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {
     translatorSetFromTextAndTranslate,
     translatorSetLanguageFrom,
@@ -51,7 +51,7 @@ const Translator = () => {
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
-            <button className={"volumetricButton"} onClick={selectFromHandler}>
+            <button className={"volumetricButton capitalize"} onClick={selectFromHandler}>
                 {fromLanguage.name}
             </button>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
@@ -95,6 +95,15 @@ const Translator = () => {
                     className={"p-4 m-0 w-[100%] mb-4 bg-gray outline-none"}
                     placeholder={"Language name..."}/>
                 <ul className={" m-0 p-0 grid grid-cols-[1fr_1fr_1fr] gap-4"}>
+                    {languagesListStatus === "from" && <>
+                        <li className={"m-auto"}>
+                            <button
+                                onClick={() => selectNewLanguage({code: "Auto", name: "Auto"})}
+                                className={`volumetricButton ${isActiveLanguage("Auto") && "active"}`}>
+                                Auto
+                            </button>
+                        </li>
+                    </>}
                     {languages.map((l, k) =>
                         l.name.toLowerCase().includes(inputSearchLanguage.toLowerCase().trim())
                             ? <li className={"m-auto"} key={k}>
