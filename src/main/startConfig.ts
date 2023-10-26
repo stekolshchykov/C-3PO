@@ -34,7 +34,7 @@ export const setIcon = (
                 showWindow(tray, mainWindow);
             });
 
-            tray.setToolTip('Test');
+            // tray.setToolTip('Test');
             tray.setContextMenu(contextMenu);
             tray.setIgnoreDoubleClickEvents(true);
         }

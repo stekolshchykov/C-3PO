@@ -8,12 +8,17 @@ import {
     translatorSwapDirection
 } from "./actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCopy} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faVolumeHigh} from "@fortawesome/free-solid-svg-icons";
 import {ILanguage, languages} from "./languageList";
+import useSound from "use-sound";
 
 const Translator = () => {
 
     const dispatch = useAppDispatch()
+
+    const [songs, setSongs] = useState<string[]>(['https://translate.google.com/translate_tts?ie=UTF-8&q=with%20the%20release%20of%20Letraset%20sheets%20containing%20Lorem%20Ipsum%20passages%2C%20and%20more%20recently%20with%20desktop%20publishing%20software%20like%20Aldus%20PageMaker%20including%20versions%20of%20Lorem%20Ipsum.&tl=en&total=1&idx=0&textlen=175&client=tw-ob&prev=input&ttsspeed=1'
+    ]);
+    const [play, {stop}] = useSound('https://translate.google.com/translate_tts?ie=UTF-8&q=with%20the%20release%20of%20Letraset%20sheets%20containing%20Lorem%20Ipsum%20passages%2C%20and%20more%20recently%20with%20desktop%20publishing%20software%20like%20Aldus%20PageMaker%20including%20versions%20of%20Lorem%20Ipsum.&tl=en&total=1&idx=0&textlen=175&client=tw-ob&prev=input&ttsspeed=1');
 
     const inputFromRef = useRef<HTMLTextAreaElement>(null);
 
@@ -49,6 +54,13 @@ const Translator = () => {
     const selectFromHandler = () =>
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
 
+    const read = (fromText: string, fromLanguage: ILanguage) => {
+        const synthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(fromText);
+        utterance.lang = fromLanguage.code;
+        synthesis.speak(utterance);
+    }
+
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
             <button className={"volumetricButton capitalize"} onClick={selectFromHandler}>
@@ -73,6 +85,11 @@ const Translator = () => {
                     size={"lg"}
                     onClick={() => navigator.clipboard.writeText(fromText)}
                     icon={faCopy}/>
+                <FontAwesomeIcon
+                    className={"icon absolute right-6 top-14 cursor-pointer"}
+                    size={"1x"}
+                    onClick={() => read(fromText, fromLanguage)}
+                    icon={faVolumeHigh}/>
             </div>
             <div className={"w-full grid grid-cols-[1fr] relative"}>
                <textarea
@@ -86,6 +103,11 @@ const Translator = () => {
                     size={"lg"}
                     onClick={() => navigator.clipboard.writeText(toText)}
                     icon={faCopy}/>
+                <FontAwesomeIcon
+                    className={"icon absolute right-6 top-14 cursor-pointer"}
+                    size={"1x"}
+                    onClick={() => read(toText, toLanguage)}
+                    icon={faVolumeHigh}/>
             </div>
             {languagesListStatus && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-[100%] bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>
