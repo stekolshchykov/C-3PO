@@ -6,6 +6,7 @@ import {EWindowEvent} from "./features/root/rootSlice";
 import {callWindowEvent, init} from "./features/root/actions";
 import Menu from "./features/menu/Menu";
 import Settings from "./features/settings/Settings";
+import History from "./features/history/History";
 
 export const App = () => {
 
@@ -72,10 +73,11 @@ export const App = () => {
         <div className="app">
             <Router>
                 {/*TODO: temp*/}
-                {/*<Navigate replace to="/settings"/>*/}
+                {/*<Navigate replace to="/history"/>*/}
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>
+                    <Route path="/history" element={<History/>}/>
                 </Routes>
                 <Menu/>
             </Router>

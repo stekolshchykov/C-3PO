@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGear, faThumbtack} from "@fortawesome/free-solid-svg-icons";
+import {faClockRotateLeft, faGear, faThumbtack} from "@fortawesome/free-solid-svg-icons";
 import SVG from "../../components/SVG";
 import {Link, useLocation} from "react-router-dom";
 
@@ -19,15 +19,28 @@ const Menu = () => {
         }
     }
 
-    if (location.pathname !== "/settings") {
+    const isShow = () => {
+        const hiddenIn = ["/settings", "/history"]
+        return !hiddenIn.includes(location.pathname)
+    }
+
+
+    if (isShow()) {
         return <div className="flex justify-between items-center px-4 py-3">
-            <FontAwesomeIcon
-                className={`iconMenuControl ${dockedWindowMode === "on" && "iconMenuControlActive"}`}
-                icon={faThumbtack} size={"2x"} onClick={clickHandler}/>
+            <div className={"w-[70px]"}>
+                <FontAwesomeIcon
+                    className={`iconMenuControl ${dockedWindowMode === "on" && "iconMenuControlActive"}`}
+                    icon={faThumbtack} size={"2x"} onClick={clickHandler}/>
+            </div>
             <SVG type={"logo"}/>
-            <Link to="/settings" relative="path">
-                <FontAwesomeIcon className={"iconMenuControl"} icon={faGear} size={"2x"}/>
-            </Link>
+            <div className="flex justify-between gap-4 w-[70px]">
+                <Link to="/history" relative="path">
+                    <FontAwesomeIcon className={"iconMenuControl"} icon={faClockRotateLeft} size={"2x"}/>
+                </Link>
+                <Link to="/settings" relative="path">
+                    <FontAwesomeIcon className={"iconMenuControl"} icon={faGear} size={"2x"}/>
+                </Link>
+            </div>
         </div>
     } else {
         return null
