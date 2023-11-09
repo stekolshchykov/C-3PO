@@ -3,7 +3,12 @@ import {ILanguage} from "../features/translator/languageList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faVolumeHigh} from "@fortawesome/free-solid-svg-icons";
 
-const TranslatorButtons = (props: { text: string, language: ILanguage }) => {
+interface IProps {
+    text: string
+    language?: ILanguage
+}
+
+const TranslatorButtons = ({text, language}: IProps) => {
 
     const read = (fromText: string, fromLanguage: ILanguage) => {
         const synthesis = window.speechSynthesis;
@@ -13,18 +18,18 @@ const TranslatorButtons = (props: { text: string, language: ILanguage }) => {
     }
 
     return <ul className={"icon absolute right-6 top-6 cursor-pointer flex flex-col gap-3"}>
-        <li>
+        {language && <li>
             <FontAwesomeIcon
                 className={"icon cursor-pointer"}
                 size={"1x"}
-                onClick={() => read(props.text, props.language)}
+                onClick={() => read(text, language)}
                 icon={faVolumeHigh}/>
-        </li>
+        </li>}
         <li>
             <FontAwesomeIcon
                 className={"icon cursor-pointer"}
                 size={"lg"}
-                onClick={() => navigator.clipboard.writeText(props.text)}
+                onClick={() => navigator.clipboard.writeText(text)}
                 icon={faCopy}/>
         </li>
     </ul>

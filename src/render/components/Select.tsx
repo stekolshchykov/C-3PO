@@ -13,10 +13,9 @@ const Select = (props: { initValue: boolean, onClick: (status: boolean) => void 
         onClick={() => {
             setSelected(!selected)
             props.onClick(!selected)
-        }
-        }>
-        <div
-            className={`transition-all w-[28px] h-[28px] rounded-full ${selected ? "bg-yellow" : "bg-grayLight"}`}></div>
+        }}>
+        <div className={`transition-all w-[28px] h-[28px] rounded-full ${selected ? "bg-yellow" : "bg-grayLight"}`}>
+        </div>
     </div>
 };
 
