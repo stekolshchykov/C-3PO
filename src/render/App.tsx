@@ -28,8 +28,8 @@ export const App = () => {
 
     useEffect(() => {
         const handleBlur = () => {
-            dispatch(callWindowEvent(EWindowEvent.blur));
-            window.electronAPI.windowBlur()
+            // dispatch(callWindowEvent(EWindowEvent.blur));
+            // window.electronAPI.windowBlur()
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -41,7 +41,7 @@ export const App = () => {
     useEffect(() => {
         const handleFocus = () => {
             dispatch(callWindowEvent(EWindowEvent.focus))
-            window.electronAPI.windowFocus()
+            window?.electronAPI?.windowFocus()
         };
         window.addEventListener('focus', handleFocus);
         return () => {
@@ -49,11 +49,10 @@ export const App = () => {
         };
     }, []);
 
-
+    // Escape
     useEffect(() => {
         function clickHandler(this: any, e: any) {
             if (e.key === 'Escape' || e.keyCode === 27) {
-                console.log("+++e", e.key)
                 window.electronAPI.windowBlur()
             }
         }

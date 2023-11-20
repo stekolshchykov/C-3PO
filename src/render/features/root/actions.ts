@@ -15,6 +15,12 @@ export const callWindowEvent = createAsyncThunk(
         dispatch(setText({fromText: text, toText: result}))
         // TODO: for settings
         await navigator.clipboard.writeText(result)
+        // set history
+        window?.electronAPI?.store(JSON.stringify({
+            type: "historySet",
+            value: text
+        }))
+        //
         return text
     }
 )

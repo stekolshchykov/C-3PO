@@ -13,7 +13,12 @@ interface IStoreDataDelete {
     value: string
 }
 
-export type IStoreData = IStoreDataGet | IStoreDataSet | IStoreDataDelete
+interface IStoreAction {
+    type: EIPCKeys,
+    value: string
+}
+
+export type IStoreData = IStoreDataGet | IStoreDataSet | IStoreDataDelete | IStoreAction
 
 
 interface IAutoLaunchDataGetStatus {
@@ -30,6 +35,7 @@ export type IAutoLaunchData = IAutoLaunchDataGetStatus | IAutoLaunchDataSetStatu
 
 export type IStoreDataObjSet = {
     key: string
+    type: string
     value: string
 }
 
@@ -40,5 +46,8 @@ export interface IHotKey {
 }
 
 export enum EIPCKeys {
-    "translatorHotKey" = "settings.translatorHotKey"
+    "translatorHotKey" = "settings.translatorHotKey",
+    "historySet" = "history.set",
+    "historyGet" = "history.get",
+    "history" = "history."
 }

@@ -6,7 +6,7 @@ import config from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {EIPCKeys, IAutoLaunchData, IStoreData, IStoreDataObjSet} from "../type";
+import {EIPCKeys, IAutoLaunchData} from "../type";
 
 const appAutoLauncher = new AutoLaunch({
     name: 'C-3PO',
@@ -53,7 +53,7 @@ const createWindow = (): void => {
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
@@ -99,21 +99,55 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 
 })
 
-ipcMain.handle('store', (_, data) => {
+ipcMain.handle('store', async (_, data) => {
     try {
-        const dataObj: IStoreData = JSON.parse(data)
 
-        // set hotkeys
-        if (dataObj.type === "set") {
-            const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
-            if (valueObj.key === EIPCKeys.translatorHotKey) {
-                const translatorHotKeyObj = JSON.parse(valueObj.value)
-                const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-                key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+        const dataObj = JSON.parse(data)
+        if (dataObj.type === "historyGetAll") {
+            const historyData = await systemStore.get("history")
+            return historyData || []
+        } else if (dataObj.type === "historySet") {
+            const historyData: string[] | null = await systemStore.get("history")
+            if (historyData && dataObj?.value) {
+                historyData.push(dataObj?.value)
             }
+            systemStore.set("history", historyData)
+            return true
         }
-    } catch (e) {
-        console.log(e)
+        // console.log("+++", dataObj)
+        // if (dataObj.type === EIPCKeys.historyGet) {
+        //     const historyData = await systemStore.get(EIPCKeys.history)
+        //     console.log("+++historyGet", historyData, JSON.parse(historyData).value)
+        //     return historyData
+        //     // return JSON.parse(historyData).value
+        // } else
+        // if (dataObj.type === EIPCKeys.historySet) {
+        //     console.log("+++dataObj.value EIPCKeys.historySet", dataObj.value)
+        //     systemStore.set(EIPCKeys.history, dataObj.value)
+        //     return true
+        // }
+        // if (valueObj.type === EIPCKeys.historyGet) {
+        //     console.log("+++ historyGet")
+        // }
+        //     try {
+        //
+        //
+        //
+        //         const data = JSON.parse(valueObj.value)
+        //
+        //         console.log("+++1")
+        //
+        //         // set hotkeys
+        //         if (dataObj.type === "set") {
+        //             if (valueObj.key === EIPCKeys.translatorHotKey) {
+        //                 const translatorHotKeyObj = JSON.parse(valueObj.value)
+        //                 const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+        //                 key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+        //
+
+        //
+    } catch (e) { /* empty */
+        // console.log("error", e)
     }
 
 
