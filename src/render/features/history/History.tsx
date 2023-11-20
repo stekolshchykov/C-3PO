@@ -14,7 +14,7 @@ const History = () => {
 
     return <PageLayout title={"History"}>
         <ul className={"mt-[-10px]"}>
-            {history.map((d, i) => <li className={"relative"} key={i}>
+            {history?.reverse()?.map((d, i) => <li className={"relative"} key={i}>
                 <div className={`pb-6 pt-6`}>
                     <TranslatorButtons text={d}/>
                     {d}

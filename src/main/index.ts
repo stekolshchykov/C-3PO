@@ -6,7 +6,7 @@ import config from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {EIPCKeys, IAutoLaunchData} from "../type";
+import {EIPCKeys, IAutoLaunchData, IStoreDataObjSet} from "../type";
 
 const appAutoLauncher = new AutoLaunch({
     name: 'C-3PO',
@@ -53,7 +53,7 @@ const createWindow = (): void => {
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
@@ -103,6 +103,9 @@ ipcMain.handle('store', async (_, data) => {
     try {
 
         const dataObj = JSON.parse(data)
+
+        // console.log("+++dataObj", dataObj)
+
         if (dataObj.type === "historyGetAll") {
             const historyData = await systemStore.get("history")
             return historyData || []
@@ -138,11 +141,14 @@ ipcMain.handle('store', async (_, data) => {
         //         console.log("+++1")
         //
         //         // set hotkeys
-        //         if (dataObj.type === "set") {
-        //             if (valueObj.key === EIPCKeys.translatorHotKey) {
-        //                 const translatorHotKeyObj = JSON.parse(valueObj.value)
-        //                 const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-        //                 key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+        if (dataObj.type === "set") {
+            const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
+            if (valueObj.key === EIPCKeys.translatorHotKey) {
+                const translatorHotKeyObj = JSON.parse(valueObj.value)
+                const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+                key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+            }
+        }
         //
 
         //
