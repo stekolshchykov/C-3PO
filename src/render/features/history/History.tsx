@@ -13,8 +13,8 @@ const History = () => {
     }, []);
 
     return <PageLayout title={"History"}>
-        <ul className={"mt-[-10px]"}>
-            {history?.reverse()?.map((d, i) => <li className={"relative"} key={i}>
+        <ul className={"mt-[-10px] p-0 m-0 mix-w-[10%] max-w-[100%] overflow-hidden list-none"}>
+            {history?.reverse()?.map((d, i) => <li className={"relative w-[100%]"} key={i}>
                 <div className={`pb-6 pt-6`}>
                     <TranslatorButtons text={d}/>
                     {d}

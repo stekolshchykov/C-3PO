@@ -28,8 +28,8 @@ export const App = () => {
 
     useEffect(() => {
         const handleBlur = () => {
-            dispatch(callWindowEvent(EWindowEvent.blur));
-            window.electronAPI.windowBlur()
+            // dispatch(callWindowEvent(EWindowEvent.blur));
+            // window.electronAPI.windowBlur()
         };
         window.addEventListener('blur', handleBlur);
         return () => {
