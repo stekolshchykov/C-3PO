@@ -102,7 +102,9 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 ipcMain.handle('store', async (_, data) => {
     try {
         const dataObj = JSON.parse(data)
-        if (dataObj.type === "historyClear") {
+        if (dataObj.type === "quitFromAppHandler") {
+            app.quit();
+        } else if (dataObj.type === "historyClear") {
             systemStore.set("history", [])
         } else if (dataObj.type === "historyGetAll") {
             const historyData = await systemStore.get("history")

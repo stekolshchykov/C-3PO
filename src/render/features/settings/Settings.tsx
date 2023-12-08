@@ -25,6 +25,12 @@ const Settings = () => {
         initAutoStart()
     }, []);
 
+    const quitFromAppHandler = () => {
+        window?.electronAPI?.store(JSON.stringify({
+            type: "quitFromAppHandler"
+        })).finally()
+    }
+
     return <PageLayout title={"Settings"}>
         <div className={"grid grid-cols-[1fr_min-content]"}>
             <div>
@@ -45,6 +51,11 @@ const Settings = () => {
                 <KeyCapture/>
             </div>
         </div>
+        <button
+            onClick={quitFromAppHandler}
+            className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark">
+            Quit
+        </button>
     </PageLayout>
 
 };

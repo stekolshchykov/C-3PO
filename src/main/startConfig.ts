@@ -1,4 +1,4 @@
-import {BrowserWindow, Menu, Tray} from 'electron';
+import {BrowserWindow, Tray} from 'electron';
 import {showWindow} from "./function";
 
 export const hideInTray = (app: Electron.App) => {
@@ -14,28 +14,28 @@ export const setIcon = (
 ) => {
     app.whenReady().then(() => {
         if (mainWindow) {
-            const contextMenu = Menu.buildFromTemplate([
-                {
-                    label: 'Hide',
-                    click: () => {
-                        mainWindow.hide();
-                    },
-                },
-                {
-                    label: 'Exit',
-                    click: () => {
-                        // ;(mainWindow).isQuiting = true
-                        app.quit();
-                    },
-                },
-            ]);
+            // const contextMenu = Menu.buildFromTemplate([
+            //     {
+            //         label: 'Hide',
+            //         click: () => {
+            //             mainWindow.hide();
+            //         },
+            //     },
+            //     {
+            //         label: 'Exit',
+            //         click: () => {
+            //             // ;(mainWindow).isQuiting = true
+            //             app.quit();
+            //         },
+            //     },
+            // ]);
 
             tray.on('click', (event) => {
                 showWindow(tray, mainWindow);
             });
 
             // tray.setToolTip('Test');
-            tray.setContextMenu(contextMenu);
+            // tray.setContextMenu(contextMenu);
             tray.setIgnoreDoubleClickEvents(true);
         }
     });
