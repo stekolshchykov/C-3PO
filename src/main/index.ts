@@ -101,48 +101,22 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 
 ipcMain.handle('store', async (_, data) => {
     try {
-
         const dataObj = JSON.parse(data)
-
-        // console.log("+++dataObj", dataObj)
-
         if (dataObj.type === "historyClear") {
             systemStore.set("history", [])
         } else if (dataObj.type === "historyGetAll") {
             const historyData = await systemStore.get("history")
             return historyData || []
         } else if (dataObj.type === "historySet") {
-            const historyData: string[] | null = await systemStore.get("history")
+            let historyData: string[] = await systemStore.get("history") || []
             if (historyData && dataObj?.value) {
                 historyData.push(dataObj?.value)
             }
+            // historyData = historyData.filter((value, index) => value !== historyData[index - 1])
+            historyData = [...new Set(historyData)];
             systemStore.set("history", historyData)
             return true
         }
-        // console.log("+++", dataObj)
-        // if (dataObj.type === EIPCKeys.historyGet) {
-        //     const historyData = await systemStore.get(EIPCKeys.history)
-        //     console.log("+++historyGet", historyData, JSON.parse(historyData).value)
-        //     return historyData
-        //     // return JSON.parse(historyData).value
-        // } else
-        // if (dataObj.type === EIPCKeys.historySet) {
-        //     console.log("+++dataObj.value EIPCKeys.historySet", dataObj.value)
-        //     systemStore.set(EIPCKeys.history, dataObj.value)
-        //     return true
-        // }
-        // if (valueObj.type === EIPCKeys.historyGet) {
-        //     console.log("+++ historyGet")
-        // }
-        //     try {
-        //
-        //
-        //
-        //         const data = JSON.parse(valueObj.value)
-        //
-        //         console.log("+++1")
-        //
-        //         // set hotkeys
         if (dataObj.type === "set") {
             const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
             if (valueObj.key === EIPCKeys.translatorHotKey) {
@@ -151,9 +125,6 @@ ipcMain.handle('store', async (_, data) => {
                 key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
             }
         }
-        //
-
-        //
     } catch (e) { /* empty */
         // console.log("error", e)
     }
