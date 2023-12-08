@@ -106,7 +106,9 @@ ipcMain.handle('store', async (_, data) => {
 
         // console.log("+++dataObj", dataObj)
 
-        if (dataObj.type === "historyGetAll") {
+        if (dataObj.type === "historyClear") {
+            systemStore.set("history", [])
+        } else if (dataObj.type === "historyGetAll") {
             const historyData = await systemStore.get("history")
             return historyData || []
         } else if (dataObj.type === "historySet") {
