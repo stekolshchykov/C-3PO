@@ -7,6 +7,7 @@ import {callWindowEvent, init} from "./features/root/actions";
 import Menu from "./features/menu/Menu";
 import Settings from "./features/settings/Settings";
 import History from "./features/history/History";
+import Nav from "./features/nav/Nav";
 
 export const App = () => {
 
@@ -78,7 +79,11 @@ export const App = () => {
     return <>
         <div className="triangleUp"></div>
         <div className="app">
+
+
             <Router>
+                <Nav/>
+
                 {needNavigateToRootPage && <Navigate replace to="/"/>}
                 {/*TODO: temp*/}
                 {/*<Navigate replace to="/history"/>*/}
