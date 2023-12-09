@@ -1,7 +1,7 @@
 {
   "name": "C-3PO",
   "productName": "C-3PO",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "repository": "https://github.com/StekolschikovV/C-3PO-releases",
@@ -75,6 +75,7 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.16.0",
     "remote-redux-devtools": "^0.5.16",
+    "reverso-api": "^2.22.6",
     "url": "^0.11.3"
   },
   "build": {
