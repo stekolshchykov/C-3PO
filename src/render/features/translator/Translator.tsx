@@ -55,7 +55,9 @@ const Translator = () => {
                 {fromLanguage.name}
             </button>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
-                <SVG type={"switchArrow"}/>
+                <div className={"cursor-pointer"}>
+                    <SVG type={"switchArrow"}/>
+                </div>
             </div>
             <button className={"volumetricButton"} onClick={selectToHandler}>
                 {toLanguage.name}
