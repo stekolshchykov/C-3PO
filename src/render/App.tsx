@@ -8,6 +8,10 @@ import Menu from "./features/menu/Menu";
 import Settings from "./features/settings/Settings";
 import History from "./features/history/History";
 import Nav from "./features/nav/Nav";
+import Context from "./features/сontext/Сontext";
+import Synonyms from "./features/synonyms/Synonyms";
+import SpellCheck from "./features/spell-check/SpellCheck";
+import Conjugation from "./features/conjugation/Conjugation";
 
 export const App = () => {
 
@@ -91,6 +95,10 @@ export const App = () => {
                     <Route path="/" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>
                     <Route path="/history" element={<History/>}/>
+                    <Route path="/context" element={<Context/>}/>
+                    <Route path="/synonyms" element={<Synonyms/>}/>
+                    <Route path="/spell-check" element={<SpellCheck/>}/>
+                    <Route path="/conjugation" element={<Conjugation/>}/>
                 </Routes>
                 <Menu/>
             </Router>

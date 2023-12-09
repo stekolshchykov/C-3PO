@@ -1,17 +1,51 @@
 import React, {useState} from "react"
+import {useNavigate} from "react-router-dom";
+
+interface ITab {
+    title: string
+    path: string
+}
 
 const Nav = () => {
 
-    const tabs = ["Translator", "Context", "Synonyms", "SpellCheck", "Conjugation"]
+    const navigate = useNavigate()
+
+    const tabs: ITab[] = [
+        {
+            title: "Translator",
+            path: "/"
+        },
+        {
+            title: "Context",
+            path: "/context"
+        },
+        {
+            title: "Synonyms",
+            path: "/synonyms"
+        },
+        {
+            title: "SpellCheck",
+            path: "/spell-check"
+        },
+        {
+            title: "conjugation",
+            path: "/conjugation"
+        }
+    ]
     const [selectedTab, setSelectedTab] = useState(tabs[0])
+
+    const navHandler = (tab: ITab) => {
+        setSelectedTab(tab)
+        navigate(tab.path);
+    }
 
     return <nav className={"pt-4 px-2"}>
         <ul className={"inline-flex flex-wrap gap-2 list-none"}>
             {tabs.map(e =>
                 <li
-                    onClick={() => setSelectedTab(e)}
-                    className={`py-2 px-4 border-0 rounded transition cursor-pointer ${e === selectedTab ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
-                    {e}
+                    onClick={() => navHandler(e)}
+                    className={`py-2 px-4 border-0 rounded transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                    {e.title}
                 </li>
             )}
         </ul>
