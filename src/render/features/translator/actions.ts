@@ -14,9 +14,11 @@ import {ILanguage} from "./languageList";
 export const translatorSwapDirection = createAsyncThunk(
     'translator/swapDirection',
     async (_, {rejectWithValue, dispatch, getState}) => {
-        const {translator} = getState() as RootState
-        dispatch(setLanguage({fromLanguage: translator.toLanguage, toLanguage: translator.fromLanguage}))
-        dispatch(setText({fromText: translator.toText, toText: translator.fromText}))
+        const {translator: storeSnapshot1} = getState() as RootState
+        dispatch(setLanguage({fromLanguage: storeSnapshot1.toLanguage, toLanguage: storeSnapshot1.fromLanguage}))
+        dispatch(setText({fromText: storeSnapshot1.toText, toText: storeSnapshot1.fromText}))
+        const result = await translateText(storeSnapshot1.fromText, storeSnapshot1.toLanguage.code, storeSnapshot1.fromLanguage.code)
+        dispatch(setTextTo(result))
     }
 )
 
