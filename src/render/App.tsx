@@ -1,5 +1,5 @@
-import React, {useEffect} from "react"
-import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
+import React, {useEffect, useState} from "react"
+import {MemoryRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
 import {EWindowEvent} from "./features/root/rootSlice";
@@ -10,6 +10,7 @@ import History from "./features/history/History";
 
 export const App = () => {
 
+    const [needNavigateToRootPage, setNeedNavigateToRootPage] = useState(false)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -30,6 +31,12 @@ export const App = () => {
         const handleBlur = () => {
             // dispatch(callWindowEvent(EWindowEvent.blur));
             // window.electronAPI.windowBlur()
+
+            // navigate to home page on start
+            setNeedNavigateToRootPage(true)
+            setTimeout(() => {
+                setNeedNavigateToRootPage(false)
+            }, 300)
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -42,6 +49,7 @@ export const App = () => {
         const handleFocus = () => {
             dispatch(callWindowEvent(EWindowEvent.focus))
             window?.electronAPI?.windowFocus()
+
         };
         window.addEventListener('focus', handleFocus);
         return () => {
@@ -71,6 +79,7 @@ export const App = () => {
         <div className="triangleUp"></div>
         <div className="app">
             <Router>
+                {needNavigateToRootPage && <Navigate replace to="/"/>}
                 {/*TODO: temp*/}
                 {/*<Navigate replace to="/history"/>*/}
                 <Routes>
