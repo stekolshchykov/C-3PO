@@ -12,6 +12,7 @@ import Context from "./features/сontext/Сontext";
 import Synonyms from "./features/synonyms/Synonyms";
 import SpellCheck from "./features/spell-check/SpellCheck";
 import Conjugation from "./features/conjugation/Conjugation";
+import UI from "./UI/index";
 
 export const App = () => {
 
@@ -90,7 +91,7 @@ export const App = () => {
 
                 {needNavigateToRootPage && <Navigate replace to="/"/>}
                 {/*TODO: temp*/}
-                {/*<Navigate replace to="/history"/>*/}
+                <Navigate replace to="/ui"/>
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>
@@ -99,6 +100,7 @@ export const App = () => {
                     <Route path="/synonyms" element={<Synonyms/>}/>
                     <Route path="/spell-check" element={<SpellCheck/>}/>
                     <Route path="/conjugation" element={<Conjugation/>}/>
+                    <Route path="/ui" element={<UI/>}/>
                 </Routes>
                 <Menu/>
             </Router>

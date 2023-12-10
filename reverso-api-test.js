@@ -1,6 +1,8 @@
 const Reverso = require('reverso-api')
 const reverso = new Reverso()
 
+// {'arabic' | 'german' | 'spanish' | 'french' | 'hebrew' | 'italian' | 'japanese' | 'dutch' | 'polish' | 'portuguese' | 'romanian' | 'russian' | 'turkish' | 'chinese' | 'english'}
+
 // reverso.getContext(
 //     'meet me half way',
 //     'english',
