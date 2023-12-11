@@ -6,7 +6,9 @@ const UI = () => {
     return <>
         <div></div>
         <div className={"flex gap-2 p-2 align-text-bottom"}>
-            <Input placeholder={"test"} width={50}/>
+            <Input placeholder={"test"} width={50} onChange={() => {
+                // test
+            }}/>
             <Btn type={"normal"} size={1} clickHandler={() => {
                 //
             }}>test</Btn>
