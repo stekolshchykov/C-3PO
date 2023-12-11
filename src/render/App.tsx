@@ -39,10 +39,10 @@ export const App = () => {
             // window.electronAPI.windowBlur()
 
             // navigate to home page on start
-            setNeedNavigateToRootPage(true)
-            setTimeout(() => {
-                setNeedNavigateToRootPage(false)
-            }, 300)
+            // setNeedNavigateToRootPage(true)
+            // setTimeout(() => {
+            //     setNeedNavigateToRootPage(false)
+            // }, 300)
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -91,7 +91,7 @@ export const App = () => {
 
                 {needNavigateToRootPage && <Navigate replace to="/"/>}
                 {/*TODO: temp*/}
-                <Navigate replace to="/ui"/>
+                {/*<Navigate replace to="/ui"/>*/}
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>
