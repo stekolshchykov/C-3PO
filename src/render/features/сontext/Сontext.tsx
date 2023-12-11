@@ -66,16 +66,16 @@ const Context = () => {
             <Input placeholder={"Enter word"} width={100}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => {
-                //
+                // TODO: need action
             }}>English</Btn>
             <div className={"text-center"}>
                 <FontAwesomeIcon icon={faArrowRight}/>
             </div>
             <Btn type={"normal"} size={1} clickHandler={() => {
-                //
+                // TODO: need action
             }}>Russian</Btn>
             <Btn type={"normal"} size={1} clickHandler={() => {
-                //
+                // TODO: need action
             }}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Btn>
