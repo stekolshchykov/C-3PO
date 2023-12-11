@@ -34,7 +34,7 @@ const Context = () => {
     ]
 
     const [context, setContext] = useState<{ source: string, target: string }[]>([])
-    
+
     const selectModeHandler = (l: null | "from" | "to") => {
         setSelectMode(selectMode !== l ? l : null)
     }
@@ -69,7 +69,8 @@ const Context = () => {
     return <div className={"px-2 pt-4"}>
 
         <div className={"flex items-center gap-2"}>
-            <Input placeholder={"Enter word"} width={100} onChange={e => setText(e)}/>
+            <Input placeholder={"Enter word"} width={100} onChange={e => setText(e)}
+                   onEnter={() => getContextHandler()}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}>
                 <div className={"capitalize"}>{langFrom}</div>

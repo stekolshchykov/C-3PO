@@ -4,15 +4,21 @@ interface Props {
     width: number
     placeholder: string
     onChange: (text: string) => void
+    onEnter?: () => void
 }
 
-const Input = ({width, placeholder, onChange}: Props) => {
+const Input = ({width, placeholder, onChange, onEnter}: Props) => {
 
     const [text, setText] = useState("")
 
     return <>
         <input
             value={text}
+            onKeyPress={(event) => {
+                if (event.key === 'Enter' && onEnter) {
+                    onEnter()
+                }
+            }}
             onChange={(event) => {
                 setText(event.target.value)
                 onChange(event.target.value)
