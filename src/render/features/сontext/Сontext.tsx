@@ -33,60 +33,8 @@ const Context = () => {
         'english'
     ]
 
-    const data: {
-        l1: string
-        l2: string
-    }[] = [
-        {
-            l1: 'Потому что "мама мыла раму", а "Apple любит музыку".',
-            l2: 'Because "mom soap frame", and "Apple loves music".'
-        },
-        {
-            l1: 'Моя мама мыла посуду, слушая радио.',
-            l2: 'I was in the kitchen washing dishes, listening to the radio.'
-        },
-        {
-            l1: 'Когда-то моя мама мыла посуду в этом ресторане.',
-            l2: 'My mom used to wash dishes at this restaurant.'
-        },
-        {
-            l1: 'Потому что "мама мыла раму", а "Apple любит музыку".',
-            l2: 'Because "mom soap frame", and "Apple loves music".'
-        },
-        {
-            l1: 'Моя мама мыла посуду, слушая радио.',
-            l2: 'I was in the kitchen washing dishes, listening to the radio.'
-        },
-        {
-            l1: 'Когда-то моя мама мыла посуду в этом ресторане.',
-            l2: 'My mom used to wash dishes at this restaurant.'
-        },
-        {
-            l1: 'Потому что "мама мыла раму", а "Apple любит музыку".',
-            l2: 'Because "mom soap frame", and "Apple loves music".'
-        },
-        {
-            l1: 'Моя мама мыла посуду, слушая радио.',
-            l2: 'I was in the kitchen washing dishes, listening to the radio.'
-        },
-        {
-            l1: 'Когда-то моя мама мыла посуду в этом ресторане.',
-            l2: 'My mom used to wash dishes at this restaurant.'
-        },
-        {
-            l1: 'Потому что "мама мыла раму", а "Apple любит музыку".',
-            l2: 'Because "mom soap frame", and "Apple loves music".'
-        },
-        {
-            l1: 'Моя мама мыла посуду, слушая радио.',
-            l2: 'I was in the kitchen washing dishes, listening to the radio.'
-        },
-        {
-            l1: 'Когда-то моя мама мыла посуду в этом ресторане.',
-            l2: 'My mom used to wash dishes at this restaurant.'
-        }
-    ]
-
+    const [context, setContext] = useState<{ source: string, target: string }[]>([])
+    
     const selectModeHandler = (l: null | "from" | "to") => {
         setSelectMode(selectMode !== l ? l : null)
     }
@@ -108,13 +56,11 @@ const Context = () => {
             langFrom,
             langTo,
             (err: any, response: {
-                examples: { id: number, source: string, target: string }[]
+                examples: { source: string, target: string }[]
             }) => {
                 const examples = response?.examples
                 if (examples) {
-                    examples.forEach(e => {
-                        console.log(e)
-                    })
+                    setContext(examples)
                 }
             }
         )
@@ -140,12 +86,12 @@ const Context = () => {
         </div>
         <div className={"my-3 h-[395px] overflow-auto relative"}>
             {selectMode === null && <ul>
-                {data.map((e, i) => {
+                {context.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-2 mb-2"}>
                         <div className={"border-l-4 border-grayDark pl-3"}
-                             onClick={() => selectModeHandler("from")}>{e.l1}</div>
+                             onClick={() => selectModeHandler("from")}>{e.source}</div>
                         <div className={"border-l-4 border-grayDark pl-3"}
-                             onClick={() => selectModeHandler("to")}>{e.l2}</div>
+                             onClick={() => selectModeHandler("to")}>{e.target}</div>
                     </li>
                 })}
             </ul>}
@@ -156,7 +102,6 @@ const Context = () => {
                             <Btn type={"normal"} size={1} clickHandler={() => selectLang(e, selectMode)}>{e}</Btn>
                         </li>
                     })}
-
                 </ul>}
         </div>
 

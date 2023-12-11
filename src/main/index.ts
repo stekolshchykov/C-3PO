@@ -40,6 +40,7 @@ const createWindow = (): void => {
         resizable: false,
         webPreferences: {
             webSecurity: false,
+            allowRunningInsecureContent: true,
             sandbox: false,
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
         },
