@@ -1,19 +1,27 @@
 import React from "react"
 import Btn from "./Btn";
+import Input from "./Input";
 
 const UI = () => {
     return <>
         <div></div>
-        <div className={"flex gap-2 p-2"}>
-            
+        <div className={"flex gap-2 p-2 align-text-bottom"}>
+            <Input placeholder={"test"} width={50}/>
             <Btn type={"normal"} size={1} clickHandler={() => {
                 //
-            }}>fwef</Btn>
+            }}>test</Btn>
+        </div>
+        <div className={"flex gap-2 p-2"}>
+
+            <Btn type={"normal"} size={1} clickHandler={() => {
+                //
+            }}>test</Btn>
 
             <Btn type={"active"} size={1} clickHandler={() => {
                 //
-            }}>Gsdf</Btn>
+            }}>test</Btn>
         </div>
+
     </>
 }
 
