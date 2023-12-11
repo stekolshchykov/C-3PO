@@ -62,13 +62,13 @@ const Context = () => {
 
     return <div className={"px-2 pt-4"}>
 
-        <div className={"flex items-center gap-1"}>
+        <div className={"flex items-center gap-2"}>
             <Input placeholder={"Enter word"} width={100}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => {
                 //
             }}>English</Btn>
-            <div className={"w-[40px] text-center"}>
+            <div className={"text-center"}>
                 <FontAwesomeIcon icon={faArrowRight}/>
             </div>
             <Btn type={"normal"} size={1} clickHandler={() => {
