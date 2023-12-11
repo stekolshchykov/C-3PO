@@ -6,7 +6,7 @@ import {faArrowRight, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons
 // @ts-ignore
 import Reverso from "reverso-api";
 
-const reverso = new Reverso()
+const reverso = new Reverso();
 
 const Context = () => {
 
@@ -50,21 +50,24 @@ const Context = () => {
         }
     }
 
-    const getContextHandler = () => {
-        reverso.getContext(
-            text,
-            langFrom,
-            langTo,
-            (err: any, response: {
-                examples: { source: string, target: string }[]
-            }) => {
-                const examples = response?.examples
+    const getContextHandler = async () => {
+        try {
+            const response = await reverso.getContext(text, langFrom, langTo);
+
+            if (response.status === 404) {
+                console.error('Error: Reverso API returned 404');
+                setContext([]);
+            } else {
+                const examples = response.examples;
                 if (examples) {
-                    setContext(examples)
+                    setContext(examples);
                 }
             }
-        )
-    }
+        } catch (e) {
+            console.error(e);
+            setContext([]);
+        }
+    };
 
     return <div className={"px-2 pt-4"}>
 
@@ -90,9 +93,11 @@ const Context = () => {
                 {context.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-2 mb-2"}>
                         <div className={"border-l-4 border-grayDark pl-3"}
-                             onClick={() => selectModeHandler("from")}>{e.source}</div>
+                             onClick={() => selectMode && selectModeHandler("from")}
+                        >{e.source}</div>
                         <div className={"border-l-4 border-grayDark pl-3"}
-                             onClick={() => selectModeHandler("to")}>{e.target}</div>
+                             onClick={() => selectMode && selectModeHandler("to")}
+                        >{e.target}</div>
                     </li>
                 })}
             </ul>}
@@ -100,7 +105,9 @@ const Context = () => {
                 <ul className={"pt-3 absolute top-0 left-0 bg-grayDark w-full h-full m-0 p-0 grid grid-cols-[1fr_1fr_1fr_1fr_1fr] auto-rows-min gap-3 "}>
                     {lanList.map((e, i) => {
                         return <li key={i} className={"text-center flex h-[35.5px] justify-center"}>
-                            <Btn type={"normal"} size={1} clickHandler={() => selectLang(e, selectMode)}>{e}</Btn>
+                            <Btn type={"normal"} size={1} clickHandler={() => selectLang(e, selectMode)}>
+                                <div className={"capitalize"}>{e}</div>
+                            </Btn>
                         </li>
                     })}
                 </ul>}
