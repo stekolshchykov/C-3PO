@@ -41,8 +41,9 @@ const Nav = () => {
 
     return <nav className={"pt-4 px-2"}>
         <ul className={"inline-flex flex-wrap gap-2 list-none"}>
-            {tabs.map(e =>
+            {tabs.map((e, i) =>
                 <li
+                    key={i}
                     onClick={() => navHandler(e)}
                     className={`py-2 px-4 border-0 rounded transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
                     {e.title}
