@@ -3,10 +3,7 @@ import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-// @ts-ignore
-import Reverso from "reverso-api";
-
-const reverso = new Reverso();
+import {lanList, reverso} from "../../reverso";
 
 const Context = () => {
 
@@ -14,24 +11,6 @@ const Context = () => {
     const [selectMode, setSelectMode] = useState<null | "from" | "to">(null)
     const [langFrom, setLangFrom] = useState("russian")
     const [langTo, setLangTo] = useState("english")
-
-    const lanList = [
-        'arabic',
-        'german',
-        'spanish',
-        'french',
-        'hebrew',
-        'italian',
-        'japanese',
-        'dutch',
-        'polish',
-        'portuguese',
-        'romanian',
-        'russian',
-        'turkish',
-        'chinese',
-        'english'
-    ]
 
     const [context, setContext] = useState<{ source: string, target: string }[]>([])
 

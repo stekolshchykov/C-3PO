@@ -22,11 +22,11 @@ const reverso = new Reverso()
 // })
 
 
-// reverso.getSynonyms('Привет', 'russian', (err, response) => {
-//     if (err) throw new Error(err.message)
-//
-//     console.log(response)
-// })
+reverso.getSynonyms('Хрен', 'russian', (err, response) => {
+    if (err) throw new Error(err.message)
+
+    console.log(response)
+})
 
 // reverso.getConjugation('идти', 'russian', (err, response) => {
 //     if (err) throw new Error(err.message)
