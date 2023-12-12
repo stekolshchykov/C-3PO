@@ -62,7 +62,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
+    "@types/react-dom": "^18.2.16",
     "ajv-keywords": "^5.1.0",
     "auto-launch": "^5.0.6",
     "axios": "^1.5.0",
