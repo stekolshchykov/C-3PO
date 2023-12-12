@@ -12,15 +12,23 @@ const Synonyms = () => {
     const [selectMode, setSelectMode] = useState<boolean>(false)
     const [synonyms, setSynonyms] = useState<string[]>([])
 
-    const getSynonymsHandler = () => {
-        reverso.getSynonyms(text, lang, (err: any, response: any) => {
-            if (err) throw new Error(err.message)
-            const synonyms: { synonym: string }[] = response?.synonyms
-            if (synonyms) {
-                setSynonyms(synonyms.map(e => e.synonym))
+    const getSynonymsHandler = async () => {
+        try {
+            const response = await reverso.getSynonyms(text, lang);
+            if (response.status === 404) {
+                console.error('Error: Reverso API returned 404');
+                setSynonyms([])
+            } else {
+                const synonyms: { synonym: string }[] = response?.synonyms
+                if (synonyms) {
+                    setSynonyms(synonyms.map(e => e.synonym))
+                }
             }
-        })
-    }
+        } catch (e) {
+            console.error(e);
+            setSynonyms([]);
+        }
+    };
 
     return <div className={"px-2 pt-4"}>
         <div className={"flex items-center gap-2"}>

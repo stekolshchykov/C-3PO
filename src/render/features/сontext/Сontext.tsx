@@ -32,7 +32,6 @@ const Context = () => {
     const getContextHandler = async () => {
         try {
             const response = await reverso.getContext(text, langFrom, langTo);
-
             if (response.status === 404) {
                 console.error('Error: Reverso API returned 404');
                 setContext([]);
