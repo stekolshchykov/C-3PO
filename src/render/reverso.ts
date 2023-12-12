@@ -1,21 +1,16 @@
 // @ts-ignore
 import Reverso from "reverso-api";
 
+// @ts-ignore
+import available from "reverso-api/src/languages/available.js";
+
+export const availableLang: {
+    context: string[]
+    spell: string[]
+    synonyms: []
+    translation: []
+    conjugation: []
+} = available
+
 export const reverso = new Reverso();
-export const lanList = [
-    'arabic',
-    'german',
-    'spanish',
-    'french',
-    'hebrew',
-    'italian',
-    'japanese',
-    'dutch',
-    'polish',
-    'portuguese',
-    'romanian',
-    'russian',
-    'turkish',
-    'chinese',
-    'english'
-]
+

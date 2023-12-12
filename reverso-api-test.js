@@ -1,4 +1,5 @@
 const Reverso = require('reverso-api')
+const available = require('reverso-api/src/languages/available.js')
 const reverso = new Reverso()
 
 // {'arabic' | 'german' | 'spanish' | 'french' | 'hebrew' | 'italian' | 'japanese' | 'dutch' | 'polish' | 'portuguese' | 'romanian' | 'russian' | 'turkish' | 'chinese' | 'english'}
@@ -15,12 +16,13 @@ const reverso = new Reverso()
 //     }
 // )
 
-reverso.getSpellCheck('Hello you How are you?', 'english', (err, response) => {
-    if (err) throw new Error(err.message)
-
-    // console.log(response)
-    console.log(JSON.stringify(response.corrections, null, "\t"))
-})
+console.log(available)
+// reverso.getSpellCheck('Привет', 'french', (err, response) => {
+//     if (err) throw new Error(err.message)
+//
+//     // console.log(response)
+//     console.log(JSON.stringify(response, null, "\t"))
+// })
 
 // ok
 // reverso.getSynonyms('Хрен', 'russian', (err, response) => {

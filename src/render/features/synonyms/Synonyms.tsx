@@ -3,7 +3,7 @@ import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import {lanList, reverso} from "../../reverso";
+import {availableLang, reverso} from "../../reverso";
 
 const Synonyms = () => {
 
@@ -53,7 +53,7 @@ const Synonyms = () => {
             </ul>}
             {selectMode &&
                 <ul className={"pt-3 absolute top-0 left-0 bg-grayDark w-full h-full m-0 p-0 grid grid-cols-[1fr_1fr_1fr_1fr_1fr] auto-rows-min gap-3 "}>
-                    {lanList.map((e, i) => {
+                    {availableLang.synonyms.map((e, i) => {
                         return <li key={i} className={"text-center flex h-[35.5px] justify-center"}>
                             <Btn type={"normal"} size={1} clickHandler={() => {
                                 setLang(e)
@@ -65,7 +65,6 @@ const Synonyms = () => {
                     })}
                 </ul>}
         </div>
-
     </div>
 }
 
