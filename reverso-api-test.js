@@ -16,13 +16,13 @@ const reverso = new Reverso()
 //     }
 // )
 
-console.log(available)
-// reverso.getSpellCheck('Привет', 'french', (err, response) => {
-//     if (err) throw new Error(err.message)
-//
-//     // console.log(response)
-//     console.log(JSON.stringify(response, null, "\t"))
-// })
+// console.log(available)
+reverso.getSpellCheck("Helloe mommm", 'english', (err, response) => {
+    if (err) throw new Error(err.message)
+
+    // console.log(response)
+    console.log(JSON.stringify(response, null, "\t"))
+})
 
 // ok
 // reverso.getSynonyms('Хрен', 'russian', (err, response) => {

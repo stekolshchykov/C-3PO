@@ -1,10 +1,10 @@
 import React, {ReactNode} from "react"
 
 interface Props {
-    type: "normal" | "active"
-    size: 1
-    clickHandler: () => void
-    children: ReactNode
+    type?: "normal" | "active"
+    size?: 1
+    clickHandler?: () => void
+    children?: ReactNode
 }
 
 const Btn = ({type, clickHandler, size, children}: Props) => {
@@ -15,7 +15,7 @@ const Btn = ({type, clickHandler, size, children}: Props) => {
 
     return <>
         <button
-            className={`items-center flex bg-${bgColor} px-4 py-2 rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[35.5px]`}
+            className={`items-center flex bg-${bgColor} gap-2 px-4 py-2 rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[35.5px]`}
             onClick={clickHandler}
         >
             {children}
