@@ -2,13 +2,13 @@ import React, {useState} from "react"
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
 
 const Synonyms = () => {
 
     const [text, setText] = useState("")
-    const [lang, setLang] = useState("russian")
+    const [lang, setLang] = useState("english")
     const [selectMode, setSelectMode] = useState<boolean>(false)
     const [synonyms, setSynonyms] = useState<string[]>([])
 
@@ -37,6 +37,7 @@ const Synonyms = () => {
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)}>
                 <div className={"capitalize"}>{lang}</div>
+                <FontAwesomeIcon icon={faCaretDown}/>
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getSynonymsHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
@@ -46,8 +47,7 @@ const Synonyms = () => {
             {selectMode === false && <ul>
                 {synonyms.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-1 mb-2"}>
-                        <div className={"border-l-4 border-grayDark pl-3"}
-                        >{e}</div>
+                        <div className={"border-l-4 border-grayDark pl-3"}>{e}</div>
                     </li>
                 })}
             </ul>}

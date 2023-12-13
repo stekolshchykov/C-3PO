@@ -28,7 +28,7 @@ const Nav = () => {
             path: "/spell-check"
         },
         {
-            title: "conjugation",
+            title: "Conjugation",
             path: "/conjugation"
         }
     ]

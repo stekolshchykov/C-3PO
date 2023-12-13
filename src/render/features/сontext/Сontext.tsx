@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
 
 const Context = () => {
@@ -55,12 +55,14 @@ const Context = () => {
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}>
                 <div className={"capitalize"}>{langFrom}</div>
+                <FontAwesomeIcon icon={faCaretDown}/>
             </Btn>
             <div className={"text-center"}>
                 <FontAwesomeIcon icon={faArrowRight}/>
             </div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("to")}>
                 <div className={"capitalize"}>{langTo}</div>
+                <FontAwesomeIcon icon={faCaretDown}/>
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getContextHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
