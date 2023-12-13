@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 interface Props {
     width?: number
@@ -6,11 +6,23 @@ interface Props {
     onChange?: (text: string) => void
     rows?: number
     resize?: boolean
+    isDefaultTextFromClipboard?: boolean
 }
 
-const Textarea = ({width, placeholder, onChange, rows, resize}: Props) => {
+const Textarea = ({isDefaultTextFromClipboard, width, placeholder, onChange, rows, resize}: Props) => {
 
     const [text, setText] = useState("")
+
+    useEffect(() => {
+        if (isDefaultTextFromClipboard) {
+            navigator.clipboard.readText().then(e => {
+                setText(e)
+                if (onChange) {
+                    onChange(e)
+                }
+            })
+        }
+    }, [])
 
     return <>
         <textarea

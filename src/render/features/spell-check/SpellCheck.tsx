@@ -13,7 +13,6 @@ interface ICorrection {
         definition: string
         category: string
     }[]
-
 }
 
 const SpellCheck = () => {
@@ -43,13 +42,17 @@ const SpellCheck = () => {
             console.error(e);
             setCorrections([]);
         }
-    };
+    }
 
     return <div className={"px-2 pt-4"}>
 
         <div className={"flex-row items-center gap-2"}>
 
-            <Textarea rows={4} placeholder={"Enter expression"} onChange={(e) => setText(e)}/>
+            <Textarea
+                isDefaultTextFromClipboard={true}
+                rows={4}
+                placeholder={"Enter expression"}
+                onChange={(e) => setText(e)}/>
 
             <div className={"flex gap-2 justify-end pt-3"}>
                 <Btn type={"normal"} clickHandler={() => setSelectMode(!selectMode)}>

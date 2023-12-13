@@ -28,12 +28,17 @@ const Synonyms = () => {
             console.error(e);
             setSynonyms([]);
         }
-    };
+    }
+
 
     return <div className={"px-2 pt-4"}>
         <div className={"flex items-center gap-2"}>
-            <Input placeholder={"Enter word"} width={100} onChange={e => setText(e)}
-                   onEnter={() => getSynonymsHandler()}/>
+            <Input
+                isDefaultTextFromClipboard={true}
+                placeholder={"Enter word"}
+                width={100}
+                onChange={e => setText(e)}
+                onEnter={() => getSynonymsHandler()}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)}>
                 <div className={"capitalize"}>{lang}</div>

@@ -13,8 +13,8 @@ interface IVerbForms {
 
 const Conjugation = () => {
 
-    const [text, setText] = useState("идти")
-    const [lang, setLang] = useState("russian")
+    const [text, setText] = useState("")
+    const [lang, setLang] = useState("english")
     const [conjugations, setConjugations] = useState<IVerbForms[]>([])
     const [selectMode, setSelectMode] = useState<boolean>(false)
 
@@ -36,10 +36,15 @@ const Conjugation = () => {
         }
     };
 
+
     return <div className={"px-2 pt-4"}>
         <div className={"flex items-center gap-2"}>
-            <Input placeholder={"Enter word"} width={100} onChange={e => setText(e)}
-                   onEnter={() => getConjugationsHandler()}/>
+            <Input
+                isDefaultTextFromClipboard={true}
+                placeholder={"Enter word"}
+                width={100}
+                onChange={e => setText(e)}
+                onEnter={() => getConjugationsHandler()}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)}>
                 <div className={"capitalize"}>{lang}</div>
@@ -56,11 +61,9 @@ const Conjugation = () => {
                         <div className={"border-l-4 border-grayDark pl-3"}>
                             {e.conjugation}
                             <div>
-                                Verbs: {e.verbs.map(ee => {
-                                return <>
-                                    <span key={i}>{ee}{e?.verbs?.length > i + 1 && ", "}</span>
-                                </>
-                            })}
+                                Verbs: {e.verbs.map((ee, ii) =>
+                                <span key={i + ee}>{ee}{e?.verbs?.length > ii + 1 && ", "}</span>
+                            )}
                             </div>
                         </div>
                     </li>

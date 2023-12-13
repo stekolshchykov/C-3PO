@@ -45,13 +45,17 @@ const Context = () => {
             console.error(e);
             setContext([]);
         }
-    };
+    }
 
     return <div className={"px-2 pt-4"}>
 
         <div className={"flex items-center gap-2"}>
-            <Input placeholder={"Enter word"} width={100} onChange={e => setText(e)}
-                   onEnter={() => getContextHandler()}/>
+            <Input
+                isDefaultTextFromClipboard={true}
+                placeholder={"Enter word"}
+                width={100}
+                onChange={e => setText(e)}
+                onEnter={() => getContextHandler()}/>
             <div className={"w-[15px]"}></div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}>
                 <div className={"capitalize"}>{langFrom}</div>
