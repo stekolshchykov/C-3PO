@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react"
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "../providers/RootStoreProvider";
 
 interface Props {
     width: number
@@ -8,18 +10,17 @@ interface Props {
     isDefaultTextFromClipboard?: boolean
 }
 
-const Input = ({isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
+const Input = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
 
-    const [text, setText] = useState("")
+    const store = useRootStore();
+    const [text, setText] = useState(store.clipboard)
 
     useEffect(() => {
         if (isDefaultTextFromClipboard) {
-            navigator.clipboard.readText().then(e => {
-                setText(e)
-                onChange(e)
-            })
+            setText(store.clipboard)
+            onChange(store.clipboard)
         }
-    }, [])
+    }, [store.activeEvent])
 
     return <>
         <input
@@ -38,7 +39,6 @@ const Input = ({isDefaultTextFromClipboard, width, placeholder, onChange, onEnte
             placeholder={placeholder}
         />
     </>
-
-}
+})
 
 export default Input

@@ -90,8 +90,6 @@ const SpellCheck = () => {
                         })}
                     </ul>}
             </div>
-
-
         </div>
     </div>
 }

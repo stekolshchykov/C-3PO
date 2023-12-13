@@ -4,6 +4,8 @@ import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {useRootStore} from "../../providers/RootStoreProvider";
+import {observer} from "mobx-react-lite";
 
 interface IVerbForms {
     id: number
@@ -11,7 +13,9 @@ interface IVerbForms {
     verbs: string[]
 }
 
-const Conjugation = () => {
+const Conjugation = observer(() => {
+
+    const store = useRootStore();
 
     const [text, setText] = useState("")
     const [lang, setLang] = useState("english")
@@ -85,6 +89,6 @@ const Conjugation = () => {
         </div>
     </div>
 
-}
+})
 
 export default Conjugation

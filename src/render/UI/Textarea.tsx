@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react"
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "../providers/RootStoreProvider";
 
 interface Props {
     width?: number
@@ -9,20 +11,17 @@ interface Props {
     isDefaultTextFromClipboard?: boolean
 }
 
-const Textarea = ({isDefaultTextFromClipboard, width, placeholder, onChange, rows, resize}: Props) => {
+const Textarea = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, rows, resize}: Props) => {
 
-    const [text, setText] = useState("")
+    const store = useRootStore();
+    const [text, setText] = useState(store.clipboard)
 
     useEffect(() => {
         if (isDefaultTextFromClipboard) {
-            navigator.clipboard.readText().then(e => {
-                setText(e)
-                if (onChange) {
-                    onChange(e)
-                }
-            })
+            setText(store.clipboard)
+            onChange && onChange(store.clipboard)
         }
-    }, [])
+    }, [store.activeEvent])
 
     return <>
         <textarea
@@ -39,7 +38,6 @@ const Textarea = ({isDefaultTextFromClipboard, width, placeholder, onChange, row
             placeholder={placeholder}
         />
     </>
-
-}
+})
 
 export default Textarea

@@ -13,11 +13,14 @@ import Synonyms from "./features/synonyms/Synonyms";
 import SpellCheck from "./features/spell-check/SpellCheck";
 import Conjugation from "./features/conjugation/Conjugation";
 import UI from "./UI/index";
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "./providers/RootStoreProvider";
 
-export const App = () => {
+export const App = observer(() => {
 
     const [needNavigateToRootPage, setNeedNavigateToRootPage] = useState(false)
     const dispatch = useAppDispatch()
+    const store = useRootStore();
 
     useEffect(() => {
         function clickHandler(this: any, e: any) {
@@ -56,6 +59,10 @@ export const App = () => {
             dispatch(callWindowEvent(EWindowEvent.focus))
             window?.electronAPI?.windowFocus()
 
+            navigator.clipboard.readText().then(e => {
+                store.setClipboard(e)
+                store.setActiveEvent()
+            })
         };
         window.addEventListener('focus', handleFocus);
         return () => {
@@ -79,16 +86,14 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(init())
-    }, []);
+    }, [])
+
 
     return <>
         <div className="triangleUp"></div>
         <div className="app">
-
-
             <Router>
                 <Nav/>
-
                 {needNavigateToRootPage && <Navigate replace to="/"/>}
                 {/*TODO: temp*/}
                 {/*<Navigate replace to="/ui"/>*/}
@@ -106,4 +111,4 @@ export const App = () => {
             </Router>
         </div>
     </>
-}
+})
