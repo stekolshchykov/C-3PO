@@ -14,6 +14,7 @@ const Nav = observer(() => {
 
     const navigate = useNavigate()
     const store = useRootStore();
+    const [hide, setHide] = useState(false)
     // navigate.
 
     const tabs: ITab[] = [
@@ -59,8 +60,14 @@ const Nav = observer(() => {
         if (targetTab) {
             setSelectedTab(targetTab)
         }
+        if (location.pathname === '/history' || location.pathname === '/settings') {
+            setHide(true)
+        } else {
+            setHide(false)
+        }
     }, [location]);
 
+    if (hide) return <></>
     return <nav className={"pt-0 px-0 overflow-hidden"}>
         <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
             {tabs.map((e, i) =>

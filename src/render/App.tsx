@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
 import {useAppDispatch} from "./hooks";
@@ -18,8 +18,6 @@ import Nav from "./features/nav/Nav";
 
 export const App = observer(() => {
 
-
-    const [needNavigateToRootPage, setNeedNavigateToRootPage] = useState(false)
     const dispatch = useAppDispatch()
     const store = useRootStore();
 
