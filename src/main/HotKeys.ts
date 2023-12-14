@@ -19,7 +19,7 @@ export class HotKeys {
 
     }
 
-    setHideShow = (hotKey: string) => {
+    setHideShow = (hotKey: string, openPage?: string) => {
 
         if (this.setHideShowTempKey && globalShortcut.isRegistered(this.setHideShowTempKey)) {
             globalShortcut.unregister(this.setHideShowTempKey)
@@ -34,6 +34,9 @@ export class HotKeys {
                     this.mainWindow.hide();
                 } else {
                     showWindow(this.tray, this.mainWindow);
+                    if (openPage) {
+                        this.mainWindow.webContents.send('open-page', openPage)
+                    }
                 }
         })
 

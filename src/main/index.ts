@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
+import {app, BrowserWindow, globalShortcut, ipcMain, nativeImage, Tray} from 'electron';
 import AutoLaunch from "auto-launch";
 import * as path from "path";
 
@@ -6,7 +6,8 @@ import config from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {EIPCKeys, IAutoLaunchData, IStoreDataObjSet} from "../type";
+import {IAutoLaunchData, IConfig} from "../type";
+import {showWindow} from "../main/function";
 
 const appAutoLauncher = new AutoLaunch({
     name: 'C-3PO',
@@ -116,31 +117,31 @@ ipcMain.handle('store', async (_, data) => {
         }
         ////////////////////////////////////////////////////////
 
-        if (dataObj.type === "quitFromAppHandler") {
-            app.quit();
-        } else if (dataObj.type === "historyClear") {
-            systemStore.set("history", [])
-        } else if (dataObj.type === "historyGetAll") {
-            const historyData = await systemStore.get("history")
-            return historyData || []
-        } else if (dataObj.type === "historySet") {
-            let historyData: string[] = await systemStore.get("history") || []
-            if (historyData && dataObj?.value) {
-                historyData.push(dataObj?.value)
-            }
-            // historyData = historyData.filter((value, index) => value !== historyData[index - 1])
-            historyData = [...new Set(historyData)];
-            systemStore.set("history", historyData)
-            return true
-        }
-        if (dataObj.type === "set") {
-            const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
-            if (valueObj.key === EIPCKeys.translatorHotKey) {
-                const translatorHotKeyObj = JSON.parse(valueObj.value)
-                const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-                key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
-            }
-        }
+        // if (dataObj.type === "quitFromAppHandler") {
+        //     app.quit();
+        // } else if (dataObj.type === "historyClear") {
+        //     systemStore.set("history", [])
+        // } else if (dataObj.type === "historyGetAll") {
+        //     const historyData = await systemStore.get("history")
+        //     return historyData || []
+        // } else if (dataObj.type === "historySet") {
+        //     let historyData: string[] = await systemStore.get("history") || []
+        //     if (historyData && dataObj?.value) {
+        //         historyData.push(dataObj?.value)
+        //     }
+        //     // historyData = historyData.filter((value, index) => value !== historyData[index - 1])
+        //     historyData = [...new Set(historyData)];
+        //     systemStore.set("history", historyData)
+        //     return true
+        // }
+        // if (dataObj.type === "set") {
+        //     const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
+        //     if (valueObj.key === EIPCKeys.translatorHotKey) {
+        //         const translatorHotKeyObj = JSON.parse(valueObj.value)
+        //         const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+        //         key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+        //     }
+        // }
     } catch (e) { /* empty */
         // console.log("error", e)
     }
@@ -170,13 +171,23 @@ app.on('ready', createWindow);
 
 // set hotkeys when app ready
 app.on('ready', async () => {
-    const translatorHotKey = await systemStore.get(EIPCKeys.translatorHotKey)
-    if (translatorHotKey) {
-        const translatorHotKeyObj = JSON.parse(translatorHotKey)
-        const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-        key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
-    }
-});
+
+    // const translatorHotKey = await systemStore.get(EIPCKeys.translatorHotKey)
+    // if (translatorHotKey) {
+    //     const translatorHotKeyObj = JSON.parse(translatorHotKey)
+    //     const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
+    //     key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
+    // }
+    const config: IConfig = await systemStore.get("config")
+    config.hotKeys.forEach(e => {
+        globalShortcut.register(e.key, () => {
+            if (mainWindow && tray) {
+                mainWindow.webContents.send('open-page', e.page)
+                showWindow(tray, mainWindow);
+            }
+        })
+    })
+})
 
 
 app.on('window-all-closed', () => {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import {observer} from "mobx-react-lite";
 
@@ -10,13 +10,16 @@ interface ITab {
 
 const Nav = observer(() => {
 
+    const location = useLocation();
+
     const navigate = useNavigate()
     const store = useRootStore();
+    // navigate.
 
     const tabs: ITab[] = [
         {
             title: "Translator",
-            path: "/"
+            path: "/translator"
         },
         {
             title: "Context",
@@ -40,6 +43,7 @@ const Nav = observer(() => {
     const navHandler = (tab: ITab) => {
         setSelectedTab(tab)
         navigate(tab.path);
+        store.openPage = tab.path
     }
 
     useEffect(() => {
@@ -50,13 +54,20 @@ const Nav = observer(() => {
         }
     }, [store.openPage])
 
+    useEffect(() => {
+        const targetTab = tabs.find(e => e.path === location.pathname)
+        if (targetTab) {
+            setSelectedTab(targetTab)
+        }
+    }, [location]);
+
     return <nav className={"pt-0 px-0 overflow-hidden"}>
         <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
             {tabs.map((e, i) =>
                 <li
                     key={i}
                     onClick={() => navHandler(e)}
-                    className={`py-5 text-center border-0 flex-auto  transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                    className={`py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
                     {e.title}
                 </li>
             )}

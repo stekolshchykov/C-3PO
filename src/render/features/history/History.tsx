@@ -7,16 +7,20 @@ const History = () => {
     const [history, setHistory] = useState<string[]>([])
 
     useEffect(() => {
-        window?.electronAPI?.store(JSON.stringify({
-            type: "historyGetAll"
-        })).then(result => setHistory(result))
+        // window?.electronAPI?.store(JSON.stringify({
+        //     type: "historyGetAll"
+        // }))
+        //     .then(result => setHistory(result))
+        //     .catch()
     }, []);
 
     const clearHistoryHandler = () => {
-        window?.electronAPI?.store(JSON.stringify({
-            type: "historyClear"
-        })).finally()
-        setHistory([])
+        // window?.electronAPI?.store(JSON.stringify({
+        //     type: "historyClear"
+        // }))
+        //     .finally()
+        //     .catch()
+        // setHistory([])
     }
 
     return <PageLayout title={"History"}>

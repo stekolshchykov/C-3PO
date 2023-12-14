@@ -100,6 +100,7 @@ export const App = observer(() => {
                 {/*<Navigate replace to="/ui"/>*/}
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
+                    <Route path="/translator" element={<Translator/>}/>
                     <Route path="/settings" element={<Settings/>}/>
                     <Route path="/history" element={<History/>}/>
                     <Route path="/context" element={<Context/>}/>

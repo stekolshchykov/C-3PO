@@ -51,3 +51,10 @@ export enum EIPCKeys {
     "historyGet" = "history.get",
     "history" = "history."
 }
+
+export interface IConfig {
+    hotKeys: {
+        key: string
+        page: string
+    }[]
+}
