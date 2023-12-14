@@ -103,6 +103,16 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 ipcMain.handle('store', async (_, data) => {
     try {
         const dataObj = JSON.parse(data)
+
+        if (dataObj.type === "config") {
+            if (dataObj.value.key === "save") {
+                systemStore.set("config", dataObj.value.value)
+            } else if (dataObj.value.key === "load") {
+                return systemStore.get("config")
+            }
+
+        }
+
         if (dataObj.type === "quitFromAppHandler") {
             app.quit();
         } else if (dataObj.type === "historyClear") {

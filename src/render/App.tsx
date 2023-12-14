@@ -92,6 +92,8 @@ export const App = observer(() => {
     return <>
         <div className="triangleUp"></div>
         <div className="app overflow-hidden">
+            <button onClick={() => store.saveConfig()}>saveConfig</button>
+            <button onClick={() => store.loadConfig()}>loadConfig</button>
             <Router>
                 <Nav/>
                 {/*{needNavigateToRootPage && <Navigate replace to="/"/>}*/}
