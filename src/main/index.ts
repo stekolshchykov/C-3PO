@@ -62,6 +62,8 @@ const createWindow = (): void => {
     hotKeys = new HotKeys(app, mainWindow, tray)
     systemStore = new SystemStore()
 
+    // TODO:
+    // mainWindow.webContents.send('open-page', "context")
 };
 
 hideInTray(app);
@@ -104,14 +106,15 @@ ipcMain.handle('store', async (_, data) => {
     try {
         const dataObj = JSON.parse(data)
 
+        // config
         if (dataObj.type === "config") {
             if (dataObj.value.key === "save") {
                 systemStore.set("config", dataObj.value.value)
             } else if (dataObj.value.key === "load") {
                 return systemStore.get("config")
             }
-
         }
+        ////////////////////////////////////////////////////////
 
         if (dataObj.type === "quitFromAppHandler") {
             app.quit();

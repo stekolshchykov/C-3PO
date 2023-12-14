@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 
+
 export type RootStoreHydration = {
     [key: string]: {
         hydrateFromLocalStore: () => void
@@ -10,12 +11,21 @@ export class RootStore {
 
     clipboard = ""
     activeEvent = 0
+    openPage = ""
     config = {
-        man: 11
+        // TODO
     }
 
     constructor() {
         makeAutoObservable(this);
+        this.listeners()
+    }
+
+    listeners = () => {
+        // redirect to page from main.js
+        window.electronAPI.openPage((value: string) => {
+            this.openPage = value
+        })
     }
 
 
@@ -24,7 +34,6 @@ export class RootStore {
     }
 
     setClipboard = (text: string) => {
-        console.log("setClipboard", text)
         this.clipboard = text.trim()
     }
 
@@ -50,6 +59,5 @@ export class RootStore {
             }
         }))
     }
-
 
 }

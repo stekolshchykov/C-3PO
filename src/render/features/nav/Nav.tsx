@@ -1,14 +1,17 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom";
+import {useRootStore} from "../../providers/RootStoreProvider";
+import {observer} from "mobx-react-lite";
 
 interface ITab {
     title: string
     path: string
 }
 
-const Nav = () => {
+const Nav = observer(() => {
 
     const navigate = useNavigate()
+    const store = useRootStore();
 
     const tabs: ITab[] = [
         {
@@ -39,6 +42,14 @@ const Nav = () => {
         navigate(tab.path);
     }
 
+    useEffect(() => {
+        navigate(store.openPage);
+        const targetPage = tabs.find(e => e.path.includes(store.openPage))
+        if (targetPage) {
+            navHandler(targetPage)
+        }
+    }, [store.openPage])
+
     return <nav className={"pt-0 px-0 overflow-hidden"}>
         <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
             {tabs.map((e, i) =>
@@ -52,7 +63,7 @@ const Nav = () => {
         </ul>
     </nav>
 
-}
+})
 
 export default Nav
 

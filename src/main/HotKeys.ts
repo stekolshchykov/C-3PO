@@ -21,8 +21,6 @@ export class HotKeys {
 
     setHideShow = (hotKey: string) => {
 
-        console.log("!!!")
-
         if (this.setHideShowTempKey && globalShortcut.isRegistered(this.setHideShowTempKey)) {
             globalShortcut.unregister(this.setHideShowTempKey)
             this.setHideShowTempKey = null

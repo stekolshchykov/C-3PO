@@ -50,4 +50,5 @@ export const hideWindowWhenFocusOut = (
             mainWindow.hide();
         }
     });
+
 };

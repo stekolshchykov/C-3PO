@@ -18,6 +18,7 @@ import Nav from "./features/nav/Nav";
 
 export const App = observer(() => {
 
+
     const [needNavigateToRootPage, setNeedNavigateToRootPage] = useState(false)
     const dispatch = useAppDispatch()
     const store = useRootStore();
@@ -92,8 +93,6 @@ export const App = observer(() => {
     return <>
         <div className="triangleUp"></div>
         <div className="app overflow-hidden">
-            <button onClick={() => store.saveConfig()}>saveConfig</button>
-            <button onClick={() => store.loadConfig()}>loadConfig</button>
             <Router>
                 <Nav/>
                 {/*{needNavigateToRootPage && <Navigate replace to="/"/>}*/}

@@ -8,7 +8,9 @@ const electronAPI: IElectronAPI = {
     dockedWindowModeOn: () => ipcRenderer.send("dockedWindowModeOn"),
     dockedWindowModeOff: () => ipcRenderer.send("dockedWindowModeOff"),
     store: (data) => ipcRenderer.invoke('store', data),
-    autoLaunch: (data) => ipcRenderer.invoke('autoLaunch', data)
+    autoLaunch: (data) => ipcRenderer.invoke('autoLaunch', data),
+    // onUpdateCounter: (callback) => ipcRenderer.on('update-counter', (_event, value) => callback(value)),
+    openPage: (callback) => ipcRenderer.on('open-page', (_event, value) => callback(value)),
 }
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI)
