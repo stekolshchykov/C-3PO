@@ -39,13 +39,13 @@ const Nav = () => {
         navigate(tab.path);
     }
 
-    return <nav className={"pt-4 px-2"}>
-        <ul className={"inline-flex flex-wrap gap-2 list-none"}>
+    return <nav className={"pt-0 px-0 overflow-hidden"}>
+        <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
             {tabs.map((e, i) =>
                 <li
                     key={i}
                     onClick={() => navHandler(e)}
-                    className={`py-2 px-4 border-0 rounded transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                    className={`py-5 text-center border-0 flex-auto  transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
                     {e.title}
                 </li>
             )}

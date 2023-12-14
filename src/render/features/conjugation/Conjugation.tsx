@@ -58,7 +58,7 @@ const Conjugation = observer(() => {
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Btn>
         </div>
-        <div className={"my-3 h-[395px] overflow-auto relative"}>
+        <div className={"my-3 h-[384px] overflow-auto relative"}>
             {selectMode === false && <ul>
                 {conjugations.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-1 mb-2"}>

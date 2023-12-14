@@ -91,7 +91,7 @@ export const App = observer(() => {
 
     return <>
         <div className="triangleUp"></div>
-        <div className="app">
+        <div className="app overflow-hidden">
             <Router>
                 <Nav/>
                 {needNavigateToRootPage && <Navigate replace to="/"/>}
