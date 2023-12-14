@@ -44,7 +44,7 @@ const SpellCheck = () => {
         }
     }
 
-    return <div className={"px-2 pt-4"}>
+    return <div className={"px-2 pt-4 overflow-auto"}>
 
         <div className={"flex-row items-center gap-2"}>
 
@@ -62,7 +62,7 @@ const SpellCheck = () => {
                 <Btn type={"normal"} clickHandler={spellCheckHandler}>Check</Btn>
             </div>
 
-            <div className={"relative h-[275px] overflow-auto mt-[15px]"}>
+            <div className={"relative overflow-auto mt-[15px]"}>
                 {selectMode === false && <>
                     <div className={"text-lg pt-3"}>Corrections({corrections.length}):</div>
                     <ul className={"pt-3 pb-2 grid grid-cols-1 gap-2"}>

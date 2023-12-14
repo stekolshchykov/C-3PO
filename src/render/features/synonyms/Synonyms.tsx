@@ -31,7 +31,7 @@ const Synonyms = () => {
     }
 
 
-    return <div className={"px-2 pt-4"}>
+    return <div className={"px-2 pt-4 overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
                 isDefaultTextFromClipboard={true}
@@ -48,7 +48,7 @@ const Synonyms = () => {
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Btn>
         </div>
-        <div className={"my-3 h-[384px] overflow-auto relative"}>
+        <div className={"my-3  overflow-auto relative"}>
             {selectMode === false && <ul>
                 {synonyms.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-1 mb-2"}>

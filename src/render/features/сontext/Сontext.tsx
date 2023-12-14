@@ -1,9 +1,9 @@
 import React, {useState} from "react"
+import {availableLang, reverso} from "../../reverso";
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight, faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import {availableLang, reverso} from "../../reverso";
 
 const Context = () => {
 
@@ -47,8 +47,7 @@ const Context = () => {
         }
     }
 
-    return <div className={"px-2 pt-4"}>
-
+    return <div className={"px-2 pt-4 grid grid-rows-[max-content_max-content] overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
                 isDefaultTextFromClipboard={true}
@@ -72,7 +71,7 @@ const Context = () => {
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Btn>
         </div>
-        <div className={"my-3 h-[384px] overflow-auto relative"}>
+        <div className={"my-3  overflow-auto relative"}>
             {selectMode === null && <ul>
                 {context.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-2 mb-2"}>
