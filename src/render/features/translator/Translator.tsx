@@ -37,9 +37,13 @@ const Translator = observer(() => {
 
     useEffect(() => {
         if (store.config?.autofill) {
-            // @ts-ignore
-            inputFromRef?.current?.value = store.clipboard
-
+            if (inputFromRef.current) {
+                inputFromRef.current.value = store.clipboard
+            }
+        } else {
+            if (inputFromRef.current) {
+                inputFromRef.current.value = ""
+            }
         }
     }, [inputFromRef])
 
