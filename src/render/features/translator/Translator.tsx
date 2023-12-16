@@ -57,7 +57,7 @@ const Translator = observer(() => {
             {/*    {store?.config?.translator?.from?.name}*/}
             {/*</button>*/}
 
-            <Btn type={"normal"} size={1} clickHandler={selectFromHandler}>
+            <Btn type={"normal"} size={2} clickHandler={selectFromHandler}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.from?.name}
                 </div>
@@ -71,7 +71,7 @@ const Translator = observer(() => {
             {/*<button className={"volumetricButton"} onClick={selectToHandler}>*/}
             {/*    {store?.config?.translator?.to?.name}*/}
             {/*</button>*/}
-            <Btn type={"normal"} size={1} clickHandler={selectToHandler}>
+            <Btn type={"normal"} size={2} clickHandler={selectToHandler}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.to?.name}
                 </div>

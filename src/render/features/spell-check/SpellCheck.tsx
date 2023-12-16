@@ -57,11 +57,11 @@ const SpellCheck = observer(() => {
                 onChange={(e) => setText(e)}/>
 
             <div className={"flex gap-2 justify-end pt-3"}>
-                <Btn type={"normal"} clickHandler={() => setSelectMode(!selectMode)}>
+                <Btn size={1} type={"normal"} clickHandler={() => setSelectMode(!selectMode)}>
                     <div className={"capitalize"}>{lang}</div>
                     <FontAwesomeIcon icon={faCaretDown}/>
                 </Btn>
-                <Btn type={"normal"} clickHandler={spellCheckHandler}>Check</Btn>
+                <Btn size={1} type={"normal"} clickHandler={spellCheckHandler}>Check</Btn>
             </div>
 
             <div className={"relative overflow-auto mt-[15px]"}>
