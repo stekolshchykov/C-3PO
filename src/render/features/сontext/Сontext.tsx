@@ -49,7 +49,7 @@ const Context = observer(() => {
         }
     }
 
-    return <div className={"px-2 pt-4 grid grid-rows-[max-content_max-content] overflow-auto"}>
+    return <div className={"px-2 pt-4 grid grid-rows-[min-content_1fr] overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
                 isDefaultTextFromClipboard={store.config?.autofill}

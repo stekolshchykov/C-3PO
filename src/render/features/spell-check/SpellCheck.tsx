@@ -49,11 +49,9 @@ const SpellCheck = observer(() => {
 
     return <div className={"px-2 pt-4 overflow-auto"}>
 
-        <div className={"flex-row items-center gap-2"}>
-
+        <div className={"h-full grid grid-rows-[min-content_min-content_1fr]"}>
             <Textarea
                 isDefaultTextFromClipboard={store.config?.autofill}
-                // isDefaultTextFromClipboard={false}
                 rows={4}
                 placeholder={"Enter expression"}
                 onChange={(e) => setText(e)}/>

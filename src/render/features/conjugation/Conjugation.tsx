@@ -41,7 +41,7 @@ const Conjugation = observer(() => {
     };
 
 
-    return <div className={"px-2 pt-4 overflow-auto"}>
+    return <div className={"px-2 pt-4 overflow-auto grid grid-rows-[min-content_1fr]"}>
         <div className={"flex items-center gap-2"}>
             <Input
                 isDefaultTextFromClipboard={store.config?.autofill}
@@ -58,7 +58,7 @@ const Conjugation = observer(() => {
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </Btn>
         </div>
-        <div className={"my-3  relative"}>
+        <div className={"my-3 relative"}>
             {selectMode === false && <ul>
                 {conjugations.map((e, i) => {
                     return <li key={i} className={"grid grid-cols-1 mb-2"}>
