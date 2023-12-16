@@ -63,6 +63,7 @@ export interface IConfig {
     }
     autoStart: boolean
     autofill: boolean
+    autofillOut: boolean
 }
 
 export type TMainCommand = "quitFromAppHandler"

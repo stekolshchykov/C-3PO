@@ -18,6 +18,7 @@ export class RootStore {
         hotKeys: [],
         autoStart: false,
         autofill: false,
+        autofillOut: false,
         translator: {
             from: {name: "English", code: "en"},
             to: {name: "Russian", code: "ru"}
@@ -61,6 +62,8 @@ export class RootStore {
     translateText = async () => {
         const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
         this.translatorText.to = translatedText
+        if (this.config?.autofillOut)
+            navigator.clipboard.writeText(translatedText)
     }
 
 
@@ -121,6 +124,9 @@ export class RootStore {
         }
         if (config?.autofill === null || config?.autofill === undefined) {
             config.autofill = false
+        }
+        if (config?.autofillOut === null || config?.autofillOut === undefined) {
+            config.autofillOut = false
         }
         return config
     }

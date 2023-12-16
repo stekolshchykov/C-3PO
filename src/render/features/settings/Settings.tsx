@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PageLayout from "../../components/PageLasyout";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
@@ -8,31 +8,7 @@ import Select from "../../components/Select";
 
 const Settings = observer(() => {
 
-
     const store = useRootStore();
-    const [autoStartInitStatus, setAutoStartInitStatus] = useState<boolean | null>(null)
-    //
-    // const onClickAutoStartHandler = async (e: boolean) => {
-    //     await window.electronAPI.autoLaunch(JSON.stringify({
-    //         type: "setStatus",
-    //         value: e.toString()
-    //     }))
-    // }
-
-    useEffect(() => {
-        async function initAutoStart() {
-            const status = await window.electronAPI.autoLaunch(JSON.stringify({
-                type: "getStatus"
-            }))
-            setAutoStartInitStatus(status)
-        }
-
-        initAutoStart()
-    }, []);
-
-    const saveHandler = () => {
-        store.saveConfig()
-    }
 
     const translatorHotKey = hotKeyStringToObj(store.config, "translator")
     const contextHotKey = hotKeyStringToObj(store.config, "context")
@@ -50,7 +26,7 @@ const Settings = observer(() => {
             <div className={"grid grid-cols-[1fr_min-content]"}>
                 <div>
                     <div className={"text-lg"}>Auto Load on Startup</div>
-                    <div className={"text-sm"}>Enable automatic loading on startup</div>
+                    <div className={"text-sm"}>Enable automatic loading on startup.</div>
                 </div>
                 <div className={"flex align-middle m-auto"}>
                     <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
@@ -65,6 +41,15 @@ const Settings = observer(() => {
                     <Select initValue={store.config.autofill} onClick={(e) => store.config.autofill = e}/>
                 </div>
             </div>
+            <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div>
+                    <div className={"text-lg"}>Clipboard Autofill</div>
+                    <div className={"text-sm"}>Automatically populates fields to clipboard.</div>
+                </div>
+                <div className={"flex align-middle m-auto"}>
+                    <Select initValue={store.config.autofillOut} onClick={(e) => store.config.autofillOut = e}/>
+                </div>
+            </div>
 
             {/*
                 TODO: windows size
@@ -74,8 +59,11 @@ const Settings = observer(() => {
         </section>
 
         <section>
-            <div className={"text-2xl"}>Translator</div>
-            <KeyCapture hotKeys={translatorHotKey} onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
+            <div className={"text-2xl mb-2"}>Translator</div>
+
+            <div className={"pt-3"}>
+                <KeyCapture hotKeys={translatorHotKey} onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
+            </div>
             {/*
                 TODO: auto fill
             */}
