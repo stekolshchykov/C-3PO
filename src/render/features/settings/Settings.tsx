@@ -22,6 +22,7 @@ const Settings = observer(() => {
     return <PageLayout title={"Settings"}>
 
         <div className={"grid gap-10"}>
+
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>General</div>
                 <div className={"grid grid-cols-[1fr_min-content]"}>
@@ -55,7 +56,6 @@ const Settings = observer(() => {
                 {/*
                 TODO: windows size
                 TODO: position mode
-                TODO: auto save to clipboard
             */}
             </section>
 
@@ -162,30 +162,6 @@ const Settings = observer(() => {
             </section>
 
         </div>
-        {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-        {/*    <div>*/}
-        {/*        <div className={"text-xl"}>AutoStart</div>*/}
-        {/*        <div className={"text-sm"}>Launch the application while the operating system boots.</div>*/}
-        {/*    </div>*/}
-        {/*    <div className={"flex align-middle m-auto"}>*/}
-        {/*        {autoStartInitStatus !== null &&*/}
-        {/*            <Select initValue={autoStartInitStatus} onClick={onClickAutoStartHandler}/>}*/}
-        {/*    </div>*/}
-        {/*</div>*/}
-        {/*<div className={"grid grid-cols-[1fr] gap-2"}>*/}
-        {/*    <div>*/}
-        {/*        <div className={"text-xl"}>HotKey</div>*/}
-        {/*        <div className={"text-sm"}>Open translator with a shortcut at any time.</div>*/}
-        {/*    </div>*/}
-        {/*    <div className={"flex align-middle"}>*/}
-        {/*        <KeyCapture/>*/}
-        {/*    </div>*/}
-        {/*</div>*/}
-        {/*<button*/}
-        {/*    onClick={quitFromAppHandler}*/}
-        {/*    className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark">*/}
-        {/*    Quit*/}
-        {/*</button>*/}
     </PageLayout>
 
 })
