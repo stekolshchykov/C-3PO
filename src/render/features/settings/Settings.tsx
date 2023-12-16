@@ -10,13 +10,13 @@ const Settings = observer(() => {
 
     const store = useRootStore();
     const [autoStartInitStatus, setAutoStartInitStatus] = useState<boolean | null>(null)
-
-    const onClickAutoStartHandler = async (e: boolean) => {
-        await window.electronAPI.autoLaunch(JSON.stringify({
-            type: "setStatus",
-            value: e.toString()
-        }))
-    }
+    //
+    // const onClickAutoStartHandler = async (e: boolean) => {
+    //     await window.electronAPI.autoLaunch(JSON.stringify({
+    //         type: "setStatus",
+    //         value: e.toString()
+    //     }))
+    // }
 
     useEffect(() => {
         async function initAutoStart() {
@@ -38,6 +38,8 @@ const Settings = observer(() => {
     const synonymsHotKey = hotKeyStringToObj(store.config, "synonyms")
     const spellCheckHotKey = hotKeyStringToObj(store.config, "spell-check")
     const conjugationHotKey = hotKeyStringToObj(store.config, "conjugation")
+    const historyHotKey = hotKeyStringToObj(store.config, "history")
+    const settingsHotKey = hotKeyStringToObj(store.config, "settings")
 
     return <PageLayout title={"Settings"}>
 
@@ -83,13 +85,24 @@ const Settings = observer(() => {
             {/* TODO: auto fill */}
         </section>
 
+        <section>
+            <div className={"text-2xl"}>History</div>
+            <KeyCapture hotKeys={historyHotKey} onChangeHandler={(e) => store.addHotKey(e, "history")}/>
+            {/* TODO: auto fill */}
+        </section>
+
+        <section>
+            <div className={"text-2xl"}>Settings</div>
+            <KeyCapture hotKeys={settingsHotKey} onChangeHandler={(e) => store.addHotKey(e, "settings")}/>
+            {/* TODO: auto fill */}
+        </section>
+
         <section className={""}>
             <button
                 onClick={() => store.mainCommand("quitFromAppHandler")}
                 className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark w-full">
                 Quit
             </button>
-
         </section>
 
 

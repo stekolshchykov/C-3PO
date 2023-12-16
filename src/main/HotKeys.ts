@@ -13,7 +13,6 @@ export class HotKeys {
         this.tray = tray
     }
 
-    // set = (hotKey: string, openPage?: string) => {
     set = (hotKeys: { key: string, page: string }[]) => {
         globalShortcut.unregisterAll()
         // set HotKey
@@ -30,8 +29,6 @@ export class HotKeys {
                     }
             })
         })
-
-
     }
 
 }

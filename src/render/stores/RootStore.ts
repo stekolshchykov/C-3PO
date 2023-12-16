@@ -89,7 +89,6 @@ export class RootStore {
                 key: "load"
             }
         }))
-        console.log("+++history", history)
         if (history) this.history = history
     }
 
@@ -102,7 +101,8 @@ export class RootStore {
     }
 
     setHistory = (text: string) => {
-        this.history.push(text)
+        this.history.push(text.trim())
+        this.history = [...new Set(this.history)]
         window.electronAPI?.history(JSON.stringify({
             type: "history",
             value: {
