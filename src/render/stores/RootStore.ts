@@ -1,5 +1,6 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, reaction} from "mobx";
 import {IConfig, IHotKey, TMainCommand} from "../../type";
+import {translateText} from "./../features/functions";
 
 
 export type RootStoreHydration = {
@@ -40,6 +41,27 @@ export class RootStore {
         window.electronAPI.openPage((value: string) => {
             this.openPage = value
         })
+        // reaction
+        reaction(
+            () => JSON.stringify(this.config),
+            () => {
+                this.translateText()
+                this.saveConfig()
+            }
+        );
+        reaction(
+            () => JSON.stringify(this.translatorText),
+            () => {
+                this.translateText()
+            }
+        );
+    }
+
+    translateText = async () => {
+        //
+        // async (text: string, fromCode: string, toCode: string)
+        const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
+        this.translatorText.to = translatedText
     }
 
 

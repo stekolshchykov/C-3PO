@@ -22,7 +22,9 @@ const Translator = observer(() => {
     // }, [fromText]);
 
     const swapDirectionHandler = () => {
-        // dispatch(translatorSwapDirection())
+        const oldFrom = store.config.translator.from
+        store.config.translator.from = store.config.translator.to
+        store.config.translator.to = oldFrom
     }
 
     const isActiveLanguage = (code: string) => {
@@ -49,7 +51,6 @@ const Translator = observer(() => {
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
             <button className={"volumetricButton capitalize"} onClick={selectFromHandler}>
                 {store?.config?.translator?.from?.name}
-                {/*{fromLanguage.name}*/}
             </button>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
@@ -58,7 +59,6 @@ const Translator = observer(() => {
             </div>
             <button className={"volumetricButton"} onClick={selectToHandler}>
                 {store?.config?.translator?.to?.name}
-                {/*{toLanguage.name}*/}
             </button>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
@@ -68,13 +68,7 @@ const Translator = observer(() => {
                           className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
                           placeholder="from"
                           onChange={e => store.translatorText.from = e.target?.value}/>
-                {/*<textarea*/}
-                {/*    ref={inputFromRef}*/}
-                {/*    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}*/}
-                {/*    placeholder="from"*/}
-                {/*    onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>*/}
                 <TranslatorButtons text={store.translatorText.from} language={store.config.translator.from}/>
-                {/*<TranslatorButtons text={fromText} language={fromLanguage}/>*/}
             </div>
             <div className={"w-full grid grid-cols-[1fr] relative"}>
                 <textarea
@@ -82,13 +76,7 @@ const Translator = observer(() => {
                     placeholder="to"
                     value={store.translatorText.to}
                     disabled={true}/>
-                {/*<textarea*/}
-                {/*    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}*/}
-                {/*    placeholder="to"*/}
-                {/*    value={toText}*/}
-                {/*    disabled={true}/>*/}
                 <TranslatorButtons text={store.translatorText.to} language={store.config.translator.to}/>
-                {/* <TranslatorButtons text={toText} language={toLanguage}/>*/}
             </div>
             {isShowLangList && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-[100%] bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>
