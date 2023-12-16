@@ -69,27 +69,27 @@ body {
 }
 
 
-.volumetricButton {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 180px;
-    border-radius: 20px;
-    border: 1px solid #262626;
-    background: #383838;
-    transition: 0.5s;
+/*.volumetricButton {*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 10px;*/
+/*    width: 180px;*/
+/*    border-radius: 20px;*/
+/*    border: 1px solid #262626;*/
+/*    background: #383838;*/
+/*    transition: 0.5s;*/
 
-    &:hover {
-        border: 1px solid #262626;
-        background: #1f1f1f;
-    }
+/*    &:hover {*/
+/*        border: 1px solid #262626;*/
+/*        background: #1f1f1f;*/
+/*    }*/
 
-    &:active, &.active {
-        border-radius: 20px;
-        border: 1px solid #F8CB5C;
-        background-color: #F8CB5C;
-        color: #262626;
-    }
-}
+/*    &:active, &.active {*/
+/*        border-radius: 20px;*/
+/*        border: 1px solid #F8CB5C;*/
+/*        background-color: #F8CB5C;*/
+/*        color: #262626;*/
+/*    }*/
+/*}*/
 
 
 .icon {

@@ -5,6 +5,9 @@ import {languages} from "./languageList";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import TranslatorButtons from "../../components/TranslatorButtons";
+import Btn from "./../../UI/Btn";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 
 const Translator = observer(() => {
 
@@ -48,18 +51,32 @@ const Translator = observer(() => {
     }, [inputFromRef])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
-        <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
-            <button className={"volumetricButton capitalize"} onClick={selectFromHandler}>
-                {store?.config?.translator?.from?.name}
-            </button>
+        {/*<div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>*/}
+        <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
+            {/*<button className={"volumetricButton capitalize"} onClick={selectFromHandler}>*/}
+            {/*    {store?.config?.translator?.from?.name}*/}
+            {/*</button>*/}
+
+            <Btn type={"normal"} size={1} clickHandler={selectFromHandler}>
+                <div className={"capitalize"}>
+                    {store?.config?.translator?.from?.name}
+                </div>
+                <FontAwesomeIcon icon={faCaretDown}/>
+            </Btn>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
                     <SVG type={"switchArrow"}/>
                 </div>
             </div>
-            <button className={"volumetricButton"} onClick={selectToHandler}>
-                {store?.config?.translator?.to?.name}
-            </button>
+            {/*<button className={"volumetricButton"} onClick={selectToHandler}>*/}
+            {/*    {store?.config?.translator?.to?.name}*/}
+            {/*</button>*/}
+            <Btn type={"normal"} size={1} clickHandler={selectToHandler}>
+                <div className={"capitalize"}>
+                    {store?.config?.translator?.to?.name}
+                </div>
+                <FontAwesomeIcon icon={faCaretDown}/>
+            </Btn>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
             <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
