@@ -83,20 +83,10 @@ const Settings = observer(() => {
             {/* TODO: auto fill */}
         </section>
 
-        <section>
-            {/*
-                TODO: save
-                TODO: exit
-            */}
-
-            <button
-                onClick={saveHandler}
-                className="text-base p-3 border-2 border-red border-solid rounded text-yellow hover:bg-yellow transition hover:text-grayDark">
-                Save
-            </button>
+        <section className={""}>
             <button
                 onClick={() => store.mainCommand("quitFromAppHandler")}
-                className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark">
+                className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark w-full">
                 Quit
             </button>
 

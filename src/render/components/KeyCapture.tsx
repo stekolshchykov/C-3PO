@@ -42,13 +42,13 @@ const KeyCapture = observer(({onChangeHandler, hotKeys}: IProps) => {
         setKeys(hotKeys)
     }, []);
 
-    const baseClasses = "transition h-[65.5px] border rounded grid grid-cols-[max-content_min-content] w-[100%] p-2 justify-between align-middle"
+    const baseClasses = "transition h-[52px] border rounded grid grid-cols-[max-content_min-content] w-[100%] p-2 justify-between align-middle"
     const activeClasses = baseClasses + " border-yellow"
 
     const noKeysBaseClasses = "transition px-3 py-0 list-none flex align-middle gap-2 text-sm m-auto"
     const activeNoKeysBaseClasses = noKeysBaseClasses + " text-yellow"
 
-    const keyBaseClasses = "transition px-6 py-3 m-0 border rounded"
+    const keyBaseClasses = "transition px-4 py-1 m-0 border rounded flex align-middle items-center"
     const activeKeyBaseClasses = keyBaseClasses + " border-yellow text-yellow"
 
     const clear = () => {
@@ -59,7 +59,6 @@ const KeyCapture = observer(({onChangeHandler, hotKeys}: IProps) => {
     return <div
         onClick={() => setActive(!active)}
         onMouseLeave={() => {
-            console.log("onMouseLeave")
             setActive(false)
         }}
         className={(keys.length < 2 && active) ? activeClasses : baseClasses}>
@@ -78,7 +77,7 @@ const KeyCapture = observer(({onChangeHandler, hotKeys}: IProps) => {
             <FontAwesomeIcon
                 icon={faXmark}
                 // color={"#494949"}
-                size={"2x"}
+                size={"1x"}
                 onClick={() => setKeys([])}/>
         </div>
     </div>
