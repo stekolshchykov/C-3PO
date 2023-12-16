@@ -58,8 +58,6 @@ export class RootStore {
     }
 
     translateText = async () => {
-        //
-        // async (text: string, fromCode: string, toCode: string)
         const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
         this.translatorText.to = translatedText
     }
@@ -132,7 +130,6 @@ export class RootStore {
         }))
         if (history) this.history = history
     }
-
 
     mainCommand = (command: TMainCommand) => {
         window?.electronAPI?.mainCommand(JSON.stringify({

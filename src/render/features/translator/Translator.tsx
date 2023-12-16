@@ -15,12 +15,6 @@ const Translator = observer(() => {
     const [languagesListStatus, setLanguageListStatus] = useState<null | "from" | "to">(null)
     const [inputSearchLanguage, setInputSearchLanguage] = useState("")
 
-    // useEffect(() => {
-    //     if (fromText.trim() !== inputFromRef?.current?.value.trim()) {
-    //         inputFromRef!.current!.value = fromText
-    //     }
-    // }, [fromText]);
-
     const swapDirectionHandler = () => {
         const oldFrom = store.config.translator.from
         store.config.translator.from = store.config.translator.to
@@ -31,11 +25,6 @@ const Translator = observer(() => {
         return store.config.translator.from.code === code || store.config.translator.to.code === code
     }
 
-    // const selectNewLanguage = (newLanguage: ILanguage) => {
-    //     dispatch(languagesListStatus === "from" ? translatorSetLanguageFrom(newLanguage) : translatorSetLanguageTo(newLanguage))
-    //     setLanguageListStatus(null)
-    // }
-
     const selectToHandler = () => {
         setIsShowLangList(!isShowLangList)
         languagesListStatus === "to" ? setLanguageListStatus(null) : setLanguageListStatus("to")
@@ -45,7 +34,6 @@ const Translator = observer(() => {
         setIsShowLangList(!isShowLangList)
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
     }
-
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
