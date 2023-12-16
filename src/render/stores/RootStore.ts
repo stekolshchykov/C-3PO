@@ -84,21 +84,13 @@ export class RootStore {
     }
 
     addHotKey = (key: IHotKey[], page: string) => {
-        this.config.hotKeys = []
-        console.log("+++addHotKey", key, page)
-
-        const clearedHotKeys = this.config.hotKeys.filter(function (e) {
-            return e.page !== page
-        })
+        let newKey: null | string = null
         if (key.length > 0) {
-            const keyStr = key[0].name + "+" + key[1].name
-            clearedHotKeys.push({key: keyStr, page})
+            newKey = `${key[0].name}+${key[1].name}`
+            this.config.hotKeys.push({key: newKey, page})
         }
-        this.config.hotKeys = clearedHotKeys
-        console.log("+++! clearedHotKeys ", clearedHotKeys)
-        console.log("+++! clearedHotKeys ", JSON.stringify(clearedHotKeys))
-        console.log("+++! this.config.hotKeys ", this.config.hotKeys)
-        console.log("+++! this.config.hotKeys ", JSON.stringify(this.config.hotKeys))
+        this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.key, v])).values()]
+        this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.page, v])).values()]
         // this.saveConfig()
     }
 

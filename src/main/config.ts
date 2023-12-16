@@ -32,9 +32,7 @@ class Config {
         const config: IConfig = await this.systemStore.get("config")
         const hotKeys = config?.hotKeys
         if (hotKeys) {
-            hotKeys.forEach(hk => {
-                this.hotKeys.set(hk.key, hk.page)
-            })
+            this.hotKeys.set(hotKeys)
         }
     }
 

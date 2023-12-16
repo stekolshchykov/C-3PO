@@ -36,7 +36,6 @@ const Settings = observer(() => {
     }
 
     const saveHandler = () => {
-        console.log("saveHandler")
         store.saveConfig()
     }
     // store.config.hotKeys.forEach(e => {
@@ -72,24 +71,20 @@ const Settings = observer(() => {
 
         <section>
             <div className={"text-2xl"}>Translator</div>
-            <KeyCapture hotKeys={translatorHotKey} onChangeHandler={(e) => {
-                console.log("++++onChangeHandler", e)
-                store.addHotKey(e, "translator")
-            }
-            }/>
+            <KeyCapture hotKeys={translatorHotKey} onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
+            {/*
+                TODO: auto fill
+            */}
+        </section>
+
+        <section>
+            <div className={"text-2xl"}>Context</div>
+            <KeyCapture hotKeys={contextHotKey} onChangeHandler={(e) => store.addHotKey(e, "context")}/>
             {/*
                 TODO: hotkey
                 TODO: auto fill
             */}
         </section>
-
-        {/*<section>*/}
-        {/*    <div className={"text-2xl"}>Context</div>*/}
-        {/*    /!**/}
-        {/*        TODO: hotkey*/}
-        {/*        TODO: auto fill*/}
-        {/*    *!/*/}
-        {/*</section>*/}
 
         {/*<section>*/}
         {/*    <div className={"text-2xl"}>Synonyms</div>*/}
