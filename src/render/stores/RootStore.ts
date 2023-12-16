@@ -91,7 +91,7 @@ export class RootStore {
         }
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.key, v])).values()]
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.page, v])).values()]
-        // this.saveConfig()
+        this.saveConfig()
     }
 
 
