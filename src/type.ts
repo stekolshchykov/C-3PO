@@ -42,7 +42,7 @@ export type IStoreDataObjSet = {
 
 export interface IHotKey {
     name: string
-    code: string
+    code: string | number
 }
 
 export enum EIPCKeys {

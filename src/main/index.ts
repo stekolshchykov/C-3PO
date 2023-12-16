@@ -1,13 +1,12 @@
-import {app, BrowserWindow, globalShortcut, ipcMain, nativeImage, Tray} from 'electron';
+import {app, BrowserWindow, ipcMain, nativeImage, Tray} from 'electron';
 import AutoLaunch from "auto-launch";
 import * as path from "path";
-
-import config from "./config";
+// import {defaultConfig} from "./config";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {IAutoLaunchData, IConfig} from "../type";
-import {showWindow} from "../main/function";
+import {IAutoLaunchData} from "../type";
+import Config from "../main/config";
 
 const appAutoLauncher = new AutoLaunch({
     name: 'C-3PO',
@@ -26,11 +25,12 @@ let tray: Tray | null = null;
 let dockedWindowMode = false
 let hotKeys: HotKeys
 let systemStore: SystemStore
+let config: Config
 
 const createWindow = (): void => {
     mainWindow = new BrowserWindow({
-        height: config.height,
-        width: config.width,
+        height: 600,
+        width: 730,
         // icon: "assets/trayIcon.png",
         skipTaskbar: true,
         title: "C-3PO",
@@ -60,22 +60,22 @@ const createWindow = (): void => {
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
 
-    hotKeys = new HotKeys(app, mainWindow, tray)
     systemStore = new SystemStore()
 
     // TODO:
     // mainWindow.webContents.send('open-page', "context")
+
+    hotKeys = new HotKeys(app, mainWindow, tray)
+    config = new Config(systemStore, ipcMain, hotKeys)
 };
 
 hideInTray(app);
 ipcMain.on('windowBlur', () => {
-    // console.log("windowBlur");
     if (!dockedWindowMode)
         mainWindow?.hide()
 });
 
 ipcMain.on('windowFocus', () => {
-    // console.log("windowFocus");
     mainWindow?.show()
 });
 
@@ -105,16 +105,16 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 
 ipcMain.handle('store', async (_, data) => {
     try {
-        const dataObj = JSON.parse(data)
+        // const dataObj = JSON.parse(data)
 
-        // config
-        if (dataObj.type === "config") {
-            if (dataObj.value.key === "save") {
-                systemStore.set("config", dataObj.value.value)
-            } else if (dataObj.value.key === "load") {
-                return systemStore.get("config")
-            }
-        }
+        // // config
+        // if (dataObj.type === "config") {
+        //     if (dataObj.value.key === "save") {
+        //         systemStore.set("config", dataObj.value.value)
+        //     } else if (dataObj.value.key === "load") {
+        //         return systemStore.get("config")
+        //     }
+        // }
         ////////////////////////////////////////////////////////
 
         // if (dataObj.type === "quitFromAppHandler") {
@@ -169,6 +169,7 @@ ipcMain.on('dockedWindowModeOff', () => {
 
 app.on('ready', createWindow);
 
+
 // set hotkeys when app ready
 app.on('ready', async () => {
 
@@ -178,15 +179,15 @@ app.on('ready', async () => {
     //     const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
     //     key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
     // }
-    const config: IConfig = await systemStore.get("config")
-    config.hotKeys.forEach(e => {
-        globalShortcut.register(e.key, () => {
-            if (mainWindow && tray) {
-                mainWindow.webContents.send('open-page', e.page)
-                showWindow(tray, mainWindow);
-            }
-        })
-    })
+    // const config: IConfig = await systemStore.get("config")
+    // config.hotKeys.forEach(e => {
+    //     globalShortcut.register(e.key, () => {
+    //         if (mainWindow && tray) {
+    //             mainWindow.webContents.send('open-page', e.page)
+    //             showWindow(tray, mainWindow);
+    //         }
+    //     })
+    // })
 })
 
 

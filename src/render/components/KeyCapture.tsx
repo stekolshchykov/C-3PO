@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useAppDispatch, useAppSelector} from "../hooks";
-import {setTranslatorHotKey} from "../features/settings/settingsSlice";
 import {IHotKey} from "../../type";
+import {observer} from "mobx-react-lite";
+
+interface IProps {
+    hotKeys: IHotKey[]
+    onChangeHandler: (keys: IHotKey[]) => void
+}
 
 
-const KeyCapture = () => {
-
-    const dispatch = useAppDispatch()
-
-    const translatorHotKey = useAppSelector((state) => state.settings.translatorHotKey)
+const KeyCapture = observer(({onChangeHandler, hotKeys}: IProps) => {
 
     const [keys, setKeys] = useState<IHotKey[]>([])
     const [active, setActive] = useState<boolean>(false)
@@ -35,11 +35,11 @@ const KeyCapture = () => {
     }, [keys, active]);
 
     useEffect(() => {
-        dispatch(setTranslatorHotKey(keys))
+        if (keys.length === 2) onChangeHandler(keys)
     }, [keys]);
 
     useEffect(() => {
-        setKeys(translatorHotKey)
+        setKeys(hotKeys)
     }, []);
 
     const baseClasses = "transition h-[65.5px] border rounded grid grid-cols-[max-content_min-content] w-[100%] p-2 justify-between align-middle"
@@ -51,27 +51,37 @@ const KeyCapture = () => {
     const keyBaseClasses = "transition px-6 py-3 m-0 border rounded"
     const activeKeyBaseClasses = keyBaseClasses + " border-yellow text-yellow"
 
+    const clear = () => {
+        setKeys([])
+        onChangeHandler([])
+    }
+
     return <div
         onClick={() => setActive(!active)}
+        onMouseLeave={() => {
+            console.log("onMouseLeave")
+            setActive(false)
+        }}
         className={(keys.length < 2 && active) ? activeClasses : baseClasses}>
         {keys.length > 0 && <ul className={"p-0 m-0 list-none grid grid-cols-[min-content_min-content] gap-2"}>
             {keys.map((key, i) =>
-                <li key={i}
-                    className={active && keys.length < 2 ? activeKeyBaseClasses : keyBaseClasses}>{key.name}</li>
+                <li key={i} className={active && keys.length < 2 ? activeKeyBaseClasses : keyBaseClasses}>
+                    {key.name}
+                </li>
             )}
         </ul>}
         {keys.length == 0 &&
             <div className={active ? activeNoKeysBaseClasses : noKeysBaseClasses}>
                 Click on this field and then press a desired shortcut
             </div>}
-        <div className={"flex align-middle m-auto cursor-pointer"}>
+        <div className={"flex align-middle m-auto cursor-pointer"} onClick={() => clear()}>
             <FontAwesomeIcon
                 icon={faXmark}
-                color={"#494949"}
+                // color={"#494949"}
                 size={"2x"}
                 onClick={() => setKeys([])}/>
         </div>
     </div>
-};
+})
 
 export default KeyCapture;
