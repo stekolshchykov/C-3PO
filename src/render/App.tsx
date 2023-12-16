@@ -1,9 +1,6 @@
 import React, {useEffect} from "react"
 import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
 import Translator from "./features/translator/Translator";
-import {useAppDispatch} from "./hooks";
-import {EWindowEvent} from "./features/root/rootSlice";
-import {callWindowEvent, init} from "./features/root/actions";
 import Menu from "./features/menu/Menu";
 import Settings from "./features/settings/Settings";
 import History from "./features/history/History";
@@ -18,7 +15,6 @@ import Nav from "./features/nav/Nav";
 
 export const App = observer(() => {
 
-    const dispatch = useAppDispatch()
     const store = useRootStore();
 
     useEffect(() => {
@@ -55,7 +51,7 @@ export const App = observer(() => {
     // windowHide
     useEffect(() => {
         const handleFocus = () => {
-            dispatch(callWindowEvent(EWindowEvent.focus))
+            // dispatch(callWindowEvent(EWindowEvent.focus))
             window?.electronAPI?.windowFocus()
 
             navigator.clipboard.readText().then(e => {
@@ -84,7 +80,7 @@ export const App = observer(() => {
     }, []);
 
     useEffect(() => {
-        dispatch(init())
+        // dispatch(init())
     }, [])
 
 

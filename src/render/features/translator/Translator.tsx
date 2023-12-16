@@ -1,58 +1,55 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import SVG from "../../components/SVG";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {
-    translatorSetFromTextAndTranslate,
-    translatorSetLanguageFrom,
-    translatorSetLanguageTo,
-    translatorSwapDirection
-} from "./actions";
-import {ILanguage, languages} from "./languageList";
+
+import {languages} from "./languageList";
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "../../providers/RootStoreProvider";
 import TranslatorButtons from "../../components/TranslatorButtons";
 
-const Translator = () => {
+const Translator = observer(() => {
 
-    const dispatch = useAppDispatch()
-
+    const store = useRootStore();
     const inputFromRef = useRef<HTMLTextAreaElement>(null);
 
+    const [isShowLangList, setIsShowLangList] = useState(false)
     const [languagesListStatus, setLanguageListStatus] = useState<null | "from" | "to">(null)
     const [inputSearchLanguage, setInputSearchLanguage] = useState("")
 
-    const toText = useAppSelector((state) => state.translator.toText)
-    const fromText = useAppSelector((state) => state.translator.fromText)
-    const fromLanguage = useAppSelector((state) => state.translator.fromLanguage)
-    const toLanguage = useAppSelector((state) => state.translator.toLanguage)
-
-    useEffect(() => {
-        if (fromText.trim() !== inputFromRef?.current?.value.trim()) {
-            inputFromRef!.current!.value = fromText
-        }
-    }, [fromText]);
+    // useEffect(() => {
+    //     if (fromText.trim() !== inputFromRef?.current?.value.trim()) {
+    //         inputFromRef!.current!.value = fromText
+    //     }
+    // }, [fromText]);
 
     const swapDirectionHandler = () => {
-        dispatch(translatorSwapDirection())
+        // dispatch(translatorSwapDirection())
     }
 
     const isActiveLanguage = (code: string) => {
-        return fromLanguage.code === code || toLanguage.code === code
+        return store.config.translator.from.code === code || store.config.translator.to.code === code
     }
 
-    const selectNewLanguage = (newLanguage: ILanguage) => {
-        dispatch(languagesListStatus === "from" ? translatorSetLanguageFrom(newLanguage) : translatorSetLanguageTo(newLanguage))
-        setLanguageListStatus(null)
-    }
+    // const selectNewLanguage = (newLanguage: ILanguage) => {
+    //     dispatch(languagesListStatus === "from" ? translatorSetLanguageFrom(newLanguage) : translatorSetLanguageTo(newLanguage))
+    //     setLanguageListStatus(null)
+    // }
 
-    const selectToHandler = () =>
+    const selectToHandler = () => {
+        setIsShowLangList(!isShowLangList)
         languagesListStatus === "to" ? setLanguageListStatus(null) : setLanguageListStatus("to")
-    const selectFromHandler = () =>
+    }
+
+    const selectFromHandler = () => {
+        setIsShowLangList(!isShowLangList)
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
+    }
 
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>
             <button className={"volumetricButton capitalize"} onClick={selectFromHandler}>
-                {fromLanguage.name}
+                {store?.config?.translator?.from?.name}
+                {/*{fromLanguage.name}*/}
             </button>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
@@ -60,27 +57,40 @@ const Translator = () => {
                 </div>
             </div>
             <button className={"volumetricButton"} onClick={selectToHandler}>
-                {toLanguage.name}
+                {store?.config?.translator?.to?.name}
+                {/*{toLanguage.name}*/}
             </button>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
             <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
-                <textarea
-                    ref={inputFromRef}
-                    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
-                    placeholder="from"
-                    onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>
-                <TranslatorButtons text={fromText} language={fromLanguage}/>
+                      <textarea
+                          ref={inputFromRef}
+                          className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
+                          placeholder="from"
+                          onChange={e => store.translatorText.from = e.target?.value}/>
+                {/*<textarea*/}
+                {/*    ref={inputFromRef}*/}
+                {/*    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}*/}
+                {/*    placeholder="from"*/}
+                {/*    onChange={e => dispatch(translatorSetFromTextAndTranslate(e.target.value))}/>*/}
+                <TranslatorButtons text={store.translatorText.from} language={store.config.translator.from}/>
+                {/*<TranslatorButtons text={fromText} language={fromLanguage}/>*/}
             </div>
             <div className={"w-full grid grid-cols-[1fr] relative"}>
-               <textarea
-                   className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
-                   placeholder="to"
-                   value={toText}
-                   disabled={true}/>
-                <TranslatorButtons text={toText} language={toLanguage}/>
+                <textarea
+                    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
+                    placeholder="to"
+                    value={store.translatorText.to}
+                    disabled={true}/>
+                {/*<textarea*/}
+                {/*    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}*/}
+                {/*    placeholder="to"*/}
+                {/*    value={toText}*/}
+                {/*    disabled={true}/>*/}
+                <TranslatorButtons text={store.translatorText.to} language={store.config.translator.to}/>
+                {/* <TranslatorButtons text={toText} language={toLanguage}/>*/}
             </div>
-            {languagesListStatus && <div
+            {isShowLangList && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-[100%] bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>
                 <input
                     value={inputSearchLanguage}
@@ -91,8 +101,12 @@ const Translator = () => {
                     {languagesListStatus === "from" && <>
                         <li className={"m-auto"}>
                             <button
-                                onClick={() => selectNewLanguage({code: "Auto", name: "Auto"})}
-                                className={`volumetricButton ${isActiveLanguage("Auto") && "active"}`}>
+                                onClick={() => {
+                                    setIsShowLangList(false)
+                                    store.config.translator.from = {code: "Auto", name: "Auto"}
+                                }}
+                                className={`volumetricButton ${isActiveLanguage("Auto") && "active"}`}
+                            >
                                 Auto
                             </button>
                         </li>
@@ -101,8 +115,13 @@ const Translator = () => {
                         l.name.toLowerCase().includes(inputSearchLanguage.toLowerCase().trim())
                             ? <li className={"m-auto"} key={k}>
                                 <button
-                                    onClick={() => selectNewLanguage(l)}
-                                    className={`volumetricButton ${isActiveLanguage(l.code) && "active"}`}>
+                                    onClick={() => {
+                                        setIsShowLangList(false)
+                                        if (languagesListStatus === "from") store.config.translator.from = l
+                                        else if (languagesListStatus === "to") store.config.translator.to = l
+                                    }}
+                                    className={`volumetricButton ${isActiveLanguage(l.code) && "active"}`}
+                                >
                                     {l.name}
                                 </button>
                             </li>
@@ -112,6 +131,6 @@ const Translator = () => {
             </div>}
         </div>
     </div>
-};
+})
 
 export default Translator;

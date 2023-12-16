@@ -1,14 +1,17 @@
 import {SystemStore} from "./SystemStore";
 import {HotKeys} from "./HotKeys";
 import {IConfig} from "../type";
+import AutoLaunch from "auto-launch";
 
 class Config {
 
     systemStore: SystemStore
     ipcMain: Electron.IpcMain
     hotKeys: HotKeys
+    appAutoLauncher: AutoLaunch
 
-    constructor(systemStore: SystemStore, ipcMain: Electron.IpcMain, hotKeys: HotKeys) {
+    constructor(systemStore: SystemStore, ipcMain: Electron.IpcMain, hotKeys: HotKeys, appAutoLauncher: AutoLaunch) {
+        this.appAutoLauncher = appAutoLauncher
         this.hotKeys = hotKeys
         this.systemStore = systemStore
         this.ipcMain = ipcMain
@@ -31,8 +34,16 @@ class Config {
     needUpdate = async () => {
         const config: IConfig = await this.systemStore.get("config")
         const hotKeys = config?.hotKeys
-        if (hotKeys) {
-            this.hotKeys.set(hotKeys)
+        if (hotKeys) this.hotKeys.set(hotKeys)
+        //
+        this.autoLaunch()
+    }
+
+    private autoLaunch = async () => {
+        const config: IConfig = await this.systemStore.get("config")
+        if ((config?.autoStart !== null || config?.autoStart !== undefined) && this.appAutoLauncher) {
+            if (config.autoStart === true) this.appAutoLauncher.enable()
+            else if (config.autoStart === false) this.appAutoLauncher.disable()
         }
     }
 

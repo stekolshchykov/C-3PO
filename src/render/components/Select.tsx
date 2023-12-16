@@ -6,7 +6,7 @@ const Select = (props: { initValue: boolean, onClick: (status: boolean) => void 
 
     const baseClasses = "transition-all w-[80px] h-[40px] rounded flex items-center px-2 cursor-pointer border border-1"
     const selectedClasses = baseClasses + " border-yellow justify-end"
-    const notSelectedClasses = baseClasses + "  border-grayLight"
+    const notSelectedClasses = baseClasses + "  border-white"
 
     return <div
         className={selected ? selectedClasses : notSelectedClasses}
@@ -14,7 +14,7 @@ const Select = (props: { initValue: boolean, onClick: (status: boolean) => void 
             setSelected(!selected)
             props.onClick(!selected)
         }}>
-        <div className={`transition-all w-[28px] h-[28px] rounded-full ${selected ? "bg-yellow" : "bg-grayLight"}`}>
+        <div className={`transition-all w-[28px] h-[28px] rounded-full ${selected ? "bg-yellow" : "bg-white"}`}>
         </div>
     </div>
 };

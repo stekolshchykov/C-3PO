@@ -57,6 +57,11 @@ export interface IConfig {
         key: string
         page: string
     }[]
+    translator: {
+        from: { name: string, code: string }
+        to: { name: string, code: string }
+    }
+    autoStart: boolean
 }
 
 export type TMainCommand = "quitFromAppHandler"

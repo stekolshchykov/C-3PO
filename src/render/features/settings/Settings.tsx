@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import KeyCapture from "../../components/KeyCapture";
 import {hotKeyStringToObj} from "./funtions";
+import Select from "../../components/Select";
 
 const Settings = observer(() => {
 
@@ -41,13 +42,20 @@ const Settings = observer(() => {
     const historyHotKey = hotKeyStringToObj(store.config, "history")
     const settingsHotKey = hotKeyStringToObj(store.config, "settings")
 
+
     return <PageLayout title={"Settings"}>
 
         <section>
             <div className={"text-2xl"}>General</div>
+            <Select initValue={store.config.autoStart} onClick={(e) => {
+                if (store.config && store.config.autoStart)
+                    store.config.autoStart = e
+            }}/>
             {/*
                 TODO: windows size
                 TODO: position mode
+                TODO: auto strat
+                TODO: auto save to clipboard
             */}
         </section>
 

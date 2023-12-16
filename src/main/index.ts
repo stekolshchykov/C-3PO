@@ -70,7 +70,7 @@ const createWindow = (): void => {
     // mainWindow.webContents.send('open-page', "context")
 
     hotKeys = new HotKeys(app, mainWindow, tray)
-    config = new Config(systemStore, ipcMain, hotKeys)
+    config = new Config(systemStore, ipcMain, hotKeys, appAutoLauncher)
     mainCommand = new MainCommand(systemStore, ipcMain, app)
     history = new History(systemStore, ipcMain)
 };
@@ -86,9 +86,7 @@ ipcMain.on('windowFocus', () => {
 });
 
 ipcMain.handle('autoLaunch', async (_, data) => {
-
     const dataObj: IAutoLaunchData = JSON.parse(data)
-
     if (dataObj.type === "getStatus") {
         let result = false
         await appAutoLauncher.isEnabled()
@@ -109,53 +107,6 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 
 })
 
-ipcMain.handle('store', async (_, data) => {
-    try {
-        // const dataObj = JSON.parse(data)
-
-        // // config
-        // if (dataObj.type === "config") {
-        //     if (dataObj.value.key === "save") {
-        //         systemStore.set("config", dataObj.value.value)
-        //     } else if (dataObj.value.key === "load") {
-        //         return systemStore.get("config")
-        //     }
-        // }
-        ////////////////////////////////////////////////////////
-
-        // if (dataObj.type === "quitFromAppHandler") {
-        //     app.quit();
-        // } else if (dataObj.type === "historyClear") {
-        //     systemStore.set("history", [])
-        // } else if (dataObj.type === "historyGetAll") {
-        //     const historyData = await systemStore.get("history")
-        //     return historyData || []
-        // } else if (dataObj.type === "historySet") {
-        //     let historyData: string[] = await systemStore.get("history") || []
-        //     if (historyData && dataObj?.value) {
-        //         historyData.push(dataObj?.value)
-        //     }
-        //     // historyData = historyData.filter((value, index) => value !== historyData[index - 1])
-        //     historyData = [...new Set(historyData)];
-        //     systemStore.set("history", historyData)
-        //     return true
-        // }
-        // if (dataObj.type === "set") {
-        //     const valueObj: IStoreDataObjSet = JSON.parse(dataObj.value)
-        //     if (valueObj.key === EIPCKeys.translatorHotKey) {
-        //         const translatorHotKeyObj = JSON.parse(valueObj.value)
-        //         const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-        //         key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
-        //     }
-        // }
-    } catch (e) { /* empty */
-        // console.log("error", e)
-    }
-
-
-    return systemStore.init(data, ipcMain, mainWindow!)
-
-})
 
 ipcMain.on('dockedWindowModeOn', () => {
     // console.log("dockedWindowModeOn");
@@ -174,28 +125,6 @@ ipcMain.on('dockedWindowModeOff', () => {
 
 
 app.on('ready', createWindow);
-
-
-// set hotkeys when app ready
-app.on('ready', async () => {
-
-    // const translatorHotKey = await systemStore.get(EIPCKeys.translatorHotKey)
-    // if (translatorHotKey) {
-    //     const translatorHotKeyObj = JSON.parse(translatorHotKey)
-    //     const key = translatorHotKeyObj.map((hk: any) => hk.name).join('+')
-    //     key && translatorHotKeyObj.length > 1 && hotKeys.setHideShow(key)
-    // }
-    // const config: IConfig = await systemStore.get("config")
-    // config.hotKeys.forEach(e => {
-    //     globalShortcut.register(e.key, () => {
-    //         if (mainWindow && tray) {
-    //             mainWindow.webContents.send('open-page', e.page)
-    //             showWindow(tray, mainWindow);
-    //         }
-    //     })
-    // })
-})
-
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

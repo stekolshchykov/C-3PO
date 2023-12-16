@@ -14,9 +14,19 @@ export class RootStore {
     activeEvent = 0
     openPage = ""
     config: IConfig = {
-        hotKeys: []
+        hotKeys: [],
+        autoStart: false,
+        translator: {
+            from: {name: "English", code: "en"},
+            to: {name: "Russian", code: "ru"}
+        }
     }
     history: string[] = []
+
+    translatorText = {
+        from: "",
+        to: ""
+    }
 
     constructor() {
         makeAutoObservable(this);
@@ -79,7 +89,16 @@ export class RootStore {
                 key: "load"
             }
         }))
-        if (config) this.config = config
+        if (config) this.config = this.setConfigDefaultValue(config)
+    }
+    setConfigDefaultValue = (config: IConfig) => {
+        if (!config?.translator?.to || !config.translator.from) {
+            config.translator = {
+                from: {name: "English", code: "en"},
+                to: {name: "Russian", code: "ru"}
+            }
+        }
+        return config
     }
 
     loadHistory = async () => {
@@ -91,6 +110,7 @@ export class RootStore {
         }))
         if (history) this.history = history
     }
+
 
     mainCommand = (command: TMainCommand) => {
         window?.electronAPI?.mainCommand(JSON.stringify({
