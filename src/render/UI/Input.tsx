@@ -13,7 +13,7 @@ interface Props {
 const Input = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
 
     const store = useRootStore();
-    const [text, setText] = useState(store.clipboard)
+    const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
 
     useEffect(() => {
         if (isDefaultTextFromClipboard) {

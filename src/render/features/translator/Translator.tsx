@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SVG from "../../components/SVG";
 
 import {languages} from "./languageList";
@@ -34,6 +34,14 @@ const Translator = observer(() => {
         setIsShowLangList(!isShowLangList)
         languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
     }
+
+    useEffect(() => {
+        if (store.config?.autofill) {
+            // @ts-ignore
+            inputFromRef?.current?.value = store.clipboard
+
+        }
+    }, [inputFromRef])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>

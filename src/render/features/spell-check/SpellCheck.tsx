@@ -4,6 +4,8 @@ import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "../../providers/RootStoreProvider";
 
 interface ICorrection {
     explanation?: string,
@@ -15,12 +17,13 @@ interface ICorrection {
     }[]
 }
 
-const SpellCheck = () => {
+const SpellCheck = observer(() => {
 
     const [text, setText] = useState<string>("")
     const [corrections, setCorrections] = useState<ICorrection[]>([])
     const [lang, setLang] = useState("english")
     const [selectMode, setSelectMode] = useState<boolean>(false)
+    const store = useRootStore();
 
     const spellCheckHandler = async () => {
         try {
@@ -49,7 +52,8 @@ const SpellCheck = () => {
         <div className={"flex-row items-center gap-2"}>
 
             <Textarea
-                isDefaultTextFromClipboard={true}
+                isDefaultTextFromClipboard={store.config?.autofill}
+                // isDefaultTextFromClipboard={false}
                 rows={4}
                 placeholder={"Enter expression"}
                 onChange={(e) => setText(e)}/>
@@ -92,6 +96,6 @@ const SpellCheck = () => {
             </div>
         </div>
     </div>
-}
+})
 
 export default SpellCheck

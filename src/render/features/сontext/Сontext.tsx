@@ -1,18 +1,20 @@
 import React, {useState} from "react"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight, faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {observer} from "mobx-react-lite";
 import {availableLang, reverso} from "../../reverso";
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {useRootStore} from "../../providers/RootStoreProvider";
 
-const Context = () => {
+const Context = observer(() => {
 
     const [text, setText] = useState("")
     const [selectMode, setSelectMode] = useState<null | "from" | "to">(null)
     const [langFrom, setLangFrom] = useState("russian")
     const [langTo, setLangTo] = useState("english")
-
     const [context, setContext] = useState<{ source: string, target: string }[]>([])
+    const store = useRootStore();
 
     const selectModeHandler = (l: null | "from" | "to") => {
         setSelectMode(selectMode !== l ? l : null)
@@ -50,7 +52,7 @@ const Context = () => {
     return <div className={"px-2 pt-4 grid grid-rows-[max-content_max-content] overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
-                isDefaultTextFromClipboard={true}
+                isDefaultTextFromClipboard={store.config?.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}
@@ -97,6 +99,6 @@ const Context = () => {
         </div>
 
     </div>
-}
+})
 
 export default Context

@@ -4,13 +4,16 @@ import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
+import {observer} from "mobx-react-lite";
+import {useRootStore} from "../../providers/RootStoreProvider";
 
-const Synonyms = () => {
+const Synonyms = observer(() => {
 
     const [text, setText] = useState("")
     const [lang, setLang] = useState("english")
     const [selectMode, setSelectMode] = useState<boolean>(false)
     const [synonyms, setSynonyms] = useState<string[]>([])
+    const store = useRootStore();
 
     const getSynonymsHandler = async () => {
         try {
@@ -34,7 +37,7 @@ const Synonyms = () => {
     return <div className={"px-2 pt-4 overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
-                isDefaultTextFromClipboard={true}
+                isDefaultTextFromClipboard={store.config?.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}
@@ -71,6 +74,6 @@ const Synonyms = () => {
                 </ul>}
         </div>
     </div>
-}
+})
 
 export default Synonyms

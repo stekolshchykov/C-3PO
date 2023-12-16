@@ -45,16 +45,30 @@ const Settings = observer(() => {
 
     return <PageLayout title={"Settings"}>
 
-        <section>
-            <div className={"text-2xl"}>General</div>
-            <Select initValue={store.config.autoStart} onClick={(e) => {
-                if (store.config && store.config.autoStart)
-                    store.config.autoStart = e
-            }}/>
+        <section className={"grid gap-3"}>
+            <div className={"text-2xl mb-2"}>General</div>
+            <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div>
+                    <div className={"text-lg"}>Auto Load on Startup</div>
+                    <div className={"text-sm"}>Enable automatic loading on startup</div>
+                </div>
+                <div className={"flex align-middle m-auto"}>
+                    <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
+                </div>
+            </div>
+            <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div>
+                    <div className={"text-lg"}>Clipboard Autofill</div>
+                    <div className={"text-sm"}>Automatically populates fields from clipboard.</div>
+                </div>
+                <div className={"flex align-middle m-auto"}>
+                    <Select initValue={store.config.autofill} onClick={(e) => store.config.autofill = e}/>
+                </div>
+            </div>
+
             {/*
                 TODO: windows size
                 TODO: position mode
-                TODO: auto strat
                 TODO: auto save to clipboard
             */}
         </section>

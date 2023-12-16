@@ -44,7 +44,7 @@ const Conjugation = observer(() => {
     return <div className={"px-2 pt-4 overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
-                isDefaultTextFromClipboard={true}
+                isDefaultTextFromClipboard={store.config?.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}

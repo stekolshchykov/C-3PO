@@ -17,6 +17,7 @@ export class RootStore {
     config: IConfig = {
         hotKeys: [],
         autoStart: false,
+        autofill: false,
         translator: {
             from: {name: "English", code: "en"},
             to: {name: "Russian", code: "ru"}
@@ -117,6 +118,9 @@ export class RootStore {
                 from: {name: "English", code: "en"},
                 to: {name: "Russian", code: "ru"}
             }
+        }
+        if (config?.autofill === null || config?.autofill === undefined) {
+            config.autofill = false
         }
         return config
     }

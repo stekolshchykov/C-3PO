@@ -14,7 +14,7 @@ interface Props {
 const Textarea = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, rows, resize}: Props) => {
 
     const store = useRootStore();
-    const [text, setText] = useState(store.clipboard)
+    const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
 
     useEffect(() => {
         if (isDefaultTextFromClipboard) {
