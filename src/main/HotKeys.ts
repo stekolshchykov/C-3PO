@@ -17,9 +17,7 @@ export class HotKeys {
     set = (hotKeys: { key: string, page: string }[]) => {
         globalShortcut.unregisterAll()
         // set HotKey
-        console.log(hotKeys)
         hotKeys.forEach(hk => {
-            // this.hotKeys.set(hk.key, hk.page)
             globalShortcut.register(hk.key, () => {
                 if (this.mainWindow)
                     if (this.mainWindow.isVisible()) {

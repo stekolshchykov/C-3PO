@@ -6,6 +6,7 @@ export interface IElectronAPI {
     store: (data: string) => Promise<any>
     config: (data: string) => Promise<any>
     mainCommand: (data: string) => Promise<any>
+    history: (data: string) => Promise<any>
     autoLaunch: (data: string) => Promise<any>
     // onUpdateCounter: (data: any) => any
     openPage: (data: any) => void

@@ -16,11 +16,13 @@ export class RootStore {
     config: IConfig = {
         hotKeys: []
     }
+    history: string[] = []
 
     constructor() {
         makeAutoObservable(this);
         this.listeners()
         this.loadConfig()
+        this.loadHistory()
     }
 
     listeners = () => {
@@ -41,10 +43,14 @@ export class RootStore {
 
     setActiveEvent = () => {
         this.activeEvent = this.activeEvent + 1
+        this.activeListeners()
+    }
+
+    activeListeners = () => {
+        this.setHistory(this.clipboard)
     }
 
     saveConfig = () => {
-        console.log("+++saveConfig()", JSON.stringify(this.config))
         window.electronAPI?.config(JSON.stringify({
             type: "config",
             value: {
@@ -73,11 +79,18 @@ export class RootStore {
                 key: "load"
             }
         }))
-        if (this.config) {
-            this.config = config
-        }
-        console.log("loadConfig", config)
-        console.log("loadConfig", JSON.stringify(config))
+        if (config) this.config = config
+    }
+
+    loadHistory = async () => {
+        const history = await window.electronAPI.history(JSON.stringify({
+            type: "history",
+            value: {
+                key: "load"
+            }
+        }))
+        console.log("+++history", history)
+        if (history) this.history = history
     }
 
     mainCommand = (command: TMainCommand) => {
@@ -86,6 +99,28 @@ export class RootStore {
         }))
             .finally()
             .catch()
+    }
+
+    setHistory = (text: string) => {
+        this.history.push(text)
+        window.electronAPI?.history(JSON.stringify({
+            type: "history",
+            value: {
+                key: "set",
+                value: this.history
+            }
+        }))
+    }
+
+    clearHistory = () => {
+        window.electronAPI?.history(JSON.stringify({
+            type: "history",
+            value: {
+                key: "clear",
+                value: this.history
+            }
+        }))
+        this.history = []
     }
 
 }
