@@ -2,6 +2,37 @@ import {makeAutoObservable, reaction} from "mobx";
 import {IConfig, IHotKey, TMainCommand} from "../../type";
 import {translateText} from "./../features/functions";
 
+const defaultConfig = {
+    hotKeys: [],
+    autoStart: false,
+    autofill: false,
+    autofillOut: false,
+    translator: {
+        from: {name: "English", code: "en"},
+        to: {name: "Russian", code: "ru"}
+    },
+    tabs: {
+        translator: {
+            on: true
+        },
+        history: {
+            on: true
+        },
+        conjugation: {
+            on: true
+        },
+        context: {
+            on: true
+        },
+        synonyms: {
+            on: true
+        },
+        spellCheck: {
+            on: true
+        }
+    }
+}
+
 
 export type RootStoreHydration = {
     [key: string]: {
@@ -14,16 +45,7 @@ export class RootStore {
     clipboard = ""
     activeEvent = 0
     openPage = ""
-    config: IConfig = {
-        hotKeys: [],
-        autoStart: false,
-        autofill: false,
-        autofillOut: false,
-        translator: {
-            from: {name: "English", code: "en"},
-            to: {name: "Russian", code: "ru"}
-        }
-    }
+    config: IConfig = defaultConfig
     history: string[] = []
 
     translatorText = {
@@ -117,16 +139,16 @@ export class RootStore {
     }
     setConfigDefaultValue = (config: IConfig) => {
         if (!config?.translator?.to || !config.translator.from) {
-            config.translator = {
-                from: {name: "English", code: "en"},
-                to: {name: "Russian", code: "ru"}
-            }
+            config.translator = defaultConfig.translator
         }
         if (config?.autofill === null || config?.autofill === undefined) {
             config.autofill = false
         }
         if (config?.autofillOut === null || config?.autofillOut === undefined) {
             config.autofillOut = false
+        }
+        if (config?.tabs === null || config?.tabs === undefined) {
+            config.tabs = defaultConfig.tabs
         }
         return config
     }

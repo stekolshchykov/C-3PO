@@ -64,6 +64,26 @@ export interface IConfig {
     autoStart: boolean
     autofill: boolean
     autofillOut: boolean
+    tabs: {
+        translator: {
+            on: boolean
+        }
+        history: {
+            on: boolean
+        }
+        conjugation: {
+            on: boolean
+        }
+        context: {
+            on: boolean
+        }
+        synonyms: {
+            on: boolean
+        }
+        spellCheck: {
+            on: boolean
+        }
+    }
 }
 
 export type TMainCommand = "quitFromAppHandler"
