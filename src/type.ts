@@ -58,3 +58,5 @@ export interface IConfig {
         page: string
     }[]
 }
+
+export type TMainCommand = "quitFromAppHandler"

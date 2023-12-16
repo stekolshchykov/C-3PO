@@ -29,12 +29,6 @@ const Settings = observer(() => {
         initAutoStart()
     }, []);
 
-    const quitFromAppHandler = () => {
-        window?.electronAPI?.store(JSON.stringify({
-            type: "quitFromAppHandler"
-        })).finally()
-    }
-
     const saveHandler = () => {
         store.saveConfig()
     }
@@ -100,11 +94,11 @@ const Settings = observer(() => {
                 className="text-base p-3 border-2 border-red border-solid rounded text-yellow hover:bg-yellow transition hover:text-grayDark">
                 Save
             </button>
-            {/*<button*/}
-            {/*    onClick={quitFromAppHandler}*/}
-            {/*    className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark">*/}
-            {/*    Quit*/}
-            {/*</button>*/}
+            <button
+                onClick={() => store.mainCommand("quitFromAppHandler")}
+                className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark">
+                Quit
+            </button>
 
         </section>
 

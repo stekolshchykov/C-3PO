@@ -7,6 +7,7 @@ import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
 import {IAutoLaunchData} from "../type";
 import Config from "../main/config";
+import MainCommand from "../main/main-command";
 
 const appAutoLauncher = new AutoLaunch({
     name: 'C-3PO',
@@ -26,6 +27,7 @@ let dockedWindowMode = false
 let hotKeys: HotKeys
 let systemStore: SystemStore
 let config: Config
+let mainCommand: MainCommand
 
 const createWindow = (): void => {
     mainWindow = new BrowserWindow({
@@ -67,6 +69,7 @@ const createWindow = (): void => {
 
     hotKeys = new HotKeys(app, mainWindow, tray)
     config = new Config(systemStore, ipcMain, hotKeys)
+    mainCommand = new MainCommand(systemStore, ipcMain, app)
 };
 
 hideInTray(app);

@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {IConfig, IHotKey} from "../../type";
+import {IConfig, IHotKey, TMainCommand} from "../../type";
 
 
 export type RootStoreHydration = {
@@ -14,36 +14,7 @@ export class RootStore {
     activeEvent = 0
     openPage = ""
     config: IConfig = {
-        hotKeys: [
-            // {
-            //     key: "CommandOrControl+G",
-            //     page: "translator"
-            // },
-            // {
-            //     key: "CommandOrControl+H",
-            //     page: "settings"
-            // },
-            // {
-            //     key: "CommandOrControl+J",
-            //     page: "history"
-            // },
-            // {
-            //     key: "/CommandOrControl+K",
-            //     page: "context"
-            // },
-            // {
-            //     key: "CommandOrControl+L",
-            //     page: "synonyms"
-            // },
-            // {
-            //     key: "CommandOrControl+B",
-            //     page: "spell-check"
-            // },
-            // {
-            //     key: "CommandOrControl+N",
-            //     page: "conjugation"
-            // }
-        ]
+        hotKeys: []
     }
 
     constructor() {
@@ -107,6 +78,14 @@ export class RootStore {
         }
         console.log("loadConfig", config)
         console.log("loadConfig", JSON.stringify(config))
+    }
+
+    mainCommand = (command: TMainCommand) => {
+        window?.electronAPI?.mainCommand(JSON.stringify({
+            type: command
+        }))
+            .finally()
+            .catch()
     }
 
 }
