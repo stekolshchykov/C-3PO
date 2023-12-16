@@ -38,27 +38,13 @@ const Settings = observer(() => {
     const saveHandler = () => {
         store.saveConfig()
     }
-    // store.config.hotKeys.forEach(e => {
-    //     console.log("++++forEach", JSON.stringify(e))
-    //
-    // })
 
-// console.log(store.config.hotKeys)
-//     const translatorKey = store.config.hotKeys.find(e => e.page === "translator")
-//     let translatorData: IHotKey[] = []
-//     if (translatorKey) {
-//         translatorData = translatorKey.key.split("+").map(e => {
-//             return {
-//                 name: e,
-//                 code: 0
-//             }
-//         })
-//     }
     const translatorHotKey = hotKeyStringToObj(store.config, "translator")
     const contextHotKey = hotKeyStringToObj(store.config, "context")
-    console.log("+++translatorHotKey", JSON.stringify(translatorHotKey))
-    // console.log("+++translatorData", JSON.stringify(translatorData))
-    console.log("+++contextHotKey", JSON.stringify(contextHotKey))
+    const synonymsHotKey = hotKeyStringToObj(store.config, "synonyms")
+    const spellCheckHotKey = hotKeyStringToObj(store.config, "spell-check")
+    const conjugationHotKey = hotKeyStringToObj(store.config, "conjugation")
+
     return <PageLayout title={"Settings"}>
 
         <section>
@@ -81,34 +67,27 @@ const Settings = observer(() => {
             <div className={"text-2xl"}>Context</div>
             <KeyCapture hotKeys={contextHotKey} onChangeHandler={(e) => store.addHotKey(e, "context")}/>
             {/*
-                TODO: hotkey
                 TODO: auto fill
             */}
         </section>
 
-        {/*<section>*/}
-        {/*    <div className={"text-2xl"}>Synonyms</div>*/}
-        {/*    /!**/}
-        {/*        TODO: hotkey*/}
-        {/*        TODO: auto fill*/}
-        {/*    *!/*/}
-        {/*</section>*/}
+        <section>
+            <div className={"text-2xl"}>Synonyms</div>
+            <KeyCapture hotKeys={synonymsHotKey} onChangeHandler={(e) => store.addHotKey(e, "synonyms")}/>
+            {/* TODO: auto fill */}
+        </section>
 
-        {/*<section>*/}
-        {/*    <div className={"text-2xl"}>SpellCheck</div>*/}
-        {/*    /!**/}
-        {/*        TODO: hotkey*/}
-        {/*        TODO: auto fill*/}
-        {/*    *!/*/}
-        {/*</section>*/}
+        <section>
+            <div className={"text-2xl"}>SpellCheck</div>
+            <KeyCapture hotKeys={spellCheckHotKey} onChangeHandler={(e) => store.addHotKey(e, "spell-check")}/>
+            {/* TODO: auto fill  */}
+        </section>
 
-        {/*<section>*/}
-        {/*    <div className={"text-2xl"}>Conjugation</div>*/}
-        {/*    /!**/}
-        {/*        TODO: hotkey*/}
-        {/*        TODO: auto fill*/}
-        {/*    *!/*/}
-        {/*</section>*/}
+        <section>
+            <div className={"text-2xl"}>Conjugation</div>
+            <KeyCapture hotKeys={conjugationHotKey} onChangeHandler={(e) => store.addHotKey(e, "conjugation")}/>
+            {/* TODO: auto fill */}
+        </section>
 
         <section>
             {/*
