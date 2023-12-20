@@ -9,9 +9,18 @@ interface Props {
     rows?: number
     resize?: boolean
     isDefaultTextFromClipboard?: boolean
+    isAutoFocus?: boolean
 }
 
-const Textarea = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, rows, resize}: Props) => {
+const Textarea = observer(({
+                               isAutoFocus,
+                               isDefaultTextFromClipboard,
+                               width,
+                               placeholder,
+                               onChange,
+                               rows,
+                               resize
+                           }: Props) => {
 
     const store = useRootStore();
     const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
@@ -25,6 +34,7 @@ const Textarea = observer(({isDefaultTextFromClipboard, width, placeholder, onCh
 
     return <>
         <textarea
+            ref={input => input && isAutoFocus ? input.focus() : ""}
             style={{resize: resize === true ? "both" : "none"}}
             rows={rows || 3}
             value={text}

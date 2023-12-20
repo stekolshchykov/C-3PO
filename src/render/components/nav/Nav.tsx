@@ -6,6 +6,7 @@ import {observer} from "mobx-react-lite";
 interface ITab {
     title: string
     path: string
+    isOn: boolean
 }
 
 const Nav = observer(() => {
@@ -16,33 +17,45 @@ const Nav = observer(() => {
     const store = useRootStore();
     const [hide, setHide] = useState(false)
     // navigate.
-
+    console.log("+++ store.config.tabs", JSON.stringify(store.config.tabs))
     const tabs: ITab[] = [
         {
             title: "Translator",
-            path: "/translator"
+            path: "/translator",
+            isOn: store.config.tabs?.translator?.on || false
         },
         {
             title: "Context",
-            path: "/context"
+            path: "/context",
+            isOn: store.config.tabs?.context?.on || false
         },
         {
             title: "Synonyms",
-            path: "/synonyms"
+            path: "/synonyms",
+            isOn: store.config.tabs?.synonyms?.on || false
         },
         {
             title: "SpellCheck",
-            path: "/spell-check"
+            path: "/spell-check",
+            isOn: store.config.tabs?.spellCheck?.on || false
         },
         {
             title: "Conjugation",
-            path: "/conjugation"
+            path: "/conjugation",
+            isOn: store.config.tabs?.conjugation?.on || false
         },
         {
             title: "Wikipedia",
-            path: "/wikipedia"
+            path: "/wikipedia",
+            isOn: store.config.tabs?.wikipedia?.on || false
+
         }
     ]
+    // tabs = tabs.filter(e => {
+    //     const clearedPath = e.path.split("/")[1]
+    //     // @ts-ignore
+    //     return store.config.tabs[`${clearedPath}`].on
+    // })
     const [selectedTab, setSelectedTab] = useState(tabs[0])
 
     const navHandler = (tab: ITab) => {
@@ -74,13 +87,16 @@ const Nav = observer(() => {
     if (hide) return <></>
     return <nav className={"pt-0 px-0 overflow-hidden"}>
         <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
-            {tabs.map((e, i) =>
-                <li
-                    key={i}
-                    onClick={() => navHandler(e)}
-                    className={`text-[18px] py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
-                    {e.title}
-                </li>
+            {tabs.map((e, i) => {
+                    return <>
+                        {e.isOn && <li
+                            key={i}
+                            onClick={() => navHandler(e)}
+                            className={`text-[18px] py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                            {e.title}
+                        </li>}
+                    </>
+                }
             )}
         </ul>
     </nav>

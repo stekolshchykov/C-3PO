@@ -74,6 +74,7 @@ const Translator = observer(() => {
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
             <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
                       <textarea
+                          autoFocus
                           ref={inputFromRef}
                           className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
                           placeholder="from"

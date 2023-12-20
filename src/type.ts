@@ -83,6 +83,9 @@ export interface IConfig {
         spellCheck: {
             on: boolean
         }
+        wikipedia: {
+            on: boolean
+        }
     }
 }
 

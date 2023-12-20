@@ -8,9 +8,10 @@ interface Props {
     onChange: (text: string) => void
     onEnter?: () => void
     isDefaultTextFromClipboard?: boolean
+    isAutoFocus?: boolean
 }
 
-const Input = observer(({isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
+const Input = observer(({isAutoFocus, isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
 
     const store = useRootStore();
     const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
@@ -24,6 +25,7 @@ const Input = observer(({isDefaultTextFromClipboard, width, placeholder, onChang
 
     return <>
         <input
+            ref={input => input && isAutoFocus ? input.focus() : ""}
             type={"text"}
             value={text}
             onKeyPress={(event) => {

@@ -29,6 +29,9 @@ const defaultConfig = {
         },
         spellCheck: {
             on: true
+        },
+        wikipedia: {
+            on: true
         }
     }
 }
@@ -192,6 +195,11 @@ export class RootStore {
             }
         }))
         this.history = []
+    }
+
+    resetConfig = () => {
+        this.config = defaultConfig
+        this.saveConfig()
     }
 
 }

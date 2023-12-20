@@ -49,6 +49,7 @@ const SpellCheck = observer(() => {
 
         <div className={"h-full grid grid-rows-[min-content_min-content_1fr]"}>
             <Textarea
+                isAutoFocus={true}
                 isDefaultTextFromClipboard={store.config?.autofill}
                 rows={4}
                 placeholder={"Enter expression"}

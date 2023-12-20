@@ -26,12 +26,13 @@ const Wikipedia = observer(() => {
     }
 
     useEffect(() => {
-        getInfo()
+        // getInfo()
     }, [text])
 
     return <div className={"px-2 pt-4 h-full overflow-hidden grid grid-rows-[min-content_1fr]"}>
         <div className={"flex items-center gap-2"}>
             <Input
+                isAutoFocus={true}
                 isDefaultTextFromClipboard={store.config?.autofill}
                 placeholder={"Enter word"}
                 width={100}

@@ -17,8 +17,10 @@ const Settings = observer(() => {
     const conjugationHotKey = hotKeyStringToObj(store.config, "conjugation")
     const historyHotKey = hotKeyStringToObj(store.config, "history")
     const settingsHotKey = hotKeyStringToObj(store.config, "settings")
+    const wikipediaHotKey = hotKeyStringToObj(store.config, "wikipedia")
 
 
+    // @ts-ignore
     return <PageLayout title={"Settings"}>
 
         <div className={"grid gap-10"}>
@@ -61,6 +63,18 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Translator</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.translator.on}
+                                    onClick={(e) => store.config.tabs.translator.on = e}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={"grid grid-cols-[1fr] gap-2"}>
                     <div>
                         <div className={"text-lg"}>Hotkey</div>
@@ -75,6 +89,18 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Context</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.context.on}
+                                    onClick={(e) => store.config.tabs.context.on = e}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={"grid grid-cols-[1fr] gap-2"}>
                     <div>
                         <div className={"text-lg"}>Hotkey</div>
@@ -88,6 +114,18 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Synonyms</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.synonyms.on}
+                                    onClick={(e) => store.config.tabs.synonyms.on = e}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={"grid grid-cols-[1fr] gap-2"}>
                     <div>
                         <div className={"text-lg"}>Hotkey</div>
@@ -101,6 +139,18 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>SpellCheck</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.spellCheck.on}
+                                    onClick={(e) => store.config.tabs.spellCheck.on = e}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={"grid grid-cols-[1fr] gap-2"}>
                     <div>
                         <div className={"text-lg"}>Hotkey</div>
@@ -115,6 +165,18 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Conjugation</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.conjugation.on}
+                                    onClick={(e) => store.config.tabs.conjugation.on = e}/>
+                        </div>
+                    </div>
+                </div>
                 <div className={"grid grid-cols-[1fr] gap-2"}>
                     <div>
                         <div className={"text-lg"}>Hotkey</div>
@@ -123,6 +185,35 @@ const Settings = observer(() => {
                     <div className={""}>
                         <KeyCapture hotKeys={conjugationHotKey}
                                     onChangeHandler={(e) => store.addHotKey(e, "conjugation")}/>
+                    </div>
+                </div>
+            </section>
+
+            <section className={"grid gap-3"}>
+                <div className={"text-2xl mb-2"}>Wikipedia</div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Enable/disable section</div>
+                        <div className={"text-sm"}>Toggles the visibility of the section.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs?.wikipedia?.on || false}
+                                    onClick={(e) => {
+                                        // @ts-ignore
+                                        store.config.tabs?.wikipedia?.on = e
+                                    }}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr] gap-2"}>
+                    <div>
+                        <div className={"text-lg"}>Hotkey</div>
+                        <div className={"text-sm"}>Assign a hotkey for instant wikipedia.</div>
+                    </div>
+                    <div className={""}>
+                        <KeyCapture hotKeys={wikipediaHotKey}
+                                    onChangeHandler={(e) => store.addHotKey(e, "wikipedia")}/>
                     </div>
                 </div>
             </section>
@@ -154,6 +245,11 @@ const Settings = observer(() => {
             </section>
 
             <section className={"grid gap-3"}>
+                <button
+                    onClick={() => store.resetConfig()}
+                    className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark w-full">
+                    Reset config
+                </button>
                 <button
                     onClick={() => store.mainCommand("quitFromAppHandler")}
                     className="text-base p-3 border-2 border-red border-solid rounded text-red hover:bg-red transition hover:text-grayDark w-full">
