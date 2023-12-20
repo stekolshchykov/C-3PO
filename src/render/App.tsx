@@ -12,6 +12,7 @@ import UI from "./UI/index";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "./providers/RootStoreProvider";
 import Nav from "../render/components/nav/Nav";
+import Wikipedia from "./pages/Wikipedia";
 
 export const App = observer(() => {
 
@@ -101,6 +102,7 @@ export const App = observer(() => {
                     <Route path="/synonyms" element={<Synonyms/>}/>
                     <Route path="/spell-check" element={<SpellCheck/>}/>
                     <Route path="/conjugation" element={<Conjugation/>}/>
+                    <Route path="/wikipedia" element={<Wikipedia/>}/>
                     <Route path="/ui" element={<UI/>}/>
                 </Routes>
                 <Menu/>

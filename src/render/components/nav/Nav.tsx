@@ -37,6 +37,10 @@ const Nav = observer(() => {
         {
             title: "Conjugation",
             path: "/conjugation"
+        },
+        {
+            title: "Wikipedia",
+            path: "/wikipedia"
         }
     ]
     const [selectedTab, setSelectedTab] = useState(tabs[0])
