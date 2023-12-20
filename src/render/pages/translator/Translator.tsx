@@ -22,6 +22,9 @@ const Translator = observer(() => {
         const oldFrom = store.config.translator.from
         store.config.translator.from = store.config.translator.to
         store.config.translator.to = oldFrom
+        setIsShowLangList(false)
+        setLanguageListStatus(null)
+        setInputSearchLanguage("")
     }
 
     const isActiveLanguage = (code: string) => {
@@ -35,7 +38,7 @@ const Translator = observer(() => {
 
     const selectFromHandler = () => {
         setIsShowLangList(!isShowLangList)
-        languagesListStatus === "from" ? setLanguageListStatus(null) : setLanguageListStatus("from")
+        setLanguageListStatus("from")
     }
 
     useEffect(() => {
@@ -51,13 +54,8 @@ const Translator = observer(() => {
     }, [inputFromRef])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
-        {/*<div className={"grid grid-cols-[1fr_1fr_1fr] justify-evenly mx-auto my-3"}>*/}
         <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
-            {/*<button className={"volumetricButton capitalize"} onClick={selectFromHandler}>*/}
-            {/*    {store?.config?.translator?.from?.name}*/}
-            {/*</button>*/}
-
-            <Btn type={"normal"} size={2} clickHandler={selectFromHandler}>
+            <Btn type={"normal"} size={1} clickHandler={selectFromHandler}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.from?.name}
                 </div>
@@ -68,10 +66,7 @@ const Translator = observer(() => {
                     <SVG type={"switchArrow"}/>
                 </div>
             </div>
-            {/*<button className={"volumetricButton"} onClick={selectToHandler}>*/}
-            {/*    {store?.config?.translator?.to?.name}*/}
-            {/*</button>*/}
-            <Btn type={"normal"} size={2} clickHandler={selectToHandler}>
+            <Btn type={"normal"} size={1} clickHandler={selectToHandler}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.to?.name}
                 </div>
@@ -96,7 +91,8 @@ const Translator = observer(() => {
                 <TranslatorButtons text={store.translatorText.to} language={store.config.translator.to}/>
             </div>
             {isShowLangList && <div
-                className={"p-4 m-0 absolute l-0 t-0 w-[100%] bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>
+                className={"p-4 m-0 absolute l-0 t-0 w-full h-full overflow-auto bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_1fr]"}>
+                {/*className={"p-4 m-0 absolute l-0 t-0 w-full overflow-auto bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>*/}
                 <input
                     value={inputSearchLanguage}
                     onChange={e => setInputSearchLanguage(e.target.value)}
@@ -105,30 +101,34 @@ const Translator = observer(() => {
                 <ul className={" m-0 p-0 grid grid-cols-[1fr_1fr_1fr] gap-4"}>
                     {languagesListStatus === "from" && <>
                         <li className={"m-auto"}>
-                            <button
-                                onClick={() => {
-                                    setIsShowLangList(false)
-                                    store.config.translator.from = {code: "Auto", name: "Auto"}
-                                }}
-                                className={`volumetricButton ${isActiveLanguage("Auto") && "active"}`}
-                            >
-                                Auto
-                            </button>
+                            <Btn type={isActiveLanguage("Auto") ? "active" : "normal"} size={1} clickHandler={() => {
+                                setIsShowLangList(false)
+                                store.config.translator.from = {code: "Auto", name: "Auto"}
+
+                                setIsShowLangList(false)
+                                setLanguageListStatus(null)
+                                setInputSearchLanguage("")
+
+                            }}>
+                                <div className={"capitalize"}>Auto</div>
+                            </Btn>
                         </li>
                     </>}
                     {languages.map((l, k) =>
                         l.name.toLowerCase().includes(inputSearchLanguage.toLowerCase().trim())
                             ? <li className={"m-auto"} key={k}>
-                                <button
-                                    onClick={() => {
-                                        setIsShowLangList(false)
-                                        if (languagesListStatus === "from") store.config.translator.from = l
-                                        else if (languagesListStatus === "to") store.config.translator.to = l
-                                    }}
-                                    className={`volumetricButton ${isActiveLanguage(l.code) && "active"}`}
-                                >
-                                    {l.name}
-                                </button>
+                                <Btn type={isActiveLanguage(l.code) ? "active" : "normal"} size={1} clickHandler={() => {
+                                    setIsShowLangList(false)
+                                    if (languagesListStatus === "from") store.config.translator.from = l
+                                    else if (languagesListStatus === "to") store.config.translator.to = l
+
+                                    setIsShowLangList(false)
+                                    setLanguageListStatus(null)
+                                    setInputSearchLanguage("")
+
+                                }}>
+                                    <div className={"capitalize"}>{l.name}</div>
+                                </Btn>
                             </li>
                             : null
                     )}

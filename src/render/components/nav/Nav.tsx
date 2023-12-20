@@ -78,7 +78,7 @@ const Nav = observer(() => {
                 <li
                     key={i}
                     onClick={() => navHandler(e)}
-                    className={`py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                    className={`text-[18px] py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
                     {e.title}
                 </li>
             )}

@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {observer} from "mobx-react-lite";
 import {availableLang, reverso} from "../../reverso";
 import Input from "../../UI/Input";
@@ -58,16 +58,17 @@ const Context = observer(() => {
                 onChange={e => setText(e)}
                 onEnter={() => getContextHandler()}/>
             <div className={"w-[15px]"}></div>
-            <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}>
+            <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}
+                 addedArrow={selectMode !== "from"}>
                 <div className={"capitalize"}>{langFrom}</div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <div className={"text-center"}>
                 <FontAwesomeIcon icon={faArrowRight}/>
             </div>
-            <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("to")}>
+            <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("to")} addedArrow={selectMode !== "to"}>
                 <div className={"capitalize"}>{langTo}</div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getContextHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>

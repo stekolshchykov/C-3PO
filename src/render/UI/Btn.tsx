@@ -1,13 +1,16 @@
 import React, {ReactNode} from "react"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCaretDown, faCaretUp} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     type?: "normal" | "active"
     size: 1 | 2
     clickHandler?: () => void
     children?: ReactNode
+    addedArrow?: boolean
 }
 
-const Btn = ({type, clickHandler, size, children}: Props) => {
+const Btn = ({addedArrow, type, clickHandler, size, children}: Props) => {
 
     const textSize = size === 1 ? 16 : 18
     const bgColor = type === "normal" ? "gray" : "yellow"
@@ -20,6 +23,12 @@ const Btn = ({type, clickHandler, size, children}: Props) => {
             onClick={clickHandler}
         >
             {children}
+            {addedArrow === true && <>
+                <FontAwesomeIcon icon={faCaretDown}/>
+            </>}
+            {addedArrow === false && <>
+                <FontAwesomeIcon icon={faCaretUp}/>
+            </>}
         </button>
     </>
 }
