@@ -19,7 +19,7 @@ const Btn = ({addedArrow, type, clickHandler, size, children}: Props) => {
 
     return <>
         <button
-            className={`items-center flex bg-${bgColor} gap-2 px-[${15 * size}px]  rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
+            className={`relative items-center flex bg-${bgColor} gap-2 px-[${15 * size}px] rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
             onClick={clickHandler}
         >
             {children}
@@ -28,7 +28,19 @@ const Btn = ({addedArrow, type, clickHandler, size, children}: Props) => {
             </>}
             {addedArrow === false && <>
                 <FontAwesomeIcon icon={faCaretUp}/>
+                <div className="
+                    left-0
+                    right-0
+                    m-auto
+                    absolute
+                    bottom-[-15px]
+                    w-0 h-0
+                    border-l-[10px] border-l-transparent
+                    border-b-[15px] border-b-grayDark
+                    border-r-[10px] border-r-transparent">
+                </div>
             </>}
+
         </button>
     </>
 }
