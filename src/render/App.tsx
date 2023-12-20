@@ -1,17 +1,17 @@
 import React, {useEffect} from "react"
 import {MemoryRouter as Router, Route, Routes} from 'react-router-dom';
-import Translator from "./features/translator/Translator";
-import Menu from "./features/menu/Menu";
-import Settings from "./features/settings/Settings";
-import History from "./features/history/History";
-import Context from "./features/сontext/Сontext";
-import Synonyms from "./features/synonyms/Synonyms";
-import SpellCheck from "./features/spell-check/SpellCheck";
-import Conjugation from "./features/conjugation/Conjugation";
+import Translator from "../render/pages/translator/Translator";
+import Menu from "../render/components/menu/Menu";
+import Settings from "../render/pages/settings/Settings";
+import History from "../render/pages/history/History";
+import Context from "../render/pages/сontext/Сontext";
+import Synonyms from "../render/pages/synonyms/Synonyms";
+import SpellCheck from "../render/pages/spell-check/SpellCheck";
+import Conjugation from "../render/pages/conjugation/Conjugation";
 import UI from "./UI/index";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "./providers/RootStoreProvider";
-import Nav from "./features/nav/Nav";
+import Nav from "../render/components/nav/Nav";
 
 export const App = observer(() => {
 

@@ -78,7 +78,8 @@
     "react-router-dom": "^6.16.0",
     "remote-redux-devtools": "^0.5.16",
     "reverso-api": "^2.22.6",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "wikipedia": "^2.1.1"
   },
   "build": {
     "appId": "your.id",

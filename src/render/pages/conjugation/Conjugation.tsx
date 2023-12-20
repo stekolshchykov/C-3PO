@@ -42,6 +42,7 @@ const Conjugation = observer(() => {
 
 
     return <div className={"px-2 pt-4 overflow-auto grid grid-rows-[min-content_1fr]"}>
+        {/*TODO: fix scroll when result*/}
         <div className={"flex items-center gap-2"}>
             <Input
                 isDefaultTextFromClipboard={store.config?.autofill}

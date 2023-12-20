@@ -1,5 +1,5 @@
 import React from "react"
-import {ILanguage} from "../features/translator/languageList";
+import {ILanguage} from "pages/translator/languageList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faVolumeHigh} from "@fortawesome/free-solid-svg-icons";
 

@@ -1,6 +1,6 @@
 import {makeAutoObservable, reaction} from "mobx";
 import {IConfig, IHotKey, TMainCommand} from "../../type";
-import {translateText} from "./../features/functions";
+import {translateText} from "../../render/pages/functions";
 
 const defaultConfig = {
     hotKeys: [],
