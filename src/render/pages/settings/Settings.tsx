@@ -27,8 +27,8 @@ const Settings = observer(() => {
                 <div className={"text-2xl mb-2"}>General</div>
                 <div className={"grid grid-cols-[1fr_min-content]"}>
                     <div>
-                        <div className={"text-lg"}>Auto Load on Startup</div>
-                        <div className={"text-sm"}>Enable automatic loading on startup.</div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
                     </div>
                     <div className={"flex align-middle m-auto"}>
                         <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
@@ -36,8 +36,8 @@ const Settings = observer(() => {
                 </div>
                 <div className={"grid grid-cols-[1fr_min-content]"}>
                     <div>
-                        <div className={"text-lg"}>Clipboard Autofill</div>
-                        <div className={"text-sm"}>Automatically populates fields from clipboard.</div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
                     </div>
                     <div className={"flex align-middle m-auto"}>
                         <Select initValue={store.config.autofill} onClick={(e) => store.config.autofill = e}/>

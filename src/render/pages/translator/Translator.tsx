@@ -53,8 +53,7 @@ const Translator = observer(() => {
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
-            <Btn type={"normal"} size={1} clickHandler={selectFromHandler}
-                 addedArrow={languagesListStatus === null}>
+            <Btn type={"normal"} size={1} clickHandler={selectFromHandler} addedArrow={languagesListStatus === null}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.from?.name}
                 </div>
