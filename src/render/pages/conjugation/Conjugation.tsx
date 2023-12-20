@@ -3,7 +3,7 @@ import {availableLang, reverso} from "../../reverso";
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import {observer} from "mobx-react-lite";
 
@@ -50,9 +50,9 @@ const Conjugation = observer(() => {
                 onChange={e => setText(e)}
                 onEnter={() => getConjugationsHandler()}/>
             <div className={"w-[15px]"}></div>
-            <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)}>
+            <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)} addedArrow={!selectMode}>
                 <div className={"capitalize"}>{lang}</div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getConjugationsHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>

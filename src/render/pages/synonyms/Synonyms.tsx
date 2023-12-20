@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretDown, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
@@ -42,9 +42,9 @@ const Synonyms = observer(() => {
                 onChange={e => setText(e)}
                 onEnter={() => getSynonymsHandler()}/>
             <div className={"w-[15px]"}></div>
-            <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)}>
-                <div className={"capitalize"}>{lang}</div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+            <Btn type={"normal"} size={1} clickHandler={() => setSelectMode(!selectMode)} addedArrow={!selectMode}>
+                <div className={"capitalize"}> {lang}</div>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getSynonymsHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>

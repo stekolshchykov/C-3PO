@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import Textarea from "../../UI/Textarea";
 import Btn from "../../UI/Btn";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 import {availableLang, reverso} from "../../reverso";
 import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
@@ -57,9 +55,9 @@ const SpellCheck = observer(() => {
                 onChange={(e) => setText(e)}/>
 
             <div className={"flex gap-2 justify-end pt-3"}>
-                <Btn size={1} type={"normal"} clickHandler={() => setSelectMode(!selectMode)}>
+                <Btn size={1} type={"normal"} clickHandler={() => setSelectMode(!selectMode)} addedArrow={!selectMode}>
                     <div className={"capitalize"}>{lang}</div>
-                    <FontAwesomeIcon icon={faCaretDown}/>
+                    {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
                 </Btn>
                 <Btn size={1} type={"normal"} clickHandler={spellCheckHandler}>Check</Btn>
             </div>

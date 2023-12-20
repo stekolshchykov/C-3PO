@@ -6,8 +6,6 @@ import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import TranslatorButtons from "../../components/TranslatorButtons";
 import Btn from "./../../UI/Btn";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 
 const Translator = observer(() => {
 
@@ -55,22 +53,22 @@ const Translator = observer(() => {
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
-            <Btn type={"normal"} size={1} clickHandler={selectFromHandler}>
+            <Btn type={"normal"} size={1} clickHandler={selectFromHandler} addedArrow={languagesListStatus !== "from"}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.from?.name}
                 </div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
                     <SVG type={"switchArrow"}/>
                 </div>
             </div>
-            <Btn type={"normal"} size={1} clickHandler={selectToHandler}>
+            <Btn type={"normal"} size={1} clickHandler={selectToHandler} addedArrow={languagesListStatus !== "to"}>
                 <div className={"capitalize"}>
                     {store?.config?.translator?.to?.name}
                 </div>
-                <FontAwesomeIcon icon={faCaretDown}/>
+                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
