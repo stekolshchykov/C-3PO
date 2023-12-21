@@ -51,7 +51,6 @@ const createWindow = (): void => {
         },
     });
 
-    // tray = new Tray(path.join(__dirname, 'assets/trayIcon.png'));
     const image = nativeImage.createFromPath(path.join(__dirname, 'assets/trayIcon.png'))
     tray = new Tray(image.resize({width: 32, height: 32}));
 

@@ -33,7 +33,20 @@ class Config {
 
     needUpdate = async () => {
         const config: IConfig = await this.systemStore.get("config")
-        const hotKeys = config?.hotKeys
+        let hotKeys = config?.hotKeys
+        hotKeys = hotKeys?.map(hk => {
+            const {page} = hk
+            const keys = Object.keys(config.tabs)
+            const position = keys.indexOf(page)
+            let isOn = false
+            try {
+                // @ts-ignore
+                isOn = config?.tabs[`${Object.keys(config?.tabs)[position]}`]?.on
+            } catch (e) {
+                //
+            }
+            return {...hk, isOn}
+        })
         if (hotKeys) this.hotKeys.set(hotKeys)
         //
         this.autoLaunch()

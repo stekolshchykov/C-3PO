@@ -13,21 +13,22 @@ export class HotKeys {
         this.tray = tray
     }
 
-    set = (hotKeys: { key: string, page: string }[]) => {
+    set = (hotKeys: { key: string, page: string, isOn?: boolean }[]) => {
         globalShortcut.unregisterAll()
         // set HotKey
         hotKeys.forEach(hk => {
-            globalShortcut.register(hk.key, () => {
-                if (this.mainWindow)
-                    if (this.mainWindow.isVisible()) {
-                        this.mainWindow.hide()
-                    } else {
-                        showWindow(this.tray, this.mainWindow)
-                        if (hk.page) {
-                            this.mainWindow.webContents.send('open-page', hk.page)
+            if (hk.isOn)
+                globalShortcut.register(hk.key, () => {
+                    if (this.mainWindow)
+                        if (this.mainWindow.isVisible()) {
+                            this.mainWindow.hide()
+                        } else {
+                            showWindow(this.tray, this.mainWindow)
+                            if (hk.page) {
+                                this.mainWindow.webContents.send('open-page', hk.page)
+                            }
                         }
-                    }
-            })
+                })
         })
     }
 

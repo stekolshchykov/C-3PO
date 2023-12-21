@@ -124,18 +124,6 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-                {/*    <div>*/}
-                {/*        <div className={"text-lg"}>Paste processed data to clipboard</div>*/}
-                {/*        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={""}>*/}
-                {/*        <div className={"flex align-middle m-auto"}>*/}
-                {/*            <Select initValue={store.config.tabs.context.autofillOut}*/}
-                {/*                    onClick={(e) => store.config.tabs.context.autofillOut = e}/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
 
             <section className={"grid gap-3"}>
@@ -173,18 +161,6 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-                {/*    <div>*/}
-                {/*        <div className={"text-lg"}>Paste processed data to clipboard</div>*/}
-                {/*        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={""}>*/}
-                {/*        <div className={"flex align-middle m-auto"}>*/}
-                {/*            <Select initValue={store.config.tabs.synonyms.autofillOut}*/}
-                {/*                    onClick={(e) => store.config.tabs.synonyms.autofillOut = e}/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
 
             <section className={"grid gap-3"}>
@@ -223,18 +199,6 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-                {/*    <div>*/}
-                {/*        <div className={"text-lg"}>Paste processed data to clipboard</div>*/}
-                {/*        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={""}>*/}
-                {/*        <div className={"flex align-middle m-auto"}>*/}
-                {/*            <Select initValue={store.config.tabs.spellCheck.autofillOut}*/}
-                {/*                    onClick={(e) => store.config.tabs.spellCheck.autofillOut = e}/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
 
             <section className={"grid gap-3"}>
@@ -273,18 +237,6 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-                {/*    <div>*/}
-                {/*        <div className={"text-lg"}>Paste processed data to clipboard</div>*/}
-                {/*        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={""}>*/}
-                {/*        <div className={"flex align-middle m-auto"}>*/}
-                {/*            <Select initValue={store.config.tabs.conjugation.autofillOut}*/}
-                {/*                    onClick={(e) => store.config.tabs.conjugation.autofillOut = e}/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
 
             <section className={"grid gap-3"}>
@@ -326,18 +278,6 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                {/*<div className={"grid grid-cols-[1fr_min-content]"}>*/}
-                {/*    <div>*/}
-                {/*        <div className={"text-lg"}>Paste processed data to clipboard</div>*/}
-                {/*        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>*/}
-                {/*    </div>*/}
-                {/*    <div className={""}>*/}
-                {/*        <div className={"flex align-middle m-auto"}>*/}
-                {/*            <Select initValue={store.config.tabs.wikipedia.autofillOut}*/}
-                {/*                    onClick={(e) => store.config.tabs.wikipedia.autofillOut = e}/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </section>
 
             <section className={"grid gap-3"}>

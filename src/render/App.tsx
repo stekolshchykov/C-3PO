@@ -35,9 +35,9 @@ export const App = observer(() => {
     useEffect(() => {
         const handleBlur = () => {
             // dispatch(callWindowEvent(EWindowEvent.blur));
-            // window.electronAPI.windowBlur()
-
-            // navigate to home page on start
+            window.electronAPI.windowBlur()
+            //
+            // // navigate to home page on start
             // setNeedNavigateToRootPage(true)
             // setTimeout(() => {
             //     setNeedNavigateToRootPage(false)
