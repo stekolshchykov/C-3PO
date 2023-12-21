@@ -34,13 +34,7 @@ export const App = observer(() => {
 
     useEffect(() => {
         const handleBlur = () => {
-            // window.electronAPI.windowBlur()
-            //
-            // // navigate to home page on start
-            // setNeedNavigateToRootPage(true)
-            // setTimeout(() => {
-            //     setNeedNavigateToRootPage(false)
-            // }, 300)
+            window.electronAPI.windowBlur()
         };
         window.addEventListener('blur', handleBlur);
         return () => {
@@ -76,11 +70,6 @@ export const App = observer(() => {
             window.removeEventListener('keydown', clickHandler);
         };
     }, []);
-
-    useEffect(() => {
-        // dispatch(init())
-    }, [])
-
 
     return <>
         <div className="triangleUp"></div>
