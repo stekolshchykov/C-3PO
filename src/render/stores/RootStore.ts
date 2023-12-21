@@ -13,7 +13,8 @@ const defaultConfig = {
         translator: {
             on: true,
             autofill: true,
-            autofillOut: true
+            autofillOut: true,
+            isReverse: false
         },
         history: {
             on: true,
@@ -103,26 +104,22 @@ export class RootStore {
 
     translateText = async (tryReverse = false) => {
         const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
-        if (tryReverse) {
+        if (tryReverse && this.config?.tabs?.translator?.isReverse) {
             const isNoResult = this.translatorText.from.trim() === translatedText.trim()
             if (isNoResult) {
                 const translatedText2 = await translateText(this.translatorText.from, this.config.translator.to.code, this.config.translator.from.code)
                 const isNoResult2 = this.translatorText.from.trim() === translatedText2.trim()
                 if (!isNoResult2) {
-                    console.log("++++ isNoResult2", isNoResult2, translatedText2)
                     this.isStopUpdate = true
                     const tempFrom = this.config.translator.from
                     this.config.translator.from = this.config.translator.to
                     this.config.translator.to = tempFrom
                     this.translatorText.to = translatedText2
-                    // this.translatorText.to = translatedText
                     if (this.config?.tabs.translator.autofillOut)
                         navigator.clipboard.writeText(translatedText2)
-
                     setTimeout(() => {
                         this.isStopUpdate = false
                     }, 0)
-                    /// [[[
                 }
             } else {
                 this.translatorText.to = translatedText
@@ -170,18 +167,14 @@ export class RootStore {
         let newKey: null | string = null
         if (key.length > 0) {
             newKey = `${key[0].name}+${key[1].name}`
-            console.log("+++newKey", {key: newKey, page})
-
             this.config.hotKeys.push({key: newKey, page})
         } else if (this.config.hotKeys.filter(e => e.page === page)) {
             this.config.hotKeys = this.config.hotKeys.filter(e => e.page !== page)
         }
-        // console.log("+++newKey", newKey)
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.key, v])).values()]
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.page, v])).values()]
         this.saveConfig()
     }
-
 
     loadConfig = async () => {
         const config = await window.electronAPI.config(JSON.stringify({

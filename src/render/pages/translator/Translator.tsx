@@ -93,7 +93,6 @@ const Translator = observer(() => {
             </div>
             {isShowLangList && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-full h-full overflow-auto bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_1fr]"}>
-                {/*className={"p-4 m-0 absolute l-0 t-0 w-full overflow-auto bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_minmax(355px,_1fr)]"}>*/}
                 <input
                     value={inputSearchLanguage}
                     onChange={e => setInputSearchLanguage(e.target.value)}

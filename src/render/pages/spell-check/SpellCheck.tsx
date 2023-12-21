@@ -32,9 +32,6 @@ const SpellCheck = observer(() => {
             } else {
                 const corrections: ICorrection[] = response?.corrections
                 if (corrections) {
-                    corrections.forEach(e => {
-                        console.log(e.suggestions)
-                    })
                     if (store.config?.tabs.spellCheck.autofillOut)
                         navigator.clipboard.writeText(corrections[0].suggestions.join(", "))
                     setCorrections(corrections)

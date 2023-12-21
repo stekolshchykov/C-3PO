@@ -87,6 +87,20 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
+                    <div>
+                        <div className={"text-lg"}>Reverse translation</div>
+                        <div className={"text-sm"}>Automatically translate even if the language directions are
+                            incorrect
+                        </div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.translator.isReverse}
+                                    onClick={(e) => store.config.tabs.translator.isReverse = e}/>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section className={"grid gap-3"}>

@@ -58,6 +58,10 @@ interface ITab {
     autofillOut: boolean
 }
 
+interface ITranslatorTab extends ITab {
+    isReverse: boolean
+}
+
 export interface IConfig {
     hotKeys: {
         key: string
@@ -69,7 +73,7 @@ export interface IConfig {
     }
     autoStart: boolean
     tabs: {
-        translator: ITab
+        translator: ITranslatorTab
         history: ITab
         conjugation: ITab
         context: ITab
