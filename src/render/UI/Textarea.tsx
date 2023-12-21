@@ -12,27 +12,28 @@ interface Props {
     isAutoFocus?: boolean
 }
 
-const Textarea = observer(({
-                               isAutoFocus,
-                               isDefaultTextFromClipboard,
-                               width,
-                               placeholder,
-                               onChange,
-                               rows,
-                               resize
-                           }: Props) => {
+const Textarea =
+    observer(({
+                  isAutoFocus,
+                  isDefaultTextFromClipboard,
+                  width,
+                  placeholder,
+                  onChange,
+                  rows,
+                  resize
+              }: Props) => {
 
-    const store = useRootStore();
-    const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
+        const store = useRootStore();
+        const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
 
-    useEffect(() => {
-        if (isDefaultTextFromClipboard) {
-            setText(store.clipboard)
-            onChange && onChange(store.clipboard)
-        }
-    }, [store.activeEvent])
+        useEffect(() => {
+            if (isDefaultTextFromClipboard) {
+                setText(store.clipboard)
+                onChange && onChange(store.clipboard)
+            }
+        }, [store.activeEvent])
 
-    return <>
+        return <>
         <textarea
             ref={input => input && isAutoFocus ? input.focus() : ""}
             style={{resize: resize === true ? "both" : "none"}}
@@ -44,10 +45,10 @@ const Textarea = observer(({
                     onChange(event.target.value)
                 }
             }}
-            className={`w-[${width || 100}%] px-4 py-2 outline-0 rounded flex border-0 m-0 bg-gray focus:bg-grayDark transition`}
+            className={`w-[${width || 100}%] px-4 py-2 outline-0 rounded flex border-0 m-0 bg-gray focus:bg-grayDark transition-0`}
             placeholder={placeholder}
         />
-    </>
-})
+        </>
+    })
 
 export default Textarea

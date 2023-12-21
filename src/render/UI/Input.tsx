@@ -37,7 +37,7 @@ const Input = observer(({isAutoFocus, isDefaultTextFromClipboard, width, placeho
                 setText(event.target.value)
                 onChange(event.target.value)
             }}
-            className={`w-[${width}%] px-4 py-2 outline-0 rounded flex border-0 m-0 bg-gray focus:bg-grayDark transition`}
+            className={`w-[${width}%] px-4 py-2 outline-0 rounded flex border-0 m-0 bg-gray focus:bg-grayDark transition duration-0 `}
             placeholder={placeholder}
         />
     </>
