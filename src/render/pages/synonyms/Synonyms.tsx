@@ -25,6 +25,8 @@ const Synonyms = observer(() => {
                 const synonyms: { synonym: string }[] = response?.synonyms
                 if (synonyms) {
                     setSynonyms(synonyms.map(e => e.synonym))
+                    if (store.config?.tabs.synonyms.autofillOut)
+                        navigator.clipboard.writeText(synonyms.map(e => e.synonym).join(", "))
                 }
             }
         } catch (e) {
@@ -37,7 +39,7 @@ const Synonyms = observer(() => {
         <div className={"flex items-center gap-2"}>
             <Input
                 isAutoFocus={true}
-                isDefaultTextFromClipboard={store.config?.autofill}
+                isDefaultTextFromClipboard={store.config?.tabs.synonyms.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}

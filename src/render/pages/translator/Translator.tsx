@@ -40,7 +40,7 @@ const Translator = observer(() => {
     }
 
     useEffect(() => {
-        if (store.config?.autofill) {
+        if (store.config?.tabs.translator.autofill) {
             if (inputFromRef.current) {
                 inputFromRef.current.value = store.clipboard
             }

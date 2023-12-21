@@ -38,8 +38,10 @@ const Context = observer(() => {
                 console.error('Error: Reverso API returned 404');
                 setContext([]);
             } else {
-                const examples = response.examples;
+                const examples: { source: string, target: string }[] = response.examples;
                 if (examples) {
+                    if (store.config?.tabs.context.autofillOut)
+                        navigator.clipboard.writeText(`${examples[0].source} - ${examples[0].target}`)
                     setContext(examples);
                 }
             }
@@ -53,7 +55,7 @@ const Context = observer(() => {
         <div className={"flex items-center gap-2"}>
             <Input
                 isAutoFocus={true}
-                isDefaultTextFromClipboard={store.config?.autofill}
+                isDefaultTextFromClipboard={store.config?.tabs.context.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}

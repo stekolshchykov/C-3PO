@@ -19,10 +19,7 @@ const Settings = observer(() => {
     const settingsHotKey = hotKeyStringToObj(store.config, "settings")
     const wikipediaHotKey = hotKeyStringToObj(store.config, "wikipedia")
 
-
-    // @ts-ignore
     return <PageLayout title={"Settings"}>
-
         <div className={"grid gap-10"}>
 
             <section className={"grid gap-3"}>
@@ -36,25 +33,6 @@ const Settings = observer(() => {
                         <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
-                    <div>
-                        <div className={"text-lg"}>Paste processed data to clipboard</div>
-                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
-                    </div>
-                    <div className={"flex align-middle m-auto"}>
-                        <Select initValue={store.config.autofill} onClick={(e) => store.config.autofill = e}/>
-                    </div>
-                </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
-                    <div>
-                        <div className={"text-lg"}>Clipboard Autofill</div>
-                        <div className={"text-sm"}>Automatically populates fields to clipboard.</div>
-                    </div>
-                    <div className={"flex align-middle m-auto"}>
-                        <Select initValue={store.config.autofillOut} onClick={(e) => store.config.autofillOut = e}/>
-                    </div>
-                </div>
-
                 {/*
                 TODO: windows size
                 TODO: position mode
@@ -85,6 +63,30 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
                     </div>
                 </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.translator.autofill}
+                                    onClick={(e) => store.config.tabs.translator.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.translator.autofillOut}
+                                    onClick={(e) => store.config.tabs.translator.autofillOut = e}/>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section className={"grid gap-3"}>
@@ -110,6 +112,30 @@ const Settings = observer(() => {
                         <KeyCapture hotKeys={contextHotKey} onChangeHandler={(e) => store.addHotKey(e, "context")}/>
                     </div>
                 </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.context.autofill}
+                                    onClick={(e) => store.config.tabs.context.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.context.autofillOut}
+                                    onClick={(e) => store.config.tabs.context.autofillOut = e}/>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section className={"grid gap-3"}>
@@ -133,6 +159,30 @@ const Settings = observer(() => {
                     </div>
                     <div className={""}>
                         <KeyCapture hotKeys={synonymsHotKey} onChangeHandler={(e) => store.addHotKey(e, "synonyms")}/>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.synonyms.autofill}
+                                    onClick={(e) => store.config.tabs.synonyms.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.synonyms.autofillOut}
+                                    onClick={(e) => store.config.tabs.synonyms.autofillOut = e}/>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -161,6 +211,30 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "spell-check")}/>
                     </div>
                 </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.spellCheck.autofill}
+                                    onClick={(e) => store.config.tabs.spellCheck.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.spellCheck.autofillOut}
+                                    onClick={(e) => store.config.tabs.spellCheck.autofillOut = e}/>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section className={"grid gap-3"}>
@@ -185,6 +259,30 @@ const Settings = observer(() => {
                     <div className={""}>
                         <KeyCapture hotKeys={conjugationHotKey}
                                     onChangeHandler={(e) => store.addHotKey(e, "conjugation")}/>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.conjugation.autofill}
+                                    onClick={(e) => store.config.tabs.conjugation.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.conjugation.autofillOut}
+                                    onClick={(e) => store.config.tabs.conjugation.autofillOut = e}/>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -214,6 +312,30 @@ const Settings = observer(() => {
                     <div className={""}>
                         <KeyCapture hotKeys={wikipediaHotKey}
                                     onChangeHandler={(e) => store.addHotKey(e, "wikipedia")}/>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Load clipboard on launch</div>
+                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.wikipedia.autofill}
+                                    onClick={(e) => store.config.tabs.wikipedia.autofill = e}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content]"}>
+                    <div>
+                        <div className={"text-lg"}>Paste processed data to clipboard</div>
+                        <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
+                    </div>
+                    <div className={""}>
+                        <div className={"flex align-middle m-auto"}>
+                            <Select initValue={store.config.tabs.wikipedia.autofillOut}
+                                    onClick={(e) => store.config.tabs.wikipedia.autofillOut = e}/>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -19,6 +19,8 @@ const Wikipedia = observer(() => {
         try {
             const page = await wiki.page(text);
             const intro = await page.intro();
+            if (store.config?.tabs.wikipedia.autofillOut)
+                navigator.clipboard.writeText(intro)
             setResult(intro)
         } catch (error) {
             console.log(error);
@@ -33,7 +35,7 @@ const Wikipedia = observer(() => {
         <div className={"flex items-center gap-2"}>
             <Input
                 isAutoFocus={true}
-                isDefaultTextFromClipboard={store.config?.autofill}
+                isDefaultTextFromClipboard={store.config?.tabs.wikipedia.autofill}
                 placeholder={"Enter word"}
                 width={100}
                 onChange={e => setText(e)}

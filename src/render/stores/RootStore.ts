@@ -5,33 +5,45 @@ import {translateText} from "../../render/pages/functions";
 const defaultConfig = {
     hotKeys: [],
     autoStart: false,
-    autofill: false,
-    autofillOut: false,
     translator: {
         from: {name: "English", code: "en"},
         to: {name: "Russian", code: "ru"}
     },
     tabs: {
         translator: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         history: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         conjugation: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         context: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         synonyms: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         spellCheck: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         },
         wikipedia: {
-            on: true
+            on: true,
+            autofill: true,
+            autofillOut: true
         }
     }
 }
@@ -87,7 +99,7 @@ export class RootStore {
     translateText = async () => {
         const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
         this.translatorText.to = translatedText
-        if (this.config?.autofillOut)
+        if (this.config?.tabs.translator.autofillOut)
             navigator.clipboard.writeText(translatedText)
     }
 
@@ -124,6 +136,8 @@ export class RootStore {
         if (key.length > 0) {
             newKey = `${key[0].name}+${key[1].name}`
             this.config.hotKeys.push({key: newKey, page})
+        } else if (this.config.hotKeys.filter(e => e.page === page)) {
+            this.config.hotKeys = this.config.hotKeys.filter(e => e.page !== page)
         }
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.key, v])).values()]
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.page, v])).values()]
@@ -141,19 +155,7 @@ export class RootStore {
         if (config) this.config = this.setConfigDefaultValue(config)
     }
     setConfigDefaultValue = (config: IConfig) => {
-        if (!config?.translator?.to || !config.translator.from) {
-            config.translator = defaultConfig.translator
-        }
-        if (config?.autofill === null || config?.autofill === undefined) {
-            config.autofill = false
-        }
-        if (config?.autofillOut === null || config?.autofillOut === undefined) {
-            config.autofillOut = false
-        }
-        if (config?.tabs === null || config?.tabs === undefined) {
-            config.tabs = defaultConfig.tabs
-        }
-        return config
+        return {...defaultConfig, ...config}
     }
 
     loadHistory = async () => {

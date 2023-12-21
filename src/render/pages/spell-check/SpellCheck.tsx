@@ -34,8 +34,9 @@ const SpellCheck = observer(() => {
                 if (corrections) {
                     corrections.forEach(e => {
                         console.log(e.suggestions)
-
                     })
+                    if (store.config?.tabs.spellCheck.autofillOut)
+                        navigator.clipboard.writeText(corrections[0].suggestions.join(", "))
                     setCorrections(corrections)
                 }
             }
@@ -50,7 +51,7 @@ const SpellCheck = observer(() => {
         <div className={"h-full grid grid-rows-[min-content_min-content_1fr]"}>
             <Textarea
                 isAutoFocus={true}
-                isDefaultTextFromClipboard={store.config?.autofill}
+                isDefaultTextFromClipboard={store.config?.tabs.spellCheck.autofill}
                 rows={4}
                 placeholder={"Enter expression"}
                 onChange={(e) => setText(e)}/>

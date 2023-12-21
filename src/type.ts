@@ -52,6 +52,12 @@ export enum EIPCKeys {
     "history" = "history."
 }
 
+interface ITab {
+    on: boolean
+    autofill: boolean
+    autofillOut: boolean
+}
+
 export interface IConfig {
     hotKeys: {
         key: string
@@ -62,30 +68,14 @@ export interface IConfig {
         to: { name: string, code: string }
     }
     autoStart: boolean
-    autofill: boolean
-    autofillOut: boolean
     tabs: {
-        translator: {
-            on: boolean
-        }
-        history: {
-            on: boolean
-        }
-        conjugation: {
-            on: boolean
-        }
-        context: {
-            on: boolean
-        }
-        synonyms: {
-            on: boolean
-        }
-        spellCheck: {
-            on: boolean
-        }
-        wikipedia: {
-            on: boolean
-        }
+        translator: ITab
+        history: ITab
+        conjugation: ITab
+        context: ITab
+        synonyms: ITab
+        spellCheck: ITab
+        wikipedia: ITab
     }
 }
 

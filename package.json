@@ -1,7 +1,7 @@
 {
   "name": "C-3PO",
   "productName": "C-3PO",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "repository": "https://github.com/StekolschikovV/C-3PO-releases",
