@@ -62,6 +62,7 @@ export class RootStore {
     openPage = ""
     config: IConfig = defaultConfig
     history: string[] = []
+    isStopUpdate = false
 
     translatorText = {
         from: "",
@@ -84,23 +85,57 @@ export class RootStore {
         reaction(
             () => JSON.stringify(this.config),
             () => {
-                this.translateText()
-                this.saveConfig()
+                if (!this.isStopUpdate) {
+                    this.translateText()
+                    this.saveConfig()
+                }
             }
         );
         reaction(
             () => JSON.stringify(this.translatorText),
             () => {
-                this.translateText()
+                if (!this.isStopUpdate) {
+                    this.translateText(true)
+                }
             }
         );
     }
 
-    translateText = async () => {
+    translateText = async (tryReverse = false) => {
         const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
-        this.translatorText.to = translatedText
-        if (this.config?.tabs.translator.autofillOut)
-            navigator.clipboard.writeText(translatedText)
+        if (tryReverse) {
+            const isNoResult = this.translatorText.from.trim() === translatedText.trim()
+            if (isNoResult) {
+                const translatedText2 = await translateText(this.translatorText.from, this.config.translator.to.code, this.config.translator.from.code)
+                const isNoResult2 = this.translatorText.from.trim() === translatedText2.trim()
+                if (!isNoResult2) {
+                    console.log("++++ isNoResult2", isNoResult2, translatedText2)
+                    this.isStopUpdate = true
+                    const tempFrom = this.config.translator.from
+                    this.config.translator.from = this.config.translator.to
+                    this.config.translator.to = tempFrom
+                    this.translatorText.to = translatedText2
+                    // this.translatorText.to = translatedText
+                    if (this.config?.tabs.translator.autofillOut)
+                        navigator.clipboard.writeText(translatedText2)
+
+                    setTimeout(() => {
+                        this.isStopUpdate = false
+                    }, 0)
+                    /// [[[
+                }
+            } else {
+                this.translatorText.to = translatedText
+                if (this.config?.tabs.translator.autofillOut)
+                    navigator.clipboard.writeText(translatedText)
+            }
+        } else {
+            this.translatorText.to = translatedText
+            if (this.config?.tabs.translator.autofillOut)
+                navigator.clipboard.writeText(translatedText)
+        }
+
+
     }
 
 

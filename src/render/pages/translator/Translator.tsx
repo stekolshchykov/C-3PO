@@ -20,6 +20,9 @@ const Translator = observer(() => {
         const oldFrom = store.config.translator.from
         store.config.translator.from = store.config.translator.to
         store.config.translator.to = oldFrom
+        const oldFromText = store.translatorText.from
+        store.translatorText.from = store.translatorText.to
+        store.translatorText.to = oldFromText
         setIsShowLangList(false)
         setLanguageListStatus(null)
         setInputSearchLanguage("")
