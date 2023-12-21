@@ -24,7 +24,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>General</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -41,7 +41,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Translator</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -63,7 +63,7 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -75,7 +75,7 @@ const Settings = observer(() => {
                         </div>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Paste processed data to clipboard</div>
                         <div className={"text-sm"}>Pastes the processed data into the clipboard.</div>
@@ -91,7 +91,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Context</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -112,7 +112,7 @@ const Settings = observer(() => {
                         <KeyCapture hotKeys={contextHotKey} onChangeHandler={(e) => store.addHotKey(e, "context")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -128,7 +128,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Synonyms</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -149,7 +149,7 @@ const Settings = observer(() => {
                         <KeyCapture hotKeys={synonymsHotKey} onChangeHandler={(e) => store.addHotKey(e, "synonyms")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -165,7 +165,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>SpellCheck</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -187,7 +187,7 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "spell-check")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -203,7 +203,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Conjugation</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -225,7 +225,7 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "conjugation")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
@@ -241,7 +241,7 @@ const Settings = observer(() => {
 
             <section className={"grid gap-3"}>
                 <div className={"text-2xl mb-2"}>Wikipedia</div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Enable/disable section</div>
                         <div className={"text-sm"}>Toggles the visibility of the section.</div>
@@ -266,7 +266,7 @@ const Settings = observer(() => {
                                     onChangeHandler={(e) => store.addHotKey(e, "wikipedia")}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-[1fr_min-content]"}>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
                         <div className={"text-lg"}>Load clipboard on launch</div>
                         <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
