@@ -3,7 +3,7 @@ import {IConfig, IHotKey, TMainCommand} from "../../type";
 import {translateText} from "../../render/pages/functions";
 
 const defaultConfig = {
-    hotKeys: [],
+    hotKeys: [{key: 'META+G', page: 'translator'}],
     autoStart: false,
     translator: {
         from: {name: "English", code: "en"},
@@ -17,33 +17,33 @@ const defaultConfig = {
         },
         history: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         },
         conjugation: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         },
         context: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         },
         synonyms: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         },
         spellCheck: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         },
         wikipedia: {
             on: true,
-            autofill: true,
-            autofillOut: true
+            autofill: false,
+            autofillOut: false
         }
     }
 }
@@ -135,10 +135,13 @@ export class RootStore {
         let newKey: null | string = null
         if (key.length > 0) {
             newKey = `${key[0].name}+${key[1].name}`
+            console.log("+++newKey", {key: newKey, page})
+
             this.config.hotKeys.push({key: newKey, page})
         } else if (this.config.hotKeys.filter(e => e.page === page)) {
             this.config.hotKeys = this.config.hotKeys.filter(e => e.page !== page)
         }
+        // console.log("+++newKey", newKey)
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.key, v])).values()]
         this.config.hotKeys = [...new Map(this.config.hotKeys.map(v => [v.page, v])).values()]
         this.saveConfig()
