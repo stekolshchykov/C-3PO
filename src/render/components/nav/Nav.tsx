@@ -17,7 +17,6 @@ const Nav = observer(() => {
     const store = useRootStore();
     const [hide, setHide] = useState(false)
     // navigate.
-    console.log("+++ store.config.tabs", JSON.stringify(store.config.tabs))
     const tabs: ITab[] = [
         {
             title: "Translator",
@@ -51,11 +50,7 @@ const Nav = observer(() => {
 
         }
     ]
-    // tabs = tabs.filter(e => {
-    //     const clearedPath = e.path.split("/")[1]
-    //     // @ts-ignore
-    //     return store.config.tabs[`${clearedPath}`].on
-    // })
+
     const [selectedTab, setSelectedTab] = useState(tabs[0])
 
     const navHandler = (tab: ITab) => {
@@ -88,14 +83,12 @@ const Nav = observer(() => {
     return <nav className={"pt-0 px-0 overflow-hidden"}>
         <ul className={"inline-flex flex-wrap gap-0 list-none w-full"}>
             {tabs.map((e, i) => {
-                    return <>
-                        {e.isOn && <li
-                            key={i}
-                            onClick={() => navHandler(e)}
-                            className={`text-[18px] py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
-                            {e.title}
-                        </li>}
-                    </>
+                    if (e.isOn) return <li
+                        key={i}
+                        onClick={() => navHandler(e)}
+                        className={`text-[18px] py-5 text-center border-0 flex-auto transition cursor-pointer ${e.path === selectedTab.path ? "bg-yellow text-gray" : "bg-gray hover:bg-grayDark"}`}>
+                        {e.title}
+                    </li>
                 }
             )}
         </ul>

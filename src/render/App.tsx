@@ -52,9 +52,7 @@ export const App = observer(() => {
     // windowHide
     useEffect(() => {
         const handleFocus = () => {
-            // dispatch(callWindowEvent(EWindowEvent.focus))
             window?.electronAPI?.windowFocus()
-
             navigator.clipboard.readText().then(e => {
                 store.setClipboard(e)
                 store.setActiveEvent()

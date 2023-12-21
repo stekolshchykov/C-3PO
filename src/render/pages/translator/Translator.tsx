@@ -42,6 +42,7 @@ const Translator = observer(() => {
     useEffect(() => {
         if (store.config?.tabs.translator.autofill) {
             if (inputFromRef.current) {
+                store.translatorText.from = store.clipboard
                 inputFromRef.current.value = store.clipboard
             }
         } else {
@@ -49,7 +50,7 @@ const Translator = observer(() => {
                 inputFromRef.current.value = ""
             }
         }
-    }, [inputFromRef])
+    }, [store.clipboard])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
@@ -57,7 +58,6 @@ const Translator = observer(() => {
                 <div className={"capitalize"}>
                     {store?.config?.translator?.from?.name}
                 </div>
-                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
@@ -68,17 +68,16 @@ const Translator = observer(() => {
                 <div className={"capitalize"}>
                     {store?.config?.translator?.to?.name}
                 </div>
-                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
             <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
-                      <textarea
-                          autoFocus
-                          ref={inputFromRef}
-                          className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
-                          placeholder="from"
-                          onChange={e => store.translatorText.from = e.target?.value}/>
+                <textarea
+                    autoFocus
+                    ref={inputFromRef}
+                    className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
+                    placeholder="from"
+                    onChange={e => store.translatorText.from = e.target?.value}/>
                 <TranslatorButtons text={store.translatorText.from} language={store.config.translator.from}/>
             </div>
             <div className={"w-full grid grid-cols-[1fr] relative"}>
