@@ -91,7 +91,7 @@ const Translator = observer(() => {
                     disabled={true}/>
                 <TranslatorButtons text={store.translatorText.to} language={store.config.translator.to}/>
             </div>
-            {isShowLangList && <div
+            {languagesListStatus && <div
                 className={"p-4 m-0 absolute l-0 t-0 w-full h-full overflow-auto bg-grayDark grid grid-cols-[1fr] grid-rows-[min-content_1fr]"}>
                 <input
                     value={inputSearchLanguage}
@@ -100,8 +100,8 @@ const Translator = observer(() => {
                     placeholder={"Language name..."}/>
                 <ul className={" m-0 p-0 grid grid-cols-[1fr_1fr_1fr] gap-4"}>
                     {languagesListStatus === "from" && <>
-                        <li className={"m-auto"}>
-                            <Btn type={isActiveLanguage("Auto") ? "active" : "normal"} size={1} clickHandler={() => {
+                        <li className={"m-0"}>
+                            <Btn type={isActiveLanguage("Auto") ? "li-active" : "li"} size={1} clickHandler={() => {
                                 setIsShowLangList(false)
                                 store.config.translator.from = {code: "Auto", name: "Auto"}
 
@@ -110,14 +110,14 @@ const Translator = observer(() => {
                                 setInputSearchLanguage("")
 
                             }}>
-                                <div className={"capitalize"}>Auto</div>
+                                <div className={"capitalize m-auto"}>Auto</div>
                             </Btn>
                         </li>
                     </>}
                     {languages.map((l, k) =>
                         l.name.toLowerCase().includes(inputSearchLanguage.toLowerCase().trim())
-                            ? <li className={"m-auto"} key={k}>
-                                <Btn type={isActiveLanguage(l.code) ? "active" : "normal"} size={1} clickHandler={() => {
+                            ? <li className={"m-0"} key={k}>
+                                <Btn type={isActiveLanguage(l.code) ? "li-active" : "li"} size={1} clickHandler={() => {
                                     setIsShowLangList(false)
                                     if (languagesListStatus === "from") store.config.translator.from = l
                                     else if (languagesListStatus === "to") store.config.translator.to = l
@@ -127,7 +127,7 @@ const Translator = observer(() => {
                                     setInputSearchLanguage("")
 
                                 }}>
-                                    <div className={"capitalize"}>{l.name}</div>
+                                    <div className={"capitalize m-auto"}>{l.name}</div>
                                 </Btn>
                             </li>
                             : null

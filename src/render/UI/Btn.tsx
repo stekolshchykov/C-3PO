@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown, faCaretUp} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
-    type?: "normal" | "active"
+    type?: "normal" | "active" | "li" | "li-active"
     size: 1 | 2
     clickHandler?: () => void
     children?: ReactNode
@@ -13,13 +13,32 @@ interface Props {
 const Btn = ({addedArrow, type, clickHandler, size, children}: Props) => {
 
     const textSize = size === 1 ? 16 : 18
-    const bgColor = type === "normal" ? "gray" : "yellow"
-    const textColor = type === "normal" ? "white" : "gray"
+    let bgColor
+    let textColor
+    let width = "w-auto"
+    switch (type) {
+        case "normal":
+            bgColor = "gray"
+            textColor = "white"
+            break
+        case "active":
+            bgColor = "yellow"
+            textColor = "gray"
+            break
+        case "li":
+            width = "w-full text-center"
+            break
+        case "li-active":
+            width = "w-full text-center"
+            bgColor = "yellow"
+            textColor = "gray"
+            break
+    }
     const height = size === 1 ? 35.5 : 40
 
     return <>
         <button
-            className={`relative items-center flex bg-${bgColor} gap-2 px-[${15 * size}px] rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
+            className={`${width} relative items-center flex bg-${bgColor} gap-2 px-[${15 * size}px] rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
             onClick={clickHandler}
         >
             {children}

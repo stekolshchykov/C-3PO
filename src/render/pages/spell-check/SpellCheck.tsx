@@ -76,14 +76,14 @@ const SpellCheck = observer(() => {
                     </ul>
                 </>}
                 {selectMode &&
-                    <ul className={"pt-3 absolute top-0 left-0 bg-grayDark w-full h-full m-0 p-0 grid grid-cols-[1fr_1fr_1fr_1fr_1fr] auto-rows-min gap-3 "}>
+                    <ul className={"p-3 absolute top-0 left-0 bg-grayDark w-full h-full m-0 grid grid-cols-[1fr_1fr_1fr] auto-rows-min gap-3 "}>
                         {availableLang.spell.map((e, i) => {
                             return <li key={i} className={"text-center flex h-[35.5px] justify-center"}>
-                                <Btn type={"normal"} size={1} clickHandler={() => {
+                                <Btn type={lang === e ? "li-active" : "li"} size={1} clickHandler={() => {
                                     setLang(e)
                                     setSelectMode(false)
                                 }}>
-                                    <div className={"capitalize"}>{e}</div>
+                                    <div className={"capitalize m-auto"}>{e}</div>
                                 </Btn>
                             </li>
                         })}
