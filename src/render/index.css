@@ -12,7 +12,7 @@ body {
 }
 
 * {
-    user-select: none !important;
+    user-select: none;
 }
 
 .triangleUp {
