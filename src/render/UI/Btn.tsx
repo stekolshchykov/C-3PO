@@ -38,7 +38,7 @@ const Btn = ({addedArrow, type, clickHandler, size, children}: Props) => {
 
     return <>
         <button
-            className={`${width} relative items-center flex bg-${bgColor} gap-2 px-[${15 * size}px] rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
+            className={`${width} relative items-center flex bg-${bgColor} gap-2 px-[${25 * size}px] rounded text-[${textSize}px] text-${textColor} hover:bg-yellow hover:text-gray transition active:opacity-80 outline-0 border-0 h-[${height}px]`}
             onClick={clickHandler}
         >
             {children}
