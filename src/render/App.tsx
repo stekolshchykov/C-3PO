@@ -77,7 +77,6 @@ export const App = observer(() => {
             <Router>
                 <Nav/>
                 {/*{needNavigateToRootPage && <Navigate replace to="/"/>}*/}
-                {/*TODO: temp*/}
                 {/*<Navigate replace to="/ui"/>*/}
                 <Routes>
                     <Route path="/" element={<Translator/>}/>
