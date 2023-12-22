@@ -56,22 +56,28 @@ const Translator = observer(() => {
     }, [store.clipboard])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
-        <div className={"grid grid-cols-[min-content_min-content_min-content] justify-evenly mx-auto my-3 w-full"}>
-            <Btn type={"normal"} size={1} clickHandler={selectFromHandler} addedArrow={languagesListStatus !== "from"}>
-                <div className={"capitalize"}>
-                    {store?.config?.translator?.from?.name}
-                </div>
-            </Btn>
+        <div className={"grid grid-cols-[1fr_min-content_1fr] justify-evenly mx-auto my-3 w-full"}>
+            <div className={"flex justify-center"}>
+                <Btn type={"normal"} size={1} clickHandler={selectFromHandler}
+                     addedArrow={languagesListStatus !== "from"}>
+                    <div className={"capitalize"}>
+                        {store?.config?.translator?.from?.name}
+                    </div>
+                </Btn>
+            </div>
+
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
                     <SVG type={"switchArrow"}/>
                 </div>
             </div>
-            <Btn type={"normal"} size={1} clickHandler={selectToHandler} addedArrow={languagesListStatus !== "to"}>
-                <div className={"capitalize"}>
-                    {store?.config?.translator?.to?.name}
-                </div>
-            </Btn>
+            <div className={"flex justify-center"}>
+                <Btn type={"normal"} size={1} clickHandler={selectToHandler} addedArrow={languagesListStatus !== "to"}>
+                    <div className={"capitalize"}>
+                        {store?.config?.translator?.to?.name}
+                    </div>
+                </Btn>
+            </div>
         </div>
         <div className={"flex justify-between mx-2 relative overflow-auto"}>
             <div className={"w-full mr-[1px] grid grid-cols-[1fr] relative"}>
