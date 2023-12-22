@@ -39,7 +39,7 @@ const Settings = observer(() => {
                         <div className={"text-lg"}>Windows width</div>
                         <div className={"text-sm"}>Customize program window width.</div>
                     </div>
-                    <div className={"flex align-middle m-auto w-[100px]"}>
+                    <div className={"flex align-middle m-auto w-[80px]"}>
                         <Input
                             forceValue={store.config.windowWidth}
                             width={100}
@@ -60,7 +60,7 @@ const Settings = observer(() => {
                         <div className={"text-lg"}>Windows height</div>
                         <div className={"text-sm"}>Customize program window height.</div>
                     </div>
-                    <div className={"flex align-middle m-auto w-[100px]"}>
+                    <div className={"flex align-middle m-auto w-[80px]"}>
                         <Input
                             type={"number"}
                             forceValue={store.config.windowHeight}
@@ -100,7 +100,7 @@ const Settings = observer(() => {
                         <div className={"text-lg"}>Hotkey</div>
                         <div className={"text-sm"}>Assign a hotkey for instant translation.</div>
                     </div>
-                    <div className={""}>
+                    <div>
                         <KeyCapture hotKeys={translatorHotKey}
                                     onChangeHandler={(e) => store.addHotKey(e, "translator")}/>
                     </div>
