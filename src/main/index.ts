@@ -5,7 +5,7 @@ import * as path from "path";
 import {hideInTray, hideWindowWhenFocusOut, setIcon} from "./startConfig";
 import {HotKeys} from "./HotKeys";
 import {SystemStore} from "./SystemStore";
-import {IAutoLaunchData} from "../type";
+import {IAutoLaunchData, IConfig} from "../type";
 import Config from "../main/config";
 import MainCommand from "../main/main-command";
 import History from "../main/history";
@@ -26,15 +26,20 @@ let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let dockedWindowMode = false
 let hotKeys: HotKeys
-let systemStore: SystemStore
+const systemStore = new SystemStore()
 let config: Config
 let mainCommand: MainCommand
 let history: History
 
-const createWindow = (): void => {
+const createWindow = async (): Promise<void> => {
+    const c: IConfig = await systemStore.get("config")
+    let windowHeight = 730
+    let windowWidth = 600
+    if (c && c?.windowHeight) windowHeight = c?.windowHeight
+    if (c && c?.windowWidth) windowWidth = c?.windowWidth
     mainWindow = new BrowserWindow({
-        height: 600,
-        width: 730,
+        height: windowHeight,
+        width: windowWidth,
         // icon: "assets/trayIcon.png",
         skipTaskbar: true,
         title: "C-3PO",
@@ -63,13 +68,8 @@ const createWindow = (): void => {
     setIcon(app, mainWindow, tray);
     hideWindowWhenFocusOut(ipcMain, mainWindow);
 
-    systemStore = new SystemStore()
-
-    // TODO:
-    // mainWindow.webContents.send('open-page', "context")
-
     hotKeys = new HotKeys(app, mainWindow, tray)
-    config = new Config(systemStore, ipcMain, hotKeys, appAutoLauncher)
+    config = new Config(systemStore, ipcMain, hotKeys, appAutoLauncher, mainWindow)
     mainCommand = new MainCommand(systemStore, ipcMain, app)
     history = new History(systemStore, ipcMain)
 };

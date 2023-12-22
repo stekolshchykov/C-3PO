@@ -2,6 +2,7 @@ import {SystemStore} from "./SystemStore";
 import {HotKeys} from "./HotKeys";
 import {IConfig} from "../type";
 import AutoLaunch from "auto-launch";
+import {BrowserWindow} from "electron";
 
 class Config {
 
@@ -9,8 +10,10 @@ class Config {
     ipcMain: Electron.IpcMain
     hotKeys: HotKeys
     appAutoLauncher: AutoLaunch
+    mainWindow: BrowserWindow
 
-    constructor(systemStore: SystemStore, ipcMain: Electron.IpcMain, hotKeys: HotKeys, appAutoLauncher: AutoLaunch) {
+    constructor(systemStore: SystemStore, ipcMain: Electron.IpcMain, hotKeys: HotKeys, appAutoLauncher: AutoLaunch, mainWindow: BrowserWindow) {
+        this.mainWindow = mainWindow
         this.appAutoLauncher = appAutoLauncher
         this.hotKeys = hotKeys
         this.systemStore = systemStore
@@ -48,6 +51,13 @@ class Config {
             return {...hk, isOn}
         })
         if (hotKeys) this.hotKeys.set(hotKeys)
+        //
+        const windowHeight = config?.windowHeight || 600
+        const windowWidth = config?.windowWidth || 730
+
+
+        this.mainWindow.setSize(windowWidth, windowHeight,);
+
         //
         this.autoLaunch()
     }

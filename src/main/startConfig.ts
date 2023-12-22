@@ -14,28 +14,9 @@ export const setIcon = (
 ) => {
     app.whenReady().then(() => {
         if (mainWindow) {
-            // const contextMenu = Menu.buildFromTemplate([
-            //     {
-            //         label: 'Hide',
-            //         click: () => {
-            //             mainWindow.hide();
-            //         },
-            //     },
-            //     {
-            //         label: 'Exit',
-            //         click: () => {
-            //             // ;(mainWindow).isQuiting = true
-            //             app.quit();
-            //         },
-            //     },
-            // ]);
-
             tray.on('click', (event) => {
                 showWindow(tray, mainWindow);
             });
-
-            // tray.setToolTip('Test');
-            // tray.setContextMenu(contextMenu);
             tray.setIgnoreDoubleClickEvents(true);
         }
     });

@@ -5,6 +5,8 @@ import {translateText} from "../../render/pages/functions";
 const defaultConfig = {
     hotKeys: [{key: 'META+G', page: 'translator'}],
     autoStart: false,
+    windowHeight: 600,
+    windowWidth: 730,
     translator: {
         from: {name: "English", code: "en"},
         to: {name: "Russian", code: "ru"}

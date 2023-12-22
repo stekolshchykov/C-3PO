@@ -5,6 +5,7 @@ import {useRootStore} from "../../providers/RootStoreProvider";
 import KeyCapture from "../../components/KeyCapture";
 import {hotKeyStringToObj} from "./funtions";
 import Select from "../../components/Select";
+import Input from "../../UI/Input";
 
 const Settings = observer(() => {
 
@@ -33,8 +34,49 @@ const Settings = observer(() => {
                         <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
                     </div>
                 </div>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
+                    <div>
+                        <div className={"text-lg"}>Windows width</div>
+                        <div className={"text-sm"}>Customize program window width.</div>
+                    </div>
+                    <div className={"flex align-middle m-auto w-[100px]"}>
+                        <Input
+                            forceValue={store.config.windowWidth}
+                            width={100}
+                            max={1500}
+                            min={500}
+                            placeholder={"730"}
+                            type={"number"}
+                            onChange={(text) => {
+                                let n = +text
+                                if (n < 500) n = 500
+                                if (n > 1500) n = 1500
+                                store.config.windowWidth = n
+                            }}/>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-[1fr_min-content] items-center"}>
+                    <div>
+                        <div className={"text-lg"}>Windows height</div>
+                        <div className={"text-sm"}>Customize program window height.</div>
+                    </div>
+                    <div className={"flex align-middle m-auto w-[100px]"}>
+                        <Input
+                            type={"number"}
+                            forceValue={store.config.windowHeight}
+                            width={100}
+                            placeholder={"600"}
+                            max={1000}
+                            min={300}
+                            onChange={(text) => {
+                                let n = +text
+                                if (n < 300) n = 300
+                                if (n > 1000) n = 1000
+                                store.config.windowHeight = n
+                            }}/>
+                    </div>
+                </div>
                 {/*
-                TODO: windows size
                 TODO: position mode
             */}
             </section>

@@ -67,6 +67,8 @@ export interface IConfig {
         key: string
         page: string
     }[]
+    windowHeight: number,
+    windowWidth: number,
     translator: {
         from: { name: string, code: string }
         to: { name: string, code: string }

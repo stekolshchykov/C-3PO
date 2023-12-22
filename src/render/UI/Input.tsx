@@ -9,12 +9,27 @@ interface Props {
     onEnter?: () => void
     isDefaultTextFromClipboard?: boolean
     isAutoFocus?: boolean
+    forceValue?: string | number
+    type?: "text" | "number"
+    max?: number
+    min?: number
 }
 
-const Input = observer(({isAutoFocus, isDefaultTextFromClipboard, width, placeholder, onChange, onEnter}: Props) => {
+const Input = observer(({
+                            min,
+                            max,
+                            type,
+                            forceValue,
+                            isAutoFocus,
+                            isDefaultTextFromClipboard,
+                            width,
+                            placeholder,
+                            onChange,
+                            onEnter
+                        }: Props) => {
 
     const store = useRootStore();
-    const [text, setText] = useState(isDefaultTextFromClipboard ? store.clipboard : "")
+    const [text, setText] = useState<string | number>(isDefaultTextFromClipboard ? store.clipboard : "")
 
     useEffect(() => {
         if (isDefaultTextFromClipboard) {
@@ -22,11 +37,17 @@ const Input = observer(({isAutoFocus, isDefaultTextFromClipboard, width, placeho
             onChange(store.clipboard)
         }
     }, [store.activeEvent])
+    useEffect(() => {
+        if (forceValue)
+            setText(forceValue)
+    }, [forceValue])
 
     return <>
         <input
             ref={input => input && isAutoFocus ? input.focus() : ""}
-            type={"text"}
+            type={type ? type : "string"}
+            max={max}
+            min={min}
             value={text}
             onKeyPress={(event) => {
                 if (event.key === 'Enter' && onEnter) {
