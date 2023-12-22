@@ -20,7 +20,9 @@
     "noEmit": true,
     "lib": [
       "dom",
-      "es2015"
+      "es2015",
+      "ES2021.String"
+
     ],
     "paths": {
       "src/*": [

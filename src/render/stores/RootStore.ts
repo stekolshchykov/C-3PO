@@ -103,7 +103,11 @@ export class RootStore {
     }
 
     translateText = async (tryReverse = false) => {
-        const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
+        const sepator = "___"
+        // console.log("+++", this.translatorText.from.replace('\n', ''), this.translatorText.to)
+        this.translatorText.from = this.translatorText.from.replaceAll("\n", sepator)
+        let translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
+        translatedText = translatedText.replaceAll(sepator, "\n")
         if (tryReverse && this.config?.tabs?.translator?.isReverse) {
             const isNoResult = this.translatorText.from.trim() === translatedText.trim()
             if (isNoResult) {
@@ -131,7 +135,9 @@ export class RootStore {
             if (this.config?.tabs.translator.autofillOut)
                 navigator.clipboard.writeText(translatedText)
         }
-
+        if (this.translatorText.from.trim().length === 0) {
+            this.translatorText.to = ""
+        }
 
     }
 
