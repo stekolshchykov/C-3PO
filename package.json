@@ -15,7 +15,7 @@
     "app:all": "electron-builder -mwl",
     "start": "ELECTRON_DISABLE_SECURITY_WARNINGS=true  electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
+    "make": "npx electron-forge make --arch=\"universal\" --targets=\"@electron-forge/maker-zip\"",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "redux-devtools": "redux-devtools --open=electron --hostname=localhost --port=8000"
@@ -80,11 +80,5 @@
     "reverso-api": "^2.22.6",
     "url": "^0.11.3",
     "wikipedia": "^2.1.1"
-  },
-  "build": {
-    "appId": "your.id",
-    "mac": {
-      "category": "your.app.category.type"
-    }
   }
 }
