@@ -13,6 +13,3 @@ docker run -d \
   lscr.io/linuxserver/qbittorrent:latest
 
 
-tasks:
-- В контексте какие языки работают?
-- Арабский в частях речи не работает
