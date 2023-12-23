@@ -10,22 +10,34 @@ import {mainConfig} from './webpack.main.config';
 import {rendererConfig} from './webpack.renderer.config';
 
 const config: ForgeConfig = {
+
     packagerConfig: {
         asar: true,
-        icon: './src/assets/icon'
+        icon: './src/assets/icon',
     },
     rebuildConfig: {},
     makers: [
         new MakerSquirrel({}),
-        // new MakerZIP({}, ['darwin', 'universal']),
         {
-            name: '@electron-forge/maker-zip',
-            platforms: ['darwin'],
-            config: {
-                "target": "universal",
-                "archs": ["arm64", "x86_64"]
+            "name": "@electron-forge/maker-zip",
+            "platforms": ["darwin", "universal", "mas"], // optional
+            "config": {
+                // Config here
             }
-        },
+        }
+        // new MakerZIP({}, ['darwin', 'x64', 'universal', 'x86']),
+        // {
+        //     name: '@electron-forge/maker-zip',
+        //     platforms: ['darwin', ','],
+        //     config: {
+        //         // target: "universal",
+        //         // arch: ["arm64", "x86_64"],
+        //         // arch: ["x64"],
+        //         archs: ["x64"],
+        //         // arch: ["universal"],
+        //         // target: ["arm64", "x86_64"]
+        //     }
+        // },
         // new MakerRpm({}),
         // new MakerDeb({},),
     ],
