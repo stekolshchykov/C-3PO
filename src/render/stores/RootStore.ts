@@ -1,5 +1,5 @@
 import {makeAutoObservable, reaction} from "mobx";
-import {IConfig, IHotKey, TMainCommand} from "../../type";
+import {IConfig, IHistoryRecord, IHotKey, TMainCommand} from "../../type";
 import {translateText} from "../../render/pages/functions";
 
 const defaultConfig = {
@@ -64,7 +64,7 @@ export class RootStore {
     activeEvent = 0
     openPage = ""
     config: IConfig = defaultConfig
-    history: string[] = []
+    history: IHistoryRecord[] = []
     isStopUpdate = false
 
     translatorText = {
@@ -216,8 +216,12 @@ export class RootStore {
     }
 
     setHistory = (text: string) => {
-        this.history.push(text.trim())
-        this.history = [...new Set(this.history)]
+        text = text.trim()
+        if (text.length === 0) return
+        const date = new Date()
+        const time = date.getTime()
+        const record: IHistoryRecord = {text, time}
+        this.history.push(record)
         window.electronAPI?.history(JSON.stringify({
             type: "history",
             value: {
