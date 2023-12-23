@@ -59,6 +59,8 @@ const Context = observer(() => {
         }
     }
 
+    //arabic
+
     return <div className={"px-2 pt-4 grid grid-rows-[min-content_1fr] overflow-auto"}>
         <div className={"flex items-center gap-2"}>
             <Input
@@ -72,14 +74,12 @@ const Context = observer(() => {
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("from")}
                  addedArrow={selectMode !== "from"}>
                 <div className={"capitalize"}>{langFrom}</div>
-                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <div className={"text-center cursor-pointer"} onClick={switchDirection}>
                 <SVG type={"switchArrow"}/>
             </div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("to")} addedArrow={selectMode !== "to"}>
                 <div className={"capitalize"}>{langTo}</div>
-                {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
             <Btn type={"normal"} size={1} clickHandler={() => getContextHandler()}>
                 <FontAwesomeIcon icon={faMagnifyingGlass}/>
@@ -100,7 +100,7 @@ const Context = observer(() => {
             </ul>}
             {selectMode !== null &&
                 <ul className={"p-3 absolute top-0 left-0 bg-grayDark w-full h-full m-0 grid grid-cols-[1fr_1fr_1fr] auto-rows-min gap-3 "}>
-                    {availableLang.context.map((e, i) => {
+                    {availableLang.context.filter(e => e !== "arabic").map((e, i) => {
                         return <li key={i} className={"text-center flex h-[35.5px] justify-center"}>
                             <Btn type={langFrom === e || langTo === e ? "li-active" : "li"} size={1}
                                  clickHandler={() => selectLang(e, selectMode)}>
