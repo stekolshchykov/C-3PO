@@ -1,11 +1,12 @@
 import React, {useState} from "react"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {observer} from "mobx-react-lite";
 import {availableLang, reverso} from "../../reverso";
 import Input from "../../UI/Input";
 import Btn from "../../UI/Btn";
 import {useRootStore} from "../../providers/RootStoreProvider";
+import SVG from "../../components/SVG";
 
 const Context = observer(() => {
 
@@ -29,6 +30,13 @@ const Context = observer(() => {
                 setLangTo(l)
             }
         }
+    }
+
+    const switchDirection = () => {
+        const tmpFrom = langFrom
+        const tmpTo = langTo
+        setLangFrom(tmpTo)
+        setLangTo(tmpFrom)
     }
 
     const getContextHandler = async () => {
@@ -66,8 +74,8 @@ const Context = observer(() => {
                 <div className={"capitalize"}>{langFrom}</div>
                 {/*<FontAwesomeIcon icon={faCaretDown}/>*/}
             </Btn>
-            <div className={"text-center"}>
-                <FontAwesomeIcon icon={faArrowRight}/>
+            <div className={"text-center cursor-pointer"} onClick={switchDirection}>
+                <SVG type={"switchArrow"}/>
             </div>
             <Btn type={"normal"} size={1} clickHandler={() => selectModeHandler("to")} addedArrow={selectMode !== "to"}>
                 <div className={"capitalize"}>{langTo}</div>
