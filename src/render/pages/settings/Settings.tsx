@@ -27,8 +27,9 @@ const Settings = observer(() => {
                 <div className={"text-2xl mb-2"}>General</div>
                 <div className={"grid grid-cols-[1fr_min-content] items-center"}>
                     <div>
-                        <div className={"text-lg"}>Load clipboard on launch</div>
-                        <div className={"text-sm"}>Loads the clipboard contents into the program when it launches.</div>
+                        <div className={"text-lg"}>AutoLoad</div>
+                        <div className={"text-sm"}>Set applications to launch automatically when your computer starts.
+                        </div>
                     </div>
                     <div className={"flex align-middle m-auto"}>
                         <Select initValue={store.config.autoStart} onClick={(e) => store.config.autoStart = e}/>
