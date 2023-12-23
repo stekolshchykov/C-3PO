@@ -65,7 +65,6 @@ const Translator = observer(() => {
                     </div>
                 </Btn>
             </div>
-
             <div className={"flex items-center justify-center"} onClick={swapDirectionHandler}>
                 <div className={"cursor-pointer"}>
                     <SVG type={"switchArrow"}/>

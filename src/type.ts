@@ -85,4 +85,9 @@ export interface IConfig {
     }
 }
 
+export interface IHistoryRecord {
+    text: string
+    time: number
+}
+
 export type TMainCommand = "quitFromAppHandler"
