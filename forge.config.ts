@@ -17,9 +17,17 @@ const config: ForgeConfig = {
     rebuildConfig: {},
     makers: [
         new MakerSquirrel({}),
-        new MakerZIP({}, ['darwin', 'linux']),
-        new MakerRpm({}),
-        new MakerDeb({},),
+        // new MakerZIP({}, ['darwin', 'universal']),
+        {
+            name: '@electron-forge/maker-zip',
+            platforms: ['darwin'],
+            config: {
+                "target": "universal",
+                "archs": ["arm64", "x86_64"]
+            }
+        },
+        // new MakerRpm({}),
+        // new MakerDeb({},),
     ],
     plugins: [
         new AutoUnpackNativesPlugin({}),

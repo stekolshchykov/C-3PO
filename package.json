@@ -15,7 +15,8 @@
     "app:all": "electron-builder -mwl",
     "start": "ELECTRON_DISABLE_SECURITY_WARNINGS=true  electron-forge start",
     "package": "electron-forge package",
-    "make": "npx electron-forge make --arch=\"universal\" --targets=\"@electron-forge/maker-zip\"",
+    "make": "npx electron-forge make",
+    "make2": "npx electron-forge make --arch=\"universal\" --targets=\"@electron-forge/maker-zip\"",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "redux-devtools": "redux-devtools --open=electron --hostname=localhost --port=8000"
