@@ -1,14 +1,9 @@
 import axios from "axios";
+import translationEncoderDecoder from "../pages/utilities/TranslationEncoderDecoder";
 
 export const translateText = async (text: string, fromCode: string, toCode: string) => {
     let translateText = ""
-    const textArray = text
-        .replace(/\?/gi, "?*******")
-        .replace(/\!/gi, "!*******")
-        .replace(/\./gi, ".*******")
-        .replace(/\?/gi, "??")
-        .split("*******")
-        .map(e => e.trim()).filter(e => e.length > 0)
+    const textArray = translationEncoderDecoder.encode(text)
     for (const suggestion of textArray) {
         const response = await axios.get('https://translate.googleapis.com/translate_a/single', {
             params: {
@@ -19,12 +14,13 @@ export const translateText = async (text: string, fromCode: string, toCode: stri
                 q: suggestion
             }
         })
-            .then(e => e.data[0][0][0].replace("??", "?"))
+            .then(e => translationEncoderDecoder.decode(e.data[0][0][0]))
             .catch(e => {
                 console.log(e)
                 return ""
             })
-        translateText += response + " "
+        translateText += response
     }
-    return translateText.trim()
+    translationEncoderDecoder.spacer(translateText)
+    return translationEncoderDecoder.spacer(translateText)
 }

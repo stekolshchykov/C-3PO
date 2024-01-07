@@ -54,6 +54,9 @@ const Translator = observer(() => {
             }
         }
     }, [store.clipboard])
+    useEffect(() => {
+        console.log("inputFromRef.current.value", inputFromRef?.current?.value)
+    }, [inputFromRef?.current?.value])
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_min-content_1fr] justify-evenly mx-auto my-3 w-full"}>
