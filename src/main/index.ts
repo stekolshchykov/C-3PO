@@ -108,16 +108,12 @@ ipcMain.handle('autoLaunch', async (_, data) => {
 
 
 ipcMain.on('dockedWindowModeOn', () => {
-    // console.log("dockedWindowModeOn");
-    // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
     mainWindow && mainWindow.setAlwaysOnTop(true, 'floating', Number.MAX_VALUE);
     dockedWindowMode = true;
 });
 
 
 ipcMain.on('dockedWindowModeOff', () => {
-    // console.log("dockedWindowModeOff");
-    // mainWindow && mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: false });
     mainWindow && mainWindow.setAlwaysOnTop(false, 'floating', Number.MAX_VALUE);
     dockedWindowMode = false;
 });

@@ -1,7 +1,7 @@
 {
   "name": "C-3PO",
   "productName": "C-3PO",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "A language utility tray app for quick text translation, spell-checking, Wikipedia lookups, contextual translation, synonym finding, and part-of-speech identification. Boost your language tasks with simple hotkey commands.",
   "main": ".webpack/main",
   "repository": "https://github.com/StekolschikovV/C-3PO-releases",

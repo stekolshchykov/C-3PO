@@ -98,7 +98,6 @@ export class RootStore {
         reaction(
             () => JSON.stringify(this.translatorText),
             () => {
-                console.log("reaction", JSON.stringify(this.translatorText))
                 if (!this.isStopUpdate) {
                     this.translateText(true)
                 }

@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import SVG from "../../components/SVG";
-
-import {languages} from "./languageList";
+import debounce from 'lodash/debounce';
 import {observer} from "mobx-react-lite";
+import SVG from "../../components/SVG";
+import {languages} from "./languageList";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import TranslatorButtons from "../../components/TranslatorButtons";
 import Btn from "./../../UI/Btn";
-import debounce from 'lodash/debounce';
 
 const Translator = observer(() => {
 
