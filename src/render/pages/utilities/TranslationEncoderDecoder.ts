@@ -8,6 +8,7 @@ class TranslationEncoderDecoder {
         return text
             .replaceAll("○○○", ";")
             .replaceAll("¶¶¶", "?")
+            .replaceAll(". .", "..")
     }
 
     // Encodes a string
@@ -37,6 +38,9 @@ class TranslationEncoderDecoder {
             }
         }
         return result
+            .replaceAll(". .", "..")
+            .replaceAll(". .", "..")
+            .replaceAll(this.newLineSeparator, "\n")
     }
 }
 

@@ -6,6 +6,7 @@ import {observer} from "mobx-react-lite";
 import {useRootStore} from "../../providers/RootStoreProvider";
 import TranslatorButtons from "../../components/TranslatorButtons";
 import Btn from "./../../UI/Btn";
+import debounce from 'lodash/debounce';
 
 const Translator = observer(() => {
 
@@ -54,9 +55,10 @@ const Translator = observer(() => {
             }
         }
     }, [store.clipboard])
-    useEffect(() => {
-        console.log("inputFromRef.current.value", inputFromRef?.current?.value)
-    }, [inputFromRef?.current?.value])
+
+    const handleInputChange = debounce((value) => {
+        store.translatorText.from = value;
+    }, 500);
 
     return <div className={"bg-grey grid grid-rows-[min-content_minmax(0,1fr)]"}>
         <div className={"grid grid-cols-[1fr_min-content_1fr] justify-evenly mx-auto my-3 w-full"}>
@@ -88,7 +90,8 @@ const Translator = observer(() => {
                     ref={inputFromRef}
                     className={" bg-grayDark w-full outline-none px-3 py-2 resize-none"}
                     placeholder="from"
-                    onChange={e => store.translatorText.from = e.target?.value}/>
+                    onChange={(e) => handleInputChange(e.target.value)}
+                />
                 <TranslatorButtons text={store.translatorText.from} language={store.config.translator.from}/>
             </div>
             <div className={"w-full grid grid-cols-[1fr] relative"}>
