@@ -1,5 +1,5 @@
 import axios from "axios";
-import translationEncoderDecoder from "../pages/utilities/TranslationEncoderDecoder";
+import translationEncoderDecoder from "./TranslationEncoderDecoder";
 
 export const translateText = async (text: string, fromCode: string, toCode: string) => {
     let translateText = ""

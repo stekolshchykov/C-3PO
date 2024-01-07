@@ -1,6 +1,7 @@
 class TranslationEncoderDecoder {
 
     private sentenceSeparators: string[] = ["!", "?", ".", ";"]
+    private newLineSeparator = "___"
 
     // Decodes a string
     public decode = (text: string) => {
@@ -16,9 +17,11 @@ class TranslationEncoderDecoder {
             .replaceAll(";", "○○○*******")
             .replaceAll("!", "!*******")
             .replaceAll(".", ".*******")
-            .replace(/\?/gi, "¶¶¶")
+            .replaceAll(/\?/gi, "¶¶¶")
+            .replaceAll("\n", this.newLineSeparator)
             .split("*******")
             .map(e => e.trim()).filter(e => e.length > 0)
+
     }
 
     // Adds spaces to text

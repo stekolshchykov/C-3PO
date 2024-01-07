@@ -1,6 +1,6 @@
 import {makeAutoObservable, reaction} from "mobx";
 import {IConfig, IHistoryRecord, IHotKey, TMainCommand} from "../../type";
-import {translateText} from "../../render/pages/functions";
+import {translateText} from "../../render/pages/utilities/translateText";
 
 const defaultConfig = {
     hotKeys: [{key: 'META+G', page: 'translator'}],
@@ -108,22 +108,11 @@ export class RootStore {
     }
 
     translateText = async (tryReverse = false) => {
-        const sepator = "___"
-        console.log("translateText", JSON.stringify(this.translatorText))
-        // console.log("+++", this.translatorText.from.replace('\n', ''), this.translatorText.to)
-        this.translatorText.from = this.translatorText.from.replaceAll("\n", sepator)
-        console.log("translateText2", JSON.stringify(this.translatorText))
-
-        let translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
-        console.log("translateText3", JSON.stringify(this.translatorText))
-
-        translatedText = translatedText.replaceAll(sepator, "\n")
+        const translatedText = await translateText(this.translatorText.from, this.config.translator.from.code, this.config.translator.to.code)
         if (tryReverse && this.config?.tabs?.translator?.isReverse) {
             const isNoResult = this.translatorText.from.trim() === translatedText.trim()
             if (isNoResult) {
                 const translatedText2 = await translateText(this.translatorText.from, this.config.translator.to.code, this.config.translator.from.code)
-                console.log("translateText4", translatedText2)
-
                 const isNoResult2 = this.translatorText.from.trim() === translatedText2.trim()
                 if (!isNoResult2) {
                     this.isStopUpdate = true
