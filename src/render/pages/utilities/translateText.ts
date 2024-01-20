@@ -3,7 +3,7 @@ import translationEncoderDecoder from "./TranslationEncoderDecoder";
 
 export const translateText = async (text: string, fromCode: string, toCode: string) => {
     let translateText = ""
-    const textArray = translationEncoderDecoder.encode(text)
+    const textArray = translationEncoderDecoder.splitString(text)
     for (const suggestion of textArray) {
         const response = await axios.get('https://translate.googleapis.com/translate_a/single', {
             params: {
@@ -11,7 +11,7 @@ export const translateText = async (text: string, fromCode: string, toCode: stri
                 sl: fromCode,
                 tl: toCode,
                 dt: "t",
-                q: suggestion
+                q: translationEncoderDecoder.encode(suggestion)
             }
         })
             .then(e => translationEncoderDecoder.decode(e.data[0][0][0]))

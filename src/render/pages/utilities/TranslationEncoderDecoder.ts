@@ -5,24 +5,12 @@ class TranslationEncoderDecoder {
 
     // Decodes a string
     public decode = (text: string) => {
-        return text
-            .replaceAll("○○○", ";")
-            .replaceAll("¶¶¶", "?")
-            .replaceAll(". .", "..")
+        return text.replaceAll("○○○", "\n")
     }
 
     // Encodes a string
-    public encode = (text: string): string[] => {
-        return text
-            .replaceAll("?", "?*******")
-            .replaceAll(";", "○○○*******")
-            .replaceAll("!", "!*******")
-            .replaceAll(".", ".*******")
-            .replaceAll(/\?/gi, "¶¶¶")
-            .replaceAll("\n", this.newLineSeparator)
-            .split("*******")
-            .map(e => e.trim()).filter(e => e.length > 0)
-
+    public encode = (text: string): string => {
+        return text.replaceAll("\n", "○○○")
     }
 
     // Adds spaces to text
@@ -41,6 +29,26 @@ class TranslationEncoderDecoder {
             .replaceAll(". .", "..")
             .replaceAll(". .", "..")
             .replaceAll(this.newLineSeparator, "\n")
+    }
+
+    public splitString = (inputString: string, delimiters = ['.', '!', '?']): string[] => {
+        const result: string[] = [];
+        let currentToken = ''
+        for (const char of inputString) {
+            if (delimiters.includes(char)) {
+                if (currentToken !== '') {
+                    currentToken += char
+                    result.push(currentToken)
+                    currentToken = ''
+                }
+            } else {
+                currentToken += char
+            }
+        }
+        if (currentToken !== '') {
+            result.push(currentToken)
+        }
+        return result
     }
 }
 
