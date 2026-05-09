@@ -209,7 +209,6 @@ struct TranslatorView: View {
     }
 
     private func swapLanguages() {
-        guard sourceLanguage != "auto" else { return }
         let temp = sourceLanguage
         sourceLanguage = targetLanguage
         targetLanguage = temp

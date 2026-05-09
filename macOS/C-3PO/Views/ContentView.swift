@@ -104,16 +104,20 @@ struct NavTab: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
-                .font(.c3poTab)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .foregroundColor(isSelected ? .c3poGray : .c3poWhite)
-                .background(backgroundColor)
+            ZStack {
+                Rectangle()
+                    .fill(backgroundColor)
+                Text(title)
+                    .font(.c3poTab)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .foregroundColor(isSelected ? .c3poGray : .c3poWhite)
+            }
         }
         .buttonStyle(.plain)
-        .onHover { hovering in
-            isHovered = hovering
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
+        .onHover { isHovered = $0 }
     }
 
     private var backgroundColor: Color {
