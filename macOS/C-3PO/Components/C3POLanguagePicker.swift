@@ -62,7 +62,7 @@ struct C3POLanguagePicker: View {
             }
             .foregroundColor(.c3poWhite)
             .padding(.horizontal, 20)
-            .frame(height: 36)
+            .frame(maxWidth: .infinity, minHeight: 36)
             .background(Color.c3poGray)
             .cornerRadius(6)
             .overlay(
