@@ -14,8 +14,9 @@ struct C3PONavTab: View {
                 Text(title)
                     .font(.c3poTab)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.85)
                     .foregroundColor(isSelected ? .c3poGray : .c3poWhite)
+                    .padding(.horizontal, 16)
             }
         }
         .buttonStyle(.plain)
