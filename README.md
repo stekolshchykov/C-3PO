@@ -5,6 +5,15 @@ Designed with precision, it offers a myriad of features tailored to streamline y
 desktop platforms. From seamless translations to spell checks, C-3PO ensures efficiency and precision in every
 text-related task you undertake.
 
+## Repository Structure
+
+This repository contains two versions of the application:
+
+- **`electron/`** — The current cross-platform Electron version (TypeScript, React, MobX).
+- **`macOS/`** — The native macOS version in development (Swift, SwiftUI, AppKit).
+
+> Native macOS development happens in the **`macos`** branch.
+
 ## Features
 
 1. **Translate Text:**
@@ -37,18 +46,18 @@ text-related task you undertake.
 
 - Tested on macOS with M1 chip.
 - Not tested on other platforms.
-- M1 build available in the `build` folder.
+- M1 build available in the `electron/build` folder.
 
-## Getting Started
+## Getting Started (Electron)
 
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/StekolschikovV/C-3PO.git
    ```
 
-2. **Navigate to project directory:**
+2. **Navigate to the Electron project:**
    ```bash
-   cd C-3PO
+   cd C-3PO/electron
    ```
 
 3. **Install dependencies:**
