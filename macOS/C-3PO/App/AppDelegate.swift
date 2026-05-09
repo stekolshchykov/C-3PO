@@ -1,5 +1,6 @@
 import Cocoa
 import SwiftUI
+import Carbon
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
@@ -14,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupStatusItem()
         setupPanel()
         setupGlobalMonitor()
+        registerGlobalHotkey()
     }
 
     private func setupStatusItem() {
@@ -46,6 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupGlobalMonitor() {
         addGlobalMonitor()
         NotificationCenter.default.addObserver(self, selector: #selector(dockedModeChanged(_:)), name: .dockedModeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(togglePanel), name: .toggleC3POPanel, object: nil)
     }
 
     private func addGlobalMonitor() {
@@ -71,6 +74,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             addGlobalMonitor()
         }
+    }
+
+    private func registerGlobalHotkey() {
+        var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: OSType(kEventHotKeyPressed))
+
+        let handler: EventHandlerUPP = { _, event, _ -> OSStatus in
+            var hkID = EventHotKeyID()
+            GetEventParameter(
+                event,
+                EventParamName(kEventParamDirectObject),
+                EventParamType(typeEventHotKeyID),
+                nil,
+                MemoryLayout<EventHotKeyID>.size,
+                nil,
+                &hkID
+            )
+            if hkID.id == 1 {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .toggleC3POPanel, object: nil)
+                }
+            }
+            return noErr
+        }
+
+        InstallEventHandler(GetApplicationEventTarget(), handler, 1, &eventType, nil, nil)
+
+        var hotKeyID = EventHotKeyID(signature: 0x4333504F, id: 1)
+        var hotKeyRef: EventHotKeyRef?
+        RegisterEventHotKey(UInt32(kVK_ANSI_G), UInt32(cmdKey), hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
     }
 
     @objc private func togglePanel() {
