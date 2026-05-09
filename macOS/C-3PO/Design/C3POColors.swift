@@ -2,6 +2,7 @@ import SwiftUI
 
 extension Color {
     init(hex: String) {
+        C3POLogger.shared.log("Color.init(hex): \(hex)")
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)

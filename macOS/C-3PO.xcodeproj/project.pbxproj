@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		4D70F9852FAFB2EC007CF5E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D1EC32F2FAF9E34009D7B46 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D1EC3362FAF9E34009D7B46;
+			remoteInfo = "C-3PO";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		2fabc2f822594b0780066f4a0e5c9d85 /* C-3POUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "C-3POUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D1EC3372FAF9E34009D7B46 /* C-3PO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "C-3PO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3212d3fe1fd84d76bbd825f4daeddcf4 /* C-3POUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "C-3POUITests";
+			sourceTree = "<group>";
+		};
 		4D1EC3392FAF9E34009D7B46 /* C-3PO */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "C-3PO";
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3a130403a32243d986068241ab21d923 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D1EC3342FAF9E34009D7B46 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				4D1EC3392FAF9E34009D7B46 /* C-3PO */,
+				3212d3fe1fd84d76bbd825f4daeddcf4 /* C-3POUITests */,
 				4D1EC3382FAF9E34009D7B46 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				4D1EC3372FAF9E34009D7B46 /* C-3PO.app */,
+				2fabc2f822594b0780066f4a0e5c9d85 /* C-3POUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,28 @@
 			productReference = 4D1EC3372FAF9E34009D7B46 /* C-3PO.app */;
 			productType = "com.apple.product-type.application";
 		};
+		684f6b900bf6450b840933b1f8bedc9d /* C-3POUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7b7b5eea9cd34cac8cb6553a0e993729 /* Build configuration list for PBXNativeTarget "C-3POUITests" */;
+			buildPhases = (
+				4bb1d784efd54fb7ab705842f5448bbd /* Sources */,
+				3a130403a32243d986068241ab21d923 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9e96965a5b934b7da30ba5264161b17e /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3212d3fe1fd84d76bbd825f4daeddcf4 /* C-3POUITests */,
+			);
+			name = "C-3POUITests";
+			packageProductDependencies = (
+			);
+			productName = "C-3POUITests";
+			productReference = 2fabc2f822594b0780066f4a0e5c9d85 /* C-3POUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +129,10 @@
 				TargetAttributes = {
 					4D1EC3362FAF9E34009D7B46 = {
 						CreatedOnToolsVersion = 26.4.1;
+					};
+					684f6b900bf6450b840933b1f8bedc9d = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = 4D1EC3362FAF9E34009D7B46;
 					};
 				};
 			};
@@ -100,6 +151,7 @@
 			projectRoot = "";
 			targets = (
 				4D1EC3362FAF9E34009D7B46 /* C-3PO */,
+				684f6b900bf6450b840933b1f8bedc9d /* C-3POUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -122,7 +174,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4bb1d784efd54fb7ab705842f5448bbd /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9e96965a5b934b7da30ba5264161b17e /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D1EC3362FAF9E34009D7B46 /* C-3PO */;
+			targetProxy = 4D70F9852FAFB2EC007CF5E5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4D1EC3402FAF9E35009D7B46 /* Debug */ = {
@@ -309,6 +376,54 @@
 			};
 			name = Release;
 		};
+		840406899fdc451388a1fc25f64163ce /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GBXZPDA462;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mk.C-3POUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "C-3PO";
+			};
+			name = Debug;
+		};
+		e6035b5b9cb8495ca0a4711558fe8653 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GBXZPDA462;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "mk.C-3POUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "C-3PO";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -326,6 +441,15 @@
 			buildConfigurations = (
 				4D1EC3432FAF9E35009D7B46 /* Debug */,
 				4D1EC3442FAF9E35009D7B46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7b7b5eea9cd34cac8cb6553a0e993729 /* Build configuration list for PBXNativeTarget "C-3POUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				840406899fdc451388a1fc25f64163ce /* Debug */,
+				e6035b5b9cb8495ca0a4711558fe8653 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

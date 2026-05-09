@@ -5,6 +5,7 @@ struct HistoryView: View {
     @Binding var currentPage: AppPage
 
     var body: some View {
+        let _ = C3POLogger.shared.log("HistoryView.body: records=\(store.records.count)")
         VStack(spacing: 0) {
             HStack {
                 Button(action: { currentPage = .translator }) {
@@ -58,6 +59,7 @@ struct HistoryView: View {
     }
 
     private func formattedDate(_ date: Date) -> String {
+        C3POLogger.shared.log("formattedDate: \(date)")
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
         return formatter.string(from: date)

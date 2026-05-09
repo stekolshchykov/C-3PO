@@ -6,9 +6,14 @@ struct C3POTextArea: View {
     let language: String
     var isReadOnly: Bool = false
     var showActions: Bool = true
+    var accessibilityId: String? = nil
 
     var body: some View {
+        let _ = C3POLogger.shared.log("C3POTextArea.body: placeholder=\(placeholder) readOnly=\(isReadOnly)")
         ZStack(alignment: .topLeading) {
+            if let id = accessibilityId {
+                Color.clear.accessibilityIdentifier(id)
+            }
             Color.c3poGrayDark
 
             TextEditor(text: $text)
@@ -17,6 +22,7 @@ struct C3POTextArea: View {
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
                 .padding(8)
+                .accessibilityIdentifier(accessibilityId ?? "")
 
             if text.isEmpty && !isReadOnly {
                 Text(placeholder)
@@ -41,12 +47,14 @@ struct C3POTextArea: View {
     }
 
     private func copyToClipboard(_ text: String) {
+        C3POLogger.shared.log("copyToClipboard: \(text.prefix(30))")
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
     }
 
     private func speak(_ text: String, language: String) {
+        C3POLogger.shared.log("speak: lang=\(language) text=\(text.prefix(30))")
         // TODO: implement TTS via AVSpeechSynthesizer
     }
 }

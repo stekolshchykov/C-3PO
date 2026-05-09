@@ -13,6 +13,7 @@ struct TranslatorView: View {
     @State private var debounceTask: Task<Void, Never>?
 
     var body: some View {
+        let _ = C3POLogger.shared.log("TranslatorView.body: sourceLang=\(sourceLanguage) targetLang=\(targetLanguage)")
         C3POLanguagePicker(
             sourceLanguage: $sourceLanguage,
             targetLanguage: $targetLanguage,
@@ -45,6 +46,7 @@ struct TranslatorView: View {
     }
 
     private func triggerTranslation(_ text: String) {
+        C3POLogger.shared.log("triggerTranslation: \(text.prefix(30))")
         guard !text.isEmpty else {
             translatedText = ""
             return

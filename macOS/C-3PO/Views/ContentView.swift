@@ -14,6 +14,7 @@ struct ContentView: View {
     ]
 
     var body: some View {
+        let _ = C3POLogger.shared.log("ContentView.body: currentPage=\(currentPage)")
         VStack(spacing: 0) {
             Triangle()
                 .fill(Color.c3poGray)
@@ -24,9 +25,12 @@ struct ContentView: View {
                 if showNavTabs {
                     HStack(spacing: 0) {
                         ForEach(navTabs, id: \.1) { tab in
-                            C3PONavTab(title: tab.0, isSelected: currentPage == tab.1) {
-                                currentPage = tab.1
-                            }
+                            C3PONavTab(
+                                title: tab.0,
+                                isSelected: currentPage == tab.1,
+                                action: { currentPage = tab.1 },
+                                accessibilityId: "\(tab.1)Tab"
+                            )
                         }
                     }
                     .frame(height: 50)
@@ -66,6 +70,7 @@ struct ContentView: View {
     }
 
     private var showNavTabs: Bool {
+        C3POLogger.shared.log("showNavTabs: currentPage=\(currentPage)")
         switch currentPage {
         case .history, .settings:
             return false

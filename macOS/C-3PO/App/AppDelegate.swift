@@ -11,14 +11,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let triangleHeight: CGFloat = 20
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        C3POLogger.shared.log("applicationDidFinishLaunching")
+        let isUITesting = ProcessInfo.processInfo.arguments.contains("--ui-testing")
+        if !isUITesting {
+            NSApp.setActivationPolicy(.accessory)
+        }
         setupStatusItem()
         setupPanel()
         setupGlobalMonitor()
         registerGlobalHotkey()
+
+        if isUITesting {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.showPanel()
+            }
+        }
     }
 
     private func setupStatusItem() {
+        C3POLogger.shared.log("setupStatusItem")
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem.button {
             let image = NSImage(named: "trayIcon") ?? NSImage(systemSymbolName: "translate", accessibilityDescription: "C-3PO")
@@ -31,6 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupPanel() {
+        C3POLogger.shared.log("setupPanel")
         panel = NSPanel(
             contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight),
             styleMask: [.borderless, .nonactivatingPanel],
@@ -42,16 +54,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.hasShadow = true
         panel.level = .floating
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        panel.contentViewController = NSHostingController(rootView: ContentView().frame(width: panelWidth, height: panelHeight))
+        panel.setAccessibilityRole(.window)
+        panel.setAccessibilityLabel("C-3PO Panel")
+        let hostingController = NSHostingController(rootView: ContentView().frame(width: panelWidth, height: panelHeight))
+        hostingController.view.setAccessibilityElement(true)
+        panel.contentViewController = hostingController
     }
 
     private func setupGlobalMonitor() {
+        C3POLogger.shared.log("setupGlobalMonitor")
         addGlobalMonitor()
         NotificationCenter.default.addObserver(self, selector: #selector(dockedModeChanged(_:)), name: .dockedModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(togglePanel), name: .toggleC3POPanel, object: nil)
     }
 
     private func addGlobalMonitor() {
+        C3POLogger.shared.log("addGlobalMonitor")
         guard eventMonitor == nil else { return }
         eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             guard let self, self.panel.isVisible else { return }
@@ -62,12 +80,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func removeGlobalMonitor() {
+        C3POLogger.shared.log("removeGlobalMonitor")
         guard let monitor = eventMonitor else { return }
         NSEvent.removeMonitor(monitor)
         eventMonitor = nil
     }
 
     @objc private func dockedModeChanged(_ notification: Notification) {
+        C3POLogger.shared.log("dockedModeChanged: \(notification.object ?? "nil")")
         guard let isDocked = notification.object as? Bool else { return }
         if isDocked {
             removeGlobalMonitor()
@@ -77,6 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func registerGlobalHotkey() {
+        C3POLogger.shared.log("registerGlobalHotkey")
         var eventType = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: OSType(kEventHotKeyPressed))
 
         let handler: EventHandlerUPP = { _, event, _ -> OSStatus in
@@ -106,6 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func togglePanel() {
+        C3POLogger.shared.log("togglePanel: isVisible=\(panel.isVisible)")
         if panel.isVisible {
             hidePanel()
         } else {
@@ -114,6 +136,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func showPanel() {
+        C3POLogger.shared.log("showPanel")
         guard let button = statusItem.button else { return }
         let buttonRect = button.window?.convertToScreen(button.frame) ?? .zero
         let x = buttonRect.midX - panelWidth / 2
@@ -125,12 +148,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func captureClipboardToHistory() {
+        C3POLogger.shared.log("captureClipboardToHistory")
         guard let text = NSPasteboard.general.string(forType: .string) else { return }
         HistoryStore.shared.add(text: text)
         NotificationCenter.default.post(name: .clipboardCaptured, object: text)
     }
 
     private func hidePanel() {
+        C3POLogger.shared.log("hidePanel")
         panel.orderOut(nil)
     }
 }

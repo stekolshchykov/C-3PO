@@ -4,6 +4,7 @@ struct SettingsView: View {
     @Binding var currentPage: AppPage
 
     var body: some View {
+        let _ = C3POLogger.shared.log("SettingsView.body")
         VStack(spacing: 0) {
             HStack {
                 Button(action: { currentPage = .translator }) {

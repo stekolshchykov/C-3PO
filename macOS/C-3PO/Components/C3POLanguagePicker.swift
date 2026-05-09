@@ -13,6 +13,7 @@ struct C3POLanguagePicker: View {
     private let languages = Language.all
 
     var body: some View {
+        let _ = C3POLogger.shared.log("C3POLanguagePicker.body: source=\(sourceLanguage) target=\(targetLanguage)")
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 languageButton(title: displayName(for: sourceLanguage), isOpen: languageListStatus == "from") {
@@ -38,8 +39,8 @@ struct C3POLanguagePicker: View {
 
             ZStack {
                 HStack(spacing: 1) {
-                    C3POTextArea(text: $sourceText, placeholder: "from", language: sourceLanguage, isReadOnly: false)
-                    C3POTextArea(text: .constant(translatedText), placeholder: "to", language: targetLanguage, isReadOnly: true)
+                    C3POTextArea(text: $sourceText, placeholder: "from", language: sourceLanguage, isReadOnly: false, accessibilityId: "sourceTextArea")
+                    C3POTextArea(text: .constant(translatedText), placeholder: "to", language: targetLanguage, isReadOnly: true, accessibilityId: "targetTextArea")
                 }
                 .padding(.horizontal, 8)
 
@@ -52,7 +53,9 @@ struct C3POLanguagePicker: View {
         }
     }
 
+    @ViewBuilder
     private func languageButton(title: String, isOpen: Bool, action: @escaping () -> Void) -> some View {
+        let _ = C3POLogger.shared.log("languageButton: \(title) isOpen=\(isOpen)")
         Button(action: action) {
             HStack(spacing: 8) {
                 Text(title.capitalized)
@@ -80,7 +83,9 @@ struct C3POLanguagePicker: View {
         .buttonStyle(.plain)
     }
 
+    @ViewBuilder
     private func languageOverlay(status: String) -> some View {
+        let _ = C3POLogger.shared.log("languageOverlay: \(status)")
         VStack(spacing: 0) {
             TextField("", text: $searchLanguage, prompt: Text("Language name...").foregroundColor(Color.c3poWhite.opacity(0.5)))
                 .font(.c3poBody)
@@ -120,17 +125,20 @@ struct C3POLanguagePicker: View {
     }
 
     private var filteredLanguages: [Language] {
+        C3POLogger.shared.log("filteredLanguages: search=\(searchLanguage)")
         let list = languages.filter { $0.id != "auto" }
         if searchLanguage.isEmpty { return list }
         return list.filter { $0.name.lowercased().contains(searchLanguage.lowercased().trimmingCharacters(in: .whitespaces)) }
     }
 
     private func displayName(for code: String) -> String {
+        C3POLogger.shared.log("displayName: \(code)")
         if code == "auto" { return "Auto" }
         return languages.first(where: { $0.id == code })?.name ?? code
     }
 
     private func swapLanguages() {
+        C3POLogger.shared.log("swapLanguages: \(sourceLanguage) <-> \(targetLanguage)")
         let temp = sourceLanguage
         sourceLanguage = targetLanguage
         targetLanguage = temp
@@ -142,6 +150,7 @@ struct C3POLanguagePicker: View {
     }
 
     private func toggleLanguageList(_ status: String) {
+        C3POLogger.shared.log("toggleLanguageList: \(status)")
         if languageListStatus == status {
             languageListStatus = nil
         } else {

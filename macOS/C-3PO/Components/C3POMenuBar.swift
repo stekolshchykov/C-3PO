@@ -6,6 +6,7 @@ struct C3POMenuBar: View {
     let onSettings: () -> Void
 
     var body: some View {
+        let _ = C3POLogger.shared.log("C3POMenuBar.body: isDocked=\(isDocked)")
         HStack {
             C3POIconButton(systemName: isDocked ? "pin.fill" : "pin", isActive: isDocked, action: { isDocked.toggle() })
                 .frame(width: 70, alignment: .leading)

@@ -4,6 +4,7 @@ struct SpellCheckView: View {
     @State private var inputText: String = ""
 
     var body: some View {
+        let _ = C3POLogger.shared.log("SpellCheckView.body")
         VStack(spacing: 12) {
             C3POTextArea(text: $inputText, placeholder: "Enter text to check...", language: "en", isReadOnly: false, showActions: false)
                 .padding(.horizontal, 8)

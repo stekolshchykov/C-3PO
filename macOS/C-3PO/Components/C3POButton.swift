@@ -8,6 +8,7 @@ struct C3POButton: View {
     @State private var isHovered = false
 
     var body: some View {
+        let _ = C3POLogger.shared.log("C3POButton.body: \(title)")
         Button(action: action) {
             Text(title)
                 .font(.c3poBody)
@@ -31,6 +32,7 @@ struct C3POIconButton: View {
     @State private var isHovered = false
 
     var body: some View {
+        let _ = C3POLogger.shared.log("C3POIconButton.body: \(systemName)")
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: size))
