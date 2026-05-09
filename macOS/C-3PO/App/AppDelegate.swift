@@ -121,6 +121,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.setFrameOrigin(NSPoint(x: x, y: y))
         panel.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        captureClipboardToHistory()
+    }
+
+    private func captureClipboardToHistory() {
+        guard let text = NSPasteboard.general.string(forType: .string) else { return }
+        HistoryStore.shared.add(text: text)
     }
 
     private func hidePanel() {

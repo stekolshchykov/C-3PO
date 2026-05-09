@@ -1,16 +1,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 0
+    @State private var currentPage: AppPage = .translator
     @State private var isDocked = false
 
-    private let tabs = [
-        ("Translator", 0),
-        ("Context", 1),
-        ("Synonyms", 2),
-        ("SpellCheck", 3),
-        ("Conjugation", 4),
-        ("Wikipedia", 5)
+    private let navTabs: [(String, AppPage)] = [
+        ("Translator", .translator),
+        ("Context", .context),
+        ("Synonyms", .synonyms),
+        ("SpellCheck", .spellCheck),
+        ("Conjugation", .conjugation),
+        ("Wikipedia", .wikipedia),
     ]
 
     var body: some View {
@@ -21,32 +21,38 @@ struct ContentView: View {
                 .offset(y: 1)
 
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    ForEach(tabs, id: \.1) { tab in
-                        C3PONavTab(title: tab.0, isSelected: selectedTab == tab.1) {
-                            selectedTab = tab.1
+                if showNavTabs {
+                    HStack(spacing: 0) {
+                        ForEach(navTabs, id: \.1) { tab in
+                            C3PONavTab(title: tab.0, isSelected: currentPage == tab.1) {
+                                currentPage = tab.1
+                            }
                         }
                     }
+                    .frame(height: 50)
                 }
-                .frame(height: 50)
 
                 Group {
-                    switch selectedTab {
-                    case 0: TranslatorView()
-                    case 1: ContextView()
-                    case 2: SynonymsView()
-                    case 3: SpellCheckView()
-                    case 4: ConjugationView()
-                    case 5: WikipediaView()
-                    default: TranslatorView()
+                    switch currentPage {
+                    case .translator: TranslatorView()
+                    case .context: ContextView()
+                    case .synonyms: SynonymsView()
+                    case .spellCheck: SpellCheckView()
+                    case .conjugation: ConjugationView()
+                    case .wikipedia: WikipediaView()
+                    case .history: HistoryView(currentPage: $currentPage)
+                    case .settings: SettingsView(currentPage: $currentPage)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                C3POMenuBar(isDocked: $isDocked, onHistory: {}, onSettings: {})
-                    .onChange(of: isDocked) { _, newValue in
-                        NotificationCenter.default.post(name: .dockedModeChanged, object: newValue)
-                    }
+                if showNavTabs {
+                    C3POMenuBar(
+                        isDocked: $isDocked,
+                        onHistory: { currentPage = .history },
+                        onSettings: { currentPage = .settings }
+                    )
+                }
             }
             .background(Color.c3poGrayLight)
             .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -54,6 +60,18 @@ struct ContentView: View {
         .frame(width: 600, height: 730)
         .font(.c3poBody)
         .foregroundColor(.c3poWhite)
+        .onChange(of: isDocked) { _, newValue in
+            NotificationCenter.default.post(name: .dockedModeChanged, object: newValue)
+        }
+    }
+
+    private var showNavTabs: Bool {
+        switch currentPage {
+        case .history, .settings:
+            return false
+        default:
+            return true
+        }
     }
 }
 
