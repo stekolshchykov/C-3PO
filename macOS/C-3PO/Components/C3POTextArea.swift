@@ -13,6 +13,7 @@ struct C3POTextArea: View {
         ZStack(alignment: .topLeading) {
             if let id = accessibilityId {
                 Color.clear.accessibilityIdentifier(id)
+                    .allowsHitTesting(false)
             }
             Color.c3poGrayDark
 

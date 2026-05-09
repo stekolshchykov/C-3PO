@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         C3POLogger.shared.log("setupPanel")
         panel = NSPanel(
             contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight),
-            styleMask: [.borderless, .nonactivatingPanel],
+            styleMask: [.borderless],
             backing: .buffered,
             defer: false
         )
