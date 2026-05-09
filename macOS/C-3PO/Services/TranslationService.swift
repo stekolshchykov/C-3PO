@@ -14,8 +14,13 @@ actor TranslationService {
         fatalError("Use SwiftUI .translationTask modifier for now")
     }
     
-    func checkAvailability(from source: Locale.Language?, to target: Locale.Language) async -> LanguageAvailability.Status {
+    func checkAvailability(from source: Locale.Language, to target: Locale.Language) async -> LanguageAvailability.Status {
         let availability = LanguageAvailability()
         return await availability.status(from: source, to: target)
+    }
+    
+    func checkAvailability(for text: String, to target: Locale.Language) async throws -> LanguageAvailability.Status {
+        let availability = LanguageAvailability()
+        return try await availability.status(for: text, to: target)
     }
 }

@@ -4,36 +4,27 @@ import Translation
 struct TranslatorView: View {
     @State private var sourceText: String = ""
     @State private var translatedText: String = ""
-    @State private var sourceLanguage: Locale.Language = .init(identifier: "en")
-    @State private var targetLanguage: Locale.Language = .init(identifier: "ru")
+    @State private var sourceLanguageCode: String = "en"
+    @State private var targetLanguageCode: String = "ru"
     @State private var isTranslating: Bool = false
     @State private var configuration: TranslationSession.Configuration?
     
-    private let languages: [Locale.Language] = [
-        .init(identifier: "auto"),
-        .init(identifier: "en"),
-        .init(identifier: "ru"),
-        .init(identifier: "de"),
-        .init(identifier: "fr"),
-        .init(identifier: "es"),
-        .init(identifier: "it"),
-        .init(identifier: "zh"),
-        .init(identifier: "ja"),
-        .init(identifier: "ko"),
+    private let languageCodes: [String] = [
+        "auto", "en", "ru", "de", "fr", "es", "it", "zh", "ja", "ko"
     ]
     
     var body: some View {
         VStack(spacing: 12) {
             // Language selector
             HStack {
-                languagePicker(title: "From", selection: $sourceLanguage)
+                languagePicker(title: "From", selection: $sourceLanguageCode)
                 
                 Button(action: swapLanguages) {
                     Image(systemName: "arrow.left.arrow.right")
                 }
                 .buttonStyle(.plain)
                 
-                languagePicker(title: "To", selection: $targetLanguage)
+                languagePicker(title: "To", selection: $targetLanguageCode)
             }
             .padding(.horizontal)
             
@@ -84,15 +75,15 @@ struct TranslatorView: View {
         }
     }
     
-    private func languagePicker(title: String, selection: Binding<Locale.Language>) -> some View {
+    private func languagePicker(title: String, selection: Binding<String>) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.caption)
                 .foregroundColor(.secondary)
             Picker("", selection: selection) {
-                ForEach(languages, id: \.identifier) { lang in
-                    Text(displayName(for: lang))
-                        .tag(lang)
+                ForEach(languageCodes, id: \.self) { code in
+                    Text(displayName(for: code))
+                        .tag(code)
                 }
             }
             .pickerStyle(.menu)
@@ -100,29 +91,29 @@ struct TranslatorView: View {
         }
     }
     
-    private func displayName(for language: Locale.Language) -> String {
-        if language.identifier == "auto" { return "Auto" }
-        return Locale.current.localizedString(forLanguageCode: language.languageCode?.identifier ?? "") ?? language.identifier
+    private func displayName(for code: String) -> String {
+        if code == "auto" { return "Auto" }
+        return Locale.current.localizedString(forLanguageCode: code) ?? code
     }
     
     private func swapLanguages() {
-        guard sourceLanguage.identifier != "auto" else { return }
-        let temp = sourceLanguage
-        sourceLanguage = targetLanguage
-        targetLanguage = temp
+        guard sourceLanguageCode != "auto" else { return }
+        let temp = sourceLanguageCode
+        sourceLanguageCode = targetLanguageCode
+        targetLanguageCode = temp
     }
     
     private func triggerTranslation() {
         guard !sourceText.isEmpty else { return }
         isTranslating = true
         
+        let source = sourceLanguageCode == "auto" ? nil : Locale.Language(identifier: sourceLanguageCode)
+        let target = Locale.Language(identifier: targetLanguageCode)
+        
         if configuration == nil {
-            configuration = TranslationSession.Configuration(
-                source: sourceLanguage.identifier == "auto" ? nil : sourceLanguage,
-                target: targetLanguage
-            )
+            configuration = TranslationSession.Configuration(source: source, target: target)
         } else {
-            configuration?.invalidate()
+            configuration = TranslationSession.Configuration(source: source, target: target)
         }
     }
 }
