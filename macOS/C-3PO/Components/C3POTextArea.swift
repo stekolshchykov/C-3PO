@@ -14,6 +14,7 @@ struct C3POTextArea: View {
             TextEditor(text: $text)
                 .font(.c3poBody)
                 .foregroundColor(.c3poWhite)
+                .scrollContentBackground(.hidden)
                 .background(Color.clear)
                 .padding(8)
 
