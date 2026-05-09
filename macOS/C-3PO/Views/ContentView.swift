@@ -44,6 +44,9 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 C3POMenuBar(isDocked: $isDocked, onHistory: {}, onSettings: {})
+                    .onChange(of: isDocked) { _, newValue in
+                        NotificationCenter.default.post(name: .dockedModeChanged, object: newValue)
+                    }
             }
             .background(Color.c3poGrayLight)
             .clipShape(RoundedRectangle(cornerRadius: 10))

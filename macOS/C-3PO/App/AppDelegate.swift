@@ -44,11 +44,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupGlobalMonitor() {
+        addGlobalMonitor()
+        NotificationCenter.default.addObserver(self, selector: #selector(dockedModeChanged(_:)), name: .dockedModeChanged, object: nil)
+    }
+
+    private func addGlobalMonitor() {
+        guard eventMonitor == nil else { return }
         eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             guard let self, self.panel.isVisible else { return }
             if !self.panel.frame.contains(NSEvent.mouseLocation) {
                 self.hidePanel()
             }
+        }
+    }
+
+    private func removeGlobalMonitor() {
+        guard let monitor = eventMonitor else { return }
+        NSEvent.removeMonitor(monitor)
+        eventMonitor = nil
+    }
+
+    @objc private func dockedModeChanged(_ notification: Notification) {
+        guard let isDocked = notification.object as? Bool else { return }
+        if isDocked {
+            removeGlobalMonitor()
+        } else {
+            addGlobalMonitor()
         }
     }
 
