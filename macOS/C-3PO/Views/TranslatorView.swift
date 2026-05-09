@@ -8,20 +8,69 @@ struct TranslatorView: View {
     @State private var targetLanguage: String = "ru"
     @State private var isTranslating: Bool = false
     @State private var configuration: TranslationSession.Configuration?
+    @State private var needsDownload: Bool = false
+    @State private var downloadConfig: TranslationSession.Configuration?
 
     private let debounceDelay: TimeInterval = 0.5
     @State private var debounceTask: Task<Void, Never>?
 
     var body: some View {
         let _ = C3POLogger.shared.log("TranslatorView.body: sourceLang=\(sourceLanguage) targetLang=\(targetLanguage)")
-        C3POLanguagePicker(
-            sourceLanguage: $sourceLanguage,
-            targetLanguage: $targetLanguage,
-            sourceText: $sourceText,
-            translatedText: $translatedText,
-            onTriggerTranslation: triggerTranslation
-        )
-        .background(Color.c3poGrayLight)
+        ZStack {
+            C3POLanguagePicker(
+                sourceLanguage: $sourceLanguage,
+                targetLanguage: $targetLanguage,
+                sourceText: $sourceText,
+                translatedText: $translatedText,
+                onTriggerTranslation: triggerTranslation
+            )
+            .background(Color.c3poGrayLight)
+
+            if needsDownload {
+                VStack {
+                    HStack(spacing: 12) {
+                        Image(systemName: "arrow.down.circle")
+                            .foregroundColor(.c3poYellow)
+                        Text("Translation model needed for this language pair.")
+                            .font(.c3poCaption)
+                            .foregroundColor(.c3poWhite)
+                        Spacer()
+                        Button(action: startDownload) {
+                            Text("Download")
+                                .font(.c3poCaption)
+                                .foregroundColor(.c3poGrayDark)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 4)
+                                .background(Color.c3poYellow)
+                                .cornerRadius(4)
+                        }
+                        .buttonStyle(.plain)
+                        Button(action: { needsDownload = false }) {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 12))
+                                .foregroundColor(.c3poWhite)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Color.c3poGray)
+                    .cornerRadius(6)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 8)
+
+                    Spacer()
+                }
+                .translationTask(downloadConfig) { session in
+                    do {
+                        try await session.prepareTranslation()
+                        needsDownload = false
+                    } catch {
+                        C3POLogger.shared.log("Download failed: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
         .onChange(of: sourceText) { _, newValue in
             debounceTask?.cancel()
             debounceTask = Task {
@@ -34,6 +83,9 @@ struct TranslatorView: View {
             guard let text = notification.object as? String else { return }
             sourceText = text
         }
+        .onAppear {
+            Task { await checkLanguageAvailability() }
+        }
         .translationTask(configuration) { session in
             do {
                 let response = try await session.translate(sourceText)
@@ -43,6 +95,24 @@ struct TranslatorView: View {
             }
             isTranslating = false
         }
+    }
+
+    private func checkLanguageAvailability() async {
+        guard sourceLanguage != "auto" else { return }
+        let availability = LanguageAvailability()
+        let source = Locale.Language(identifier: sourceLanguage)
+        let target = Locale.Language(identifier: targetLanguage)
+        let status = await availability.status(from: source, to: target)
+        if status == .supported {
+            needsDownload = true
+        }
+    }
+
+    private func startDownload() {
+        downloadConfig = TranslationSession.Configuration(
+            source: Locale.Language(identifier: sourceLanguage),
+            target: Locale.Language(identifier: targetLanguage)
+        )
     }
 
     private func triggerTranslation(_ text: String) {
