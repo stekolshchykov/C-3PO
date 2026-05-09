@@ -29,6 +29,10 @@ struct TranslatorView: View {
                 triggerTranslation(newValue)
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .clipboardCaptured)) { notification in
+            guard let text = notification.object as? String else { return }
+            sourceText = text
+        }
         .translationTask(configuration) { session in
             do {
                 let response = try await session.translate(sourceText)

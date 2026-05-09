@@ -127,6 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func captureClipboardToHistory() {
         guard let text = NSPasteboard.general.string(forType: .string) else { return }
         HistoryStore.shared.add(text: text)
+        NotificationCenter.default.post(name: .clipboardCaptured, object: text)
     }
 
     private func hidePanel() {
