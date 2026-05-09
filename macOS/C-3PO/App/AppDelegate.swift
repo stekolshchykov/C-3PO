@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem.button {
             let image = NSImage(named: "trayIcon") ?? NSImage(systemSymbolName: "translate", accessibilityDescription: "C-3PO")
             image?.size = NSSize(width: 18, height: 18)
-            image?.isTemplate = true
+            image?.isTemplate = false
             button.image = image
             button.action = #selector(togglePanel)
             button.target = self
