@@ -1,5 +1,6 @@
 import SwiftUI
 import Translation
+import NaturalLanguage
 
 struct TranslatorView: View {
     @State private var sourceText: String = ""
@@ -115,6 +116,25 @@ struct TranslatorView: View {
         )
     }
 
+    private func detectLanguage(_ text: String) -> String {
+        let recognizer = NLLanguageRecognizer()
+        recognizer.processString(text)
+        let hypotheses = recognizer.languageHypotheses(withMaximum: 5)
+        let supportedCodes = Set(Language.all.map { $0.id })
+        let codeMapping: [String: String] = [
+            "zh-Hans": "zh-CN",
+            "zh-Hant": "zh-TW",
+        ]
+        for (language, _) in hypotheses.sorted(by: { $0.value > $1.value }) {
+            let rawCode = language.rawValue
+            let mappedCode = codeMapping[rawCode] ?? rawCode
+            if supportedCodes.contains(mappedCode) {
+                return mappedCode
+            }
+        }
+        return "en"
+    }
+
     private func triggerTranslation(_ text: String) {
         C3POLogger.shared.log("triggerTranslation: \(text.prefix(30))")
         guard !text.isEmpty else {
@@ -124,7 +144,11 @@ struct TranslatorView: View {
         isTranslating = true
 
         if sourceLanguage == "auto" {
-            configuration = TranslationSession.Configuration(target: Locale.Language(identifier: targetLanguage))
+            let detected = detectLanguage(text)
+            configuration = TranslationSession.Configuration(
+                source: Locale.Language(identifier: detected),
+                target: Locale.Language(identifier: targetLanguage)
+            )
             return
         }
 
