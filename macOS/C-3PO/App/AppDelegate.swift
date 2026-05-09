@@ -4,11 +4,8 @@ import Carbon
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
-    private var panel: NSPanel!
-    private var eventMonitor: Any?
-    private let panelWidth: CGFloat = 600
-    private let panelHeight: CGFloat = 730
-    private let triangleHeight: CGFloat = 20
+    private var popover: NSPopover!
+    private var tempAnchorWindow: NSPanel?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         C3POLogger.shared.log("applicationDidFinishLaunching")
@@ -17,13 +14,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.setActivationPolicy(.accessory)
         }
         setupStatusItem()
-        setupPanel()
-        setupGlobalMonitor()
+        setupPopover()
+        setupNotifications()
         registerGlobalHotkey()
 
         if isUITesting {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.showPanel()
+                self.showPopover()
             }
         }
     }
@@ -45,59 +42,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func setupPanel() {
-        C3POLogger.shared.log("setupPanel")
-        panel = NSPanel(
-            contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight),
-            styleMask: [.borderless],
-            backing: .buffered,
-            defer: false
-        )
-        panel.isOpaque = false
-        panel.backgroundColor = .clear
-        panel.hasShadow = true
-        panel.level = .floating
-        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        panel.setAccessibilityRole(.window)
-        panel.setAccessibilityLabel("C-3PO Panel")
-        let hostingController = NSHostingController(rootView: ContentView().frame(width: panelWidth, height: panelHeight))
-        hostingController.view.setAccessibilityElement(true)
-        panel.contentViewController = hostingController
+    private func setupPopover() {
+        C3POLogger.shared.log("setupPopover")
+        popover = NSPopover()
+        popover.contentSize = NSSize(width: 720, height: 730)
+        popover.behavior = .transient
+        let hostingController = NSHostingController(rootView: ContentView())
+        hostingController.preferredContentSize = popover.contentSize
+        popover.contentViewController = hostingController
     }
 
-    private func setupGlobalMonitor() {
-        C3POLogger.shared.log("setupGlobalMonitor")
-        addGlobalMonitor()
+    private func setupNotifications() {
+        C3POLogger.shared.log("setupNotifications")
         NotificationCenter.default.addObserver(self, selector: #selector(dockedModeChanged(_:)), name: .dockedModeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(togglePanel), name: .toggleC3POPanel, object: nil)
-    }
-
-    private func addGlobalMonitor() {
-        C3POLogger.shared.log("addGlobalMonitor")
-        guard eventMonitor == nil else { return }
-        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-            guard let self, self.panel.isVisible else { return }
-            if !self.panel.frame.contains(NSEvent.mouseLocation) {
-                self.hidePanel()
-            }
-        }
-    }
-
-    private func removeGlobalMonitor() {
-        C3POLogger.shared.log("removeGlobalMonitor")
-        guard let monitor = eventMonitor else { return }
-        NSEvent.removeMonitor(monitor)
-        eventMonitor = nil
     }
 
     @objc private func dockedModeChanged(_ notification: Notification) {
         C3POLogger.shared.log("dockedModeChanged: \(notification.object ?? "nil")")
         guard let isDocked = notification.object as? Bool else { return }
-        if isDocked {
-            removeGlobalMonitor()
-        } else {
-            addGlobalMonitor()
-        }
+        popover.behavior = isDocked ? .applicationDefined : .transient
     }
 
     private func registerGlobalHotkey() {
@@ -131,25 +95,40 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func togglePanel() {
-        C3POLogger.shared.log("togglePanel: isVisible=\(panel.isVisible)")
-        if panel.isVisible {
-            hidePanel()
+        C3POLogger.shared.log("togglePanel: isShown=\(popover.isShown)")
+        if popover.isShown {
+            hidePopover()
         } else {
-            showPanel()
+            showPopover()
         }
     }
 
-    private func showPanel() {
-        C3POLogger.shared.log("showPanel")
-        guard let button = statusItem.button else { return }
-        let buttonRect = button.window?.convertToScreen(button.frame) ?? .zero
-        let x = buttonRect.midX - panelWidth / 2
-        let y = buttonRect.minY - panelHeight
-        panel.setFrameOrigin(NSPoint(x: x, y: y))
+    private func showPopover() {
+        C3POLogger.shared.log("showPopover")
         NSRunningApplication.current.activate(options: [.activateIgnoringOtherApps])
-        panel.makeKeyAndOrderFront(nil)
-        panel.makeKey()
+
+        if let button = statusItem.button,
+           let window = button.window,
+           window.isVisible,
+           NSScreen.screens.contains(where: { $0.frame.intersects(window.convertToScreen(button.frame)) }) {
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+        } else {
+            showPopoverAtMouse()
+        }
         captureClipboardToHistory()
+    }
+
+    private func showPopoverAtMouse() {
+        let mouseLoc = NSEvent.mouseLocation
+        tempAnchorWindow?.orderOut(nil)
+        tempAnchorWindow = NSPanel(contentRect: NSRect(x: mouseLoc.x, y: mouseLoc.y, width: 1, height: 1), styleMask: [.borderless], backing: .buffered, defer: false)
+        tempAnchorWindow?.level = .floating
+        tempAnchorWindow?.backgroundColor = .clear
+        tempAnchorWindow?.isOpaque = false
+        tempAnchorWindow?.orderFront(nil)
+        if let view = tempAnchorWindow?.contentView {
+            popover.show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
+        }
     }
 
     private func captureClipboardToHistory() {
@@ -159,8 +138,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.post(name: .clipboardCaptured, object: text)
     }
 
-    private func hidePanel() {
-        C3POLogger.shared.log("hidePanel")
-        panel.orderOut(nil)
+    private func hidePopover() {
+        C3POLogger.shared.log("hidePopover")
+        popover.performClose(nil)
+        tempAnchorWindow?.orderOut(nil)
+        tempAnchorWindow = nil
     }
 }

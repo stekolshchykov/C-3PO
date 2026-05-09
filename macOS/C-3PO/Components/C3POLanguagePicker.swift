@@ -40,7 +40,7 @@ struct C3POLanguagePicker: View {
             ZStack {
                 HStack(spacing: 1) {
                     C3POTextArea(text: $sourceText, placeholder: "from", language: sourceLanguage, isReadOnly: false, accessibilityId: "sourceTextArea")
-                    C3POTextArea(text: .constant(translatedText), placeholder: "to", language: targetLanguage, isReadOnly: true, accessibilityId: "targetTextArea")
+                    C3POTextArea(text: $translatedText, placeholder: "to", language: targetLanguage, isReadOnly: true, accessibilityId: "targetTextArea")
                 }
                 .padding(.horizontal, 8)
 
@@ -104,7 +104,7 @@ struct C3POLanguagePicker: View {
                             onTriggerTranslation(sourceText)
                         }, isFullWidth: true)
                     }
-                    ForEach(filteredLanguages, id: \.id) { lang in
+                    ForEach(filteredLanguages(for: status), id: \.id) { lang in
                         let isActive = (status == "from" && sourceLanguage == lang.id) || (status == "to" && targetLanguage == lang.id)
                         C3POButton(title: lang.name, isActive: isActive, action: {
                             if status == "from" {
@@ -124,9 +124,10 @@ struct C3POLanguagePicker: View {
         .background(Color.c3poGrayDark)
     }
 
-    private var filteredLanguages: [Language] {
+    private func filteredLanguages(for status: String) -> [Language] {
         C3POLogger.shared.log("filteredLanguages: search=\(searchLanguage)")
-        let list = languages.filter { $0.id != "auto" }
+        let base = languages.filter { $0.id != "auto" }
+        let list = (status == "to") ? base.filter { $0.id != "ar" } : base
         if searchLanguage.isEmpty { return list }
         return list.filter { $0.name.lowercased().contains(searchLanguage.lowercased().trimmingCharacters(in: .whitespaces)) }
     }

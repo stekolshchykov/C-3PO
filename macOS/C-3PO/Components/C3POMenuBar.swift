@@ -13,10 +13,16 @@ struct C3POMenuBar: View {
 
             Spacer()
 
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 21)
+            if let logoImage = NSImage(named: "logo") {
+                Image(nsImage: logoImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 21)
+            } else {
+                Text("C-3PO")
+                    .font(.c3poBody)
+                    .foregroundColor(.c3poWhite)
+            }
 
             Spacer()
 

@@ -52,8 +52,36 @@ struct TranslatorView: View {
             return
         }
         isTranslating = true
-        let src: Locale.Language? = sourceLanguage == "auto" ? nil : Locale.Language(identifier: sourceLanguage)
-        let tgt = Locale.Language(identifier: targetLanguage)
-        configuration = TranslationSession.Configuration(source: src, target: tgt)
+
+        if sourceLanguage == "auto" {
+            configuration = TranslationSession.Configuration(target: Locale.Language(identifier: targetLanguage))
+            return
+        }
+
+        Task {
+            do {
+                let result = try await TranslationService.shared.translate(
+                    text: text,
+                    from: sourceLanguage,
+                    to: targetLanguage
+                )
+                await MainActor.run {
+                    translatedText = result
+                    isTranslating = false
+                }
+            } catch TranslationError.modelNotInstalled {
+                await MainActor.run {
+                    configuration = TranslationSession.Configuration(
+                        source: Locale.Language(identifier: sourceLanguage),
+                        target: Locale.Language(identifier: targetLanguage)
+                    )
+                }
+            } catch {
+                await MainActor.run {
+                    translatedText = "Error: \(error.localizedDescription)"
+                    isTranslating = false
+                }
+            }
+        }
     }
 }

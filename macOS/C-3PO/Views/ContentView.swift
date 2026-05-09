@@ -16,11 +16,6 @@ struct ContentView: View {
     var body: some View {
         let _ = C3POLogger.shared.log("ContentView.body: currentPage=\(currentPage)")
         VStack(spacing: 0) {
-            Triangle()
-                .fill(Color.c3poGray)
-                .frame(width: 20, height: 20)
-                .offset(y: 1)
-
             VStack(spacing: 0) {
                 if showNavTabs {
                     HStack(spacing: 0) {
@@ -61,7 +56,7 @@ struct ContentView: View {
             .background(Color.c3poGrayLight)
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-        .frame(width: 600, height: 730)
+        .frame(width: 720, height: 730)
         .font(.c3poBody)
         .foregroundColor(.c3poWhite)
         .onChange(of: isDocked) { _, newValue in

@@ -73,6 +73,11 @@ typings/
 # vuepress build output
 .vuepress/dist
 
+# Xcode
+xcuserdata/
+*.xcuserstate
+macOS/build/
+
 # Serverless directories
 .serverless/
 

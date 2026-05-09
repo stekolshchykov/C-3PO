@@ -11,19 +11,10 @@ struct C3POTextArea: View {
     var body: some View {
         let _ = C3POLogger.shared.log("C3POTextArea.body: placeholder=\(placeholder) readOnly=\(isReadOnly)")
         ZStack(alignment: .topLeading) {
-            if let id = accessibilityId {
-                Color.clear.accessibilityIdentifier(id)
-                    .allowsHitTesting(false)
-            }
             Color.c3poGrayDark
 
-            TextField(placeholder, text: $text, axis: .vertical)
-                .font(.c3poBody)
-                .foregroundColor(.c3poWhite)
-                .lineLimit(5...20)
+            C3POMultiLineTextView(text: $text, isReadOnly: isReadOnly, accessibilityId: accessibilityId)
                 .padding(8)
-                .accessibilityIdentifier(accessibilityId ?? "")
-                .disabled(isReadOnly)
 
             if text.isEmpty && !isReadOnly {
                 Text(placeholder)
@@ -32,30 +23,26 @@ struct C3POTextArea: View {
                     .padding(.vertical, 16)
                     .allowsHitTesting(false)
             }
-
+        }
+        .overlay(alignment: .topTrailing) {
             if showActions && !text.isEmpty {
                 VStack(spacing: 10) {
-                    if !isReadOnly {
-                        C3POIconButton(systemName: "speaker.wave.2", isActive: false, action: { speak(text, language: language) }, size: 16)
-                    }
+                    C3POIconButton(systemName: "speaker.wave.2", isActive: false, action: { speak(text, language: language) }, size: 16)
                     C3POIconButton(systemName: "doc.on.doc", isActive: false, action: { copyToClipboard(text) }, size: 16)
                 }
                 .padding(.trailing, 12)
                 .padding(.top, 12)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             }
         }
     }
 
     private func copyToClipboard(_ text: String) {
         C3POLogger.shared.log("copyToClipboard: \(text.prefix(30))")
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(text, forType: .string)
+        ClipboardService.shared.copy(text)
     }
 
     private func speak(_ text: String, language: String) {
         C3POLogger.shared.log("speak: lang=\(language) text=\(text.prefix(30))")
-        // TODO: implement TTS via AVSpeechSynthesizer
+        TTSService.shared.speak(text: text, languageCode: language)
     }
 }
