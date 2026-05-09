@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem.button {
             let image = NSImage(named: "trayIcon") ?? NSImage(systemSymbolName: "translate", accessibilityDescription: "C-3PO")
-            image?.size = NSSize(width: 18, height: 18)
+            image?.size = NSSize(width: 22, height: 22)
             image?.isTemplate = false
             button.image = image
             button.action = #selector(togglePanel)
@@ -45,10 +45,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         C3POLogger.shared.log("setupPanel")
         panel = NSPanel(
             contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight),
-            styleMask: [.borderless],
+            styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
         )
+        panel.becomesKeyOnlyIfNeeded = false
         panel.isOpaque = false
         panel.backgroundColor = .clear
         panel.hasShadow = true
@@ -143,6 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let y = buttonRect.minY - panelHeight
         panel.setFrameOrigin(NSPoint(x: x, y: y))
         panel.makeKeyAndOrderFront(nil)
+        panel.makeKey()
         NSApp.activate(ignoringOtherApps: true)
         captureClipboardToHistory()
     }
