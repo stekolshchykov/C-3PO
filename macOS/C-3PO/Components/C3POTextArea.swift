@@ -17,11 +17,13 @@ struct C3POTextArea: View {
             }
             Color.c3poGrayDark
 
-            TextEditor(text: $text)
+            TextField(placeholder, text: $text, axis: .vertical)
                 .font(.c3poBody)
                 .foregroundColor(.c3poWhite)
+                .lineLimit(5...20)
                 .padding(8)
                 .accessibilityIdentifier(accessibilityId ?? "")
+                .disabled(isReadOnly)
 
             if text.isEmpty && !isReadOnly {
                 Text(placeholder)

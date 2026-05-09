@@ -146,7 +146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let x = buttonRect.midX - panelWidth / 2
         let y = buttonRect.minY - panelHeight
         panel.setFrameOrigin(NSPoint(x: x, y: y))
-        NSApp.activate(ignoringOtherApps: true)
+        NSRunningApplication.current.activate(options: [.activateIgnoringOtherApps])
         panel.makeKeyAndOrderFront(nil)
         panel.makeKey()
         captureClipboardToHistory()
